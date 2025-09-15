@@ -1,0 +1,222 @@
+﻿using ClubMembership.Models;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using PagedList;
+using System.IO;
+
+namespace ClubMembership.Controllers
+{
+    public class MembersController : Controller
+    {
+        private readonly ApplicationDbContext _db;
+
+        public MembersController()
+        {
+            _db = new ApplicationDbContext();
+        }
+
+        // GET: Members
+        public ActionResult Index(int? page)
+        {
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            var members = _db.MemberShipMasters.OrderBy(m => m.Member_Name).ToPagedList(pageNumber, pageSize);
+            return View(members);
+        }
+
+        private void PopulateViewBags()
+        {
+            var bloodGroups = _db.BloodGroupMasters
+                                .Where(b => b.DISPSTATUS == 0)
+                                .OrderBy(b => b.BLDGDESC)
+                                .ToList();
+            ViewBag.BloodGroups = new SelectList(bloodGroups, "BldGID", "BLDGDESC");
+            var states = _db.StateMasters
+                          .Where(s => s.DISPSTATUS == 0)
+                          .OrderBy(s => s.STATEDESC)
+                          .ToList();
+            ViewBag.States = new SelectList(states, "STATEID", "STATEDESC");
+            ViewBag.ChildGenders = new SelectList(new[]
+            {
+                new { Value = 1, Text = "Male" },
+                new { Value = 2, Text = "Female" }
+            }, "Value", "Text");
+            ViewBag.ChildPositions = new SelectList(new[]
+            {
+                new { Value = 1, Text = "Student" },
+                new { Value = 2, Text = "Graduated" },
+                new { Value = 3, Text = "Employee" },
+                new { Value = 4, Text = "Business" },
+                new { Value = 5, Text = "Others" }
+            }, "Value", "Text");
+            ViewBag.ChildMaritalStatuses = new SelectList(new[]
+            {
+                new { Value = 1, Text = "Single" },
+                new { Value = 2, Text = "Married" }
+            }, "Value", "Text");
+        }
+
+        // GET: Members/Create
+        public ActionResult Create()
+        {
+            PopulateViewBags();
+            var viewModel = new MemberProfileViewModel
+            {
+                Member = new MemberShipMaster(),
+                Children = new List<MemberShipFamilyDetail>(),
+                OrganizationDetails = new List<MemberShipODetail>()
+            };
+            return View(viewModel);
+        }
+
+        // POST: Members/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(MemberProfileViewModel viewModel, HttpPostedFileBase Photo, HttpPostedFileBase FamilyPhoto)
+        {
+            PopulateViewBags();
+            if (ModelState.IsValid)
+            {
+                // Handle photo upload
+                if (Photo != null && Photo.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(Photo.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Uploads/MemberPhotos"), fileName);
+                    Directory.CreateDirectory(Server.MapPath("~/Uploads/MemberPhotos"));
+                    Photo.SaveAs(path);
+                    viewModel.Member.Member_Photo_Path = "/Uploads/MemberPhotos/" + fileName;
+                }
+                // Handle family photo upload
+                if (FamilyPhoto != null && FamilyPhoto.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(FamilyPhoto.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Uploads/FamilyPhotos"), fileName);
+                    Directory.CreateDirectory(Server.MapPath("~/Uploads/FamilyPhotos"));
+                    FamilyPhoto.SaveAs(path);
+                    viewModel.Member.Family_Photo_Path = "/Uploads/FamilyPhotos/" + fileName;
+                }
+                // Set audit fields
+                viewModel.Member.CreatedBy = User.Identity.Name;
+                viewModel.Member.CreatedDateTime = DateTime.Now;
+
+                _db.MemberShipMasters.Add(viewModel.Member);
+                _db.SaveChanges();
+
+                if (viewModel.Children != null)
+                {
+                    foreach (var child in viewModel.Children)
+                    {
+                        child.MemberID = viewModel.Member.MemberID;
+                        _db.MemberShipFamilyDetails.Add(child);
+                    }
+                }
+                if (viewModel.OrganizationDetails != null)
+                {
+                    foreach (var org in viewModel.OrganizationDetails)
+                    {
+                        org.MemberID = viewModel.Member.MemberID;
+                        _db.MemberShipODetails.Add(org);
+                    }
+                }
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(viewModel);
+        }
+
+        // GET: Members/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var member = _db.MemberShipMasters.Find(id);
+            if (member == null) return HttpNotFound();
+            var viewModel = new MemberProfileViewModel
+            {
+                Member = member,
+                Children = _db.MemberShipFamilyDetails.Where(f => f.MemberID == member.MemberID).ToList(),
+                OrganizationDetails = _db.MemberShipODetails.Where(o => o.MemberID == member.MemberID).ToList()
+            };
+            return View(viewModel);
+        }
+
+        // POST: Members/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(MemberProfileViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Entry(viewModel.Member).State = EntityState.Modified;
+                // Remove old children/orgs
+                var oldChildren = _db.MemberShipFamilyDetails.Where(f => f.MemberID == viewModel.Member.MemberID);
+                _db.MemberShipFamilyDetails.RemoveRange(oldChildren);
+                var oldOrgs = _db.MemberShipODetails.Where(o => o.MemberID == viewModel.Member.MemberID);
+                _db.MemberShipODetails.RemoveRange(oldOrgs);
+                _db.SaveChanges();
+                // Add new children/orgs
+                if (viewModel.Children != null)
+                {
+                    foreach (var child in viewModel.Children)
+                    {
+                        child.MemberID = viewModel.Member.MemberID;
+                        _db.MemberShipFamilyDetails.Add(child);
+                    }
+                }
+                if (viewModel.OrganizationDetails != null)
+                {
+                    foreach (var org in viewModel.OrganizationDetails)
+                    {
+                        org.MemberID = viewModel.Member.MemberID;
+                        _db.MemberShipODetails.Add(org);
+                    }
+                }
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(viewModel);
+        }
+
+        // GET: Members/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var member = _db.MemberShipMasters.Find(id);
+            if (member == null) return HttpNotFound();
+            return View(member);
+        }
+
+        // POST: Members/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var member = _db.MemberShipMasters.Find(id);
+            if (member != null)
+            {
+                // Remove children/orgs
+                var children = _db.MemberShipFamilyDetails.Where(f => f.MemberID == member.MemberID);
+                _db.MemberShipFamilyDetails.RemoveRange(children);
+                var orgs = _db.MemberShipODetails.Where(o => o.MemberID == member.MemberID);
+                _db.MemberShipODetails.RemoveRange(orgs);
+                _db.MemberShipMasters.Remove(member);
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+    }
+}

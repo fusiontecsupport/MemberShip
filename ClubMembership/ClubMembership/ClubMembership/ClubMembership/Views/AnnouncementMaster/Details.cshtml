@@ -1,0 +1,69 @@
+@model ClubMembership.Models.AnnouncementMaster
+
+<style>
+	.meta-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:.5rem }
+	.meta-item { background:#f8f9fb; border:1px solid #eef1f4; border-radius:.5rem; padding:.5rem .75rem }
+	.meta-item .label { display:block; font-size:.75rem; color:#6c757d }
+	.meta-item .value { font-weight:600 }
+</style>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<div class="d-flex align-items-center justify-content-between mb-2">
+				<h5 class="mb-0">@Model.Heading</h5>
+				<span class="badge @(Model.Status == 0 ? "bg-success" : "bg-secondary")">@(Model.Status == 0 ? "Active" : "Inactive")</span>
+			</div>
+			<div class="text-muted small mb-3">
+				<span class="me-2"><i class="fa fa-hashtag me-1"></i>ID: @Model.AnnouncementId</span>
+				<span class="me-2"><i class="fa fa-user me-1"></i>Created by: @(Model.CreatedBy ?? "-")</span>
+				<span class="me-2"><i class="fa fa-clock-o me-1"></i>@Model.CreatedDate.ToString("dd MMM yyyy, hh:mm tt")</span>
+				@if (Model.ModifiedDate.HasValue)
+				{
+					<span class="me-2"><i class="fa fa-edit me-1"></i>Updated: @Model.ModifiedDate.Value.ToString("dd MMM yyyy, hh:mm tt")</span>
+				}
+			</div>
+
+			@if (!string.IsNullOrEmpty(Model.MainImage))
+			{
+				<img src="@Model.MainImage" class="img-fluid mb-3" style="max-height:320px; object-fit:cover; width:100%" />
+			}
+
+			@if (!string.IsNullOrEmpty(Model.Caption))
+			{
+				<p class="text-muted">@Model.Caption</p>
+			}
+			@if (!string.IsNullOrEmpty(Model.Description))
+			{
+				<div class="mb-3">@Model.Description</div>
+			}
+
+			<div class="meta-grid mb-3">
+				@if (Model.CategoryTypeDescriptions != null && Model.CategoryTypeDescriptions.Any())
+				{
+					<div class="meta-item"><span class="label">Category Types</span><span class="value">@string.Join(", ", Model.CategoryTypeDescriptions)</span></div>
+				}
+			</div>
+
+			@{
+				var allImages = new System.Collections.Generic.List<string>();
+				if (!string.IsNullOrEmpty(Model.MainImage)) { allImages.Add(Model.MainImage); }
+				if (!string.IsNullOrEmpty(Model.AdditionalImages)) { allImages.AddRange(Model.ImageList); }
+			}
+			@if (allImages.Any())
+			{
+				<h6 class="mb-2">All Images</h6>
+				<div class="row g-2">
+					@foreach (var img in allImages)
+					{
+						<div class="col-6 col-md-4 col-lg-3">
+							<img src="@img" class="img-fluid rounded" style="height:120px; object-fit:cover; width:100%" />
+							<div class="small text-muted mt-1 text-truncate" title="@img">@img</div>
+						</div>
+					}
+				</div>
+			}
+		</div>
+	</div>
+</div>
+

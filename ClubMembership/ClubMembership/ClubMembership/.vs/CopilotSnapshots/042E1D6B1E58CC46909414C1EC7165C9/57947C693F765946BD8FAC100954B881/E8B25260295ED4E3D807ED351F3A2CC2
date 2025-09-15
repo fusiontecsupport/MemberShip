@@ -1,0 +1,42 @@
+﻿using ClubMembership.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using ClubMembership.Models;
+using PagedList;
+
+namespace ClubMembership.Controllers
+{
+    public class MemberShipMasterController : Controller
+    {
+        private readonly ApplicationDbContext _db;
+
+        public MemberShipMasterController()
+        {
+            _db = new ApplicationDbContext();  // Using your existing ApplicationDbContext
+        }
+        // GET: Members
+        public ActionResult Index(int? page)
+        {
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            var members = _db.MemberShipMasters
+                .OrderBy(m => m.Member_Name)
+                .AsEnumerable() // Switch to LINQ to Objects
+                .Select(m => new MemberShipMaster
+                {
+                    Member_Name = m.Member_Name,
+                    Gender = m.Gender,
+                    Member_Mobile_No = m.Member_Mobile_No,
+                    Member_WhatsApp_No = m.Member_WhatsApp_No,
+                    Member_EmailID = m.Member_EmailID
+                });
+
+            return View(members.ToPagedList(pageNumber, pageSize));
+        }
+
+    }
+}

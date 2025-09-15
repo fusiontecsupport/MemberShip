@@ -1,0 +1,80 @@
+﻿using ClubMembership.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+
+namespace ClubMembership.Controllers
+{
+    [AllowAnonymous]
+    public class RegisterController : Controller
+    {
+        private UserManager<ApplicationUser> UserManager { get; }
+
+        public RegisterController()
+            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+        {
+        }
+
+        public RegisterController(UserManager<ApplicationUser> userManager)
+        {
+            UserManager = userManager;
+        }
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View("Login_Register", new AccountViewModels.RegisterViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Index(AccountViewModels.RegisterViewModel model)
+        {
+            if (model.Password != model.ConfirmPassword)
+            {
+                ModelState.AddModelError("ConfirmPassword", "The password and confirmation password do not match.");
+            }
+
+            if (!string.IsNullOrEmpty(model.MobileNo) && !System.Text.RegularExpressions.Regex.IsMatch(model.MobileNo, @"^[0-9]{10}$"))
+            {
+                ModelState.AddModelError("MobileNo", "Please enter a valid 10-digit mobile number");
+            }
+
+            if (model.DOB > DateTime.Now)
+            {
+                ModelState.AddModelError("DOB", "Date of birth cannot be in the future");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var user = model.GetUser();
+                user.NPassword = model.Password;
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    // Assign user to default group (GroupId = 4) using stored procedure
+                    var createdUser = await UserManager.FindByNameAsync(user.UserName);
+                    if (createdUser != null)
+                    {
+                        using (var db = new ApplicationDbContext())
+                        {
+                            db.Database.ExecuteSqlCommand(
+                                "EXEC pr_Auto_User_Groups_Roles_Assgn @UserId = {0}, @GroupId = {1}",
+                                createdUser.Id, 4
+                            );
+                        }
+                    }
+                    return RedirectToAction("Login", "Account");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+            return View("Login_Register", model);
+        }
+    }
+}

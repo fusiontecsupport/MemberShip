@@ -1,0 +1,164 @@
+﻿@using ClubMembership.Models;
+@model ClubMembership.Models.HSNCodeMaster
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>  HSN Code Master  <div class="clearfix"> </div></h3>
+        </div>
+
+        @Html.Raw(ViewBag.msg)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel-body">
+                    <form action="@Url.Content("~/HSNCodeMaster/savedata")" method="post" accept-charset="utf-8" id="accountgroupmasterform" data-ng-controller="myController" name="accountgroupmasterform">
+                        @Html.ValidationSummary(true)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4 hidden">
+                                    <div class="form-group">
+                                        <label>Primary  </label>
+                                        @Html.TextBoxFor(model => Model.HSNID, new { @class = "form-control  HSNID", @id = "HSNID" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Code <span class="req"> *</span></label>
+                                        @Html.TextBoxFor(model => Model.HSNCODE, new { @class = "form-control  HSNCODE", @id = "HSNCODE" })
+                                        @Html.ValidationMessageFor(mode => Model.HSNCODE)
+                                        <input type="text" value="@Model.HSNCODE" name="i_HSNCODE" hidden>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Description <span class="req"> *</span></label>
+                                        @Html.TextBoxFor(model => Model.HSNDESC, new { @class = "form-control  HSNDESC", @id = "HSNDESC" })
+                                        @Html.ValidationMessageFor(mode => Model.HSNDESC)
+                                        <input type="text" value="@Model.HSNDESC" name="i_HSNDESC" hidden>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>GST % </label>
+                                        @Html.TextBoxFor(model => Model.TAXEXPRN, new { @class = "form-control TAXEXPRN", @id = "TAXEXPRN" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Status </label>
+                                        @Html.DropDownList("DISPSTATUS", null, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend style="font-family:Arial;font-size:small;color:white">Local Tax Details</legend>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>CGST % </label>
+                                            @Html.TextBoxFor(model => Model.CGSTEXPRN, new { @class = "form-control CGSTEXPRN", @id = "CGSTEXPRN" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>SGST % </label>
+                                            @Html.TextBoxFor(model => Model.SGSTEXPRN, new { @class = "form-control SGSTEXPRN", @id = "SGSTEXPRN" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 hidden">
+                                        <div class="form-group">
+                                            <label>IGST % </label>
+                                            @Html.TextBoxFor(model => Model.IGSTEXPRN, new { @class = "form-control IGSTEXPRN", @id = "IGSTEXPRN" })
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-12 hide">
+                                <fieldset>
+                                    <legend style="font-family:Arial;font-size:small;color:white">Interstate Tax Details</legend>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>CGST % </label>
+                                            @Html.TextBoxFor(model => Model.ACGSTEXPRN, new { @class = "form-control ACGSTEXPRN", @id = "ACGSTEXPRN" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>SGST % </label>
+                                            @Html.TextBoxFor(model => Model.ASGSTEXPRN, new { @class = "form-control ASGSTEXPRN", @id = "ASGSTEXPRN" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>IGST % </label>
+                                            @Html.TextBoxFor(model => Model.AIGSTEXPRN, new { @class = "form-control AIGSTEXPRN", @id = "AIGSTEXPRN" })
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12 hidden">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>CUSRID </label>
+                                        @Html.TextBoxFor(model => Model.CUSRID, new { @class = "form-control CUSRID", @id = "CUSRID" })
+                                        @Html.ValidationMessageFor(model => model.CUSRID)
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>LMUSRID </label>
+                                        @Html.TextBoxFor(model => Model.LMUSRID, new { @class = "form-control  LMUSRID", @id = "LMUSRID" })
+                                        @Html.ValidationMessageFor(model => model.LMUSRID)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Status </label>
+                                        @Html.DropDownList("DISPSTATUS", null, new { @class = "form-control DISPSTATUS", @id = "DISPSTATUS" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 box-footer">
+                                <input type="button" name="back" value="Go Back" class="btn btn-primary btn-sm  pull-left" onclick="JavaScript:history.back()" />
+                                @*<input type="submit" name="continue" value="Save & Add" class="btn btn-success btn-sm pull-right " />*@
+
+                                <input type="submit" name="save" value="Save" class="btn btn-primary btn-sm pull-right  " />
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $('.msg').delay(1200).fadeOut(1000);
+
+    //    $(".DEPTCODE").keyup(function () {//...capitalize each
+
+    //    $(this).val($(this).val().toUpperCase());
+    //});
+
+    </script>
+
+}
+
+
+
+

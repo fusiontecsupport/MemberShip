@@ -1,0 +1,170 @@
+@model ClubMembership.Models.MinutesOfMeeting
+
+<div class="mom-details">
+    <div class="mom-header">
+        <div class="mom-title">@Model.Heading</div>
+        <div class="mom-subtitle">@Model.Caption</div>
+    </div>
+
+    <div class="row g-3 mom-meta">
+        <div class="col-md-6">
+            <div class="mom-item">
+                <div class="mom-label">Meeting Date & Time</div>
+                <div class="mom-value">@(Model.MeetingDateAndTime.HasValue ? Model.MeetingDateAndTime.Value.ToString("dd/MM/yyyy HH:mm") : "-")</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mom-item">
+                <div class="mom-label">Place</div>
+                <div class="mom-value">@Model.MeetingPlace</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mom-item">
+                <div class="mom-label">Conducted By</div>
+                <div class="mom-value">@Model.ConductedBy</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mom-item">
+                <div class="mom-label">Organized By</div>
+                <div class="mom-value">@Model.OrganizedBy</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mom-item">
+                <div class="mom-label">Members Invited</div>
+                <div class="mom-value">@((Model.MembersInvited ?? "").Replace("â€¢", " | ").Replace("•", " | "))</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mom-item">
+                <div class="mom-label">Members Attended</div>
+                <div class="mom-value">@((Model.MembersAttended ?? "").Replace("â€¢", " | ").Replace("•", " | "))</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mom-section">
+        <div class="mom-section-title">Description</div>
+        <div class="mom-letter-pad">
+            <div class="mom-paper">
+                @Html.Raw((Model.Description ?? "").Replace("â€¢", " | ").Replace("•", " | ").Replace("\n", "<br/>").Replace("\r", ""))
+            </div>
+        </div>
+    </div>
+
+    @{
+        var attachments = new[] { Model.Attachment1Path, Model.Attachment2Path, Model.Attachment3Path }
+            .Where(p => !string.IsNullOrWhiteSpace(p))
+            .ToList();
+    }
+    @if (attachments.Any())
+    {
+        <div class="mom-section">
+            <div class="mom-section-title">Attachments</div>
+            <div class="row g-3">
+                @foreach (var path in attachments)
+                {
+                    var lower = (path ?? string.Empty).ToLower();
+                    bool isPdf = lower.EndsWith(".pdf");
+                    // Normalize path and build /sngs URL like Announcements
+                    var normalizedPath = path;
+                    if (!string.IsNullOrWhiteSpace(normalizedPath))
+                    {
+                        if (normalizedPath.StartsWith("~/"))
+                        {
+                            normalizedPath = normalizedPath.Substring(2);
+                        }
+                        else if (normalizedPath.StartsWith("/"))
+                        {
+                            normalizedPath = normalizedPath.Substring(1);
+                        }
+                        normalizedPath = normalizedPath.TrimStart('~', '/');
+                    }
+                    var url = "/sngs/" + normalizedPath;
+                    <div class="col-md-4">
+                        <div class="mom-item d-flex align-items-center justify-content-center" style="min-height: 180px;">
+                            @if (isPdf)
+                            {
+                                <a href="@url" class="btn btn-outline-primary" target="_blank" rel="noopener">
+                                    <i class="fa fa-file-pdf-o me-2"></i> Download PDF
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@url" target="_blank" rel="noopener">
+                                    <img src="@url" alt="Attachment" class="img-fluid rounded border" style="max-height:160px; object-fit:contain; background:#f8f9fa;" />
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .mom-details { padding: 8px; }
+
+    .mom-header {
+        padding: 14px 16px;
+        background: linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%);
+        border-radius: 10px;
+        color: #fff;
+        box-shadow: 0 6px 20px rgba(13, 110, 253, 0.25);
+        margin-bottom: 14px;
+    }
+    .mom-title { font-size: 1.25rem; font-weight: 700; letter-spacing: .3px; }
+    .mom-subtitle { opacity: .9; margin-top: 4px; font-size: .95rem; }
+
+    .mom-meta .mom-item {
+        background: #fff;
+        border: 1px solid #eef1f5;
+        border-radius: 10px;
+        padding: 12px 14px;
+        box-shadow: 0 4px 14px rgba(31, 45, 61, .06);
+        height: 100%;
+    }
+    .mom-label { font-size: .8rem; color: #6c757d; text-transform: uppercase; letter-spacing: .06em; }
+    .mom-value { font-size: 1rem; color: #212529; margin-top: 4px; font-weight: 600; }
+
+    .mom-section { margin-top: 16px; }
+    .mom-section-title { font-weight: 700; color: #343a40; margin-bottom: 8px; }
+
+    /* Letter pad styling */
+    .mom-letter-pad {
+        position: relative;
+        border-radius: 12px;
+        background: #fff;
+        border: 1px solid #e9ecef;
+        overflow: hidden;
+        box-shadow: 0 8px 22px rgba(0,0,0,.06);
+    }
+    .mom-letter-pad:before { /* left red margin line */
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0; left: 56px;
+        width: 2px; background: rgba(220, 53, 69, .6);
+        pointer-events: none;
+    }
+    .mom-paper {
+        padding: 18px 18px 18px 72px;
+        line-height: 1.7;
+        font-size: 1rem;
+        color: #2b2f33;
+        background-image: repeating-linear-gradient(
+            to bottom,
+            #ffffff 0px,
+            #ffffff 28px,
+            #e9ecef 29px
+        );
+        background-size: 100% 29px;
+        min-height: 160px;
+        white-space: normal;
+    }
+
+    /* Make modal body scroll nicely */
+    .modal-body { max-height: 75vh; overflow-y: auto; }
+</style>

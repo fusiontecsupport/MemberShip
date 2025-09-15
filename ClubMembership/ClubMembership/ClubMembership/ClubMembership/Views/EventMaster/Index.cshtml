@@ -1,0 +1,371 @@
+@model IEnumerable<ClubMembership.Models.EventMaster>
+
+@{
+    ViewBag.Title = "Events";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style>
+        .event-card {
+            transition: transform .18s ease, box-shadow .18s ease;
+            border: 0;
+            border-radius: .75rem;
+            overflow: hidden;
+        }
+        .event-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+        }
+        .event-media {
+            position: relative;
+            background: #f6f7fb;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .event-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .event-thumb {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: .35rem;
+        }
+        .date-badge {
+            position: absolute;
+            top: .75rem;
+            left: .75rem;
+            background: rgba(0,0,0,.65);
+            color: #fff;
+            border-radius: .5rem;
+            padding: .35rem .5rem;
+            line-height: 1;
+            font-size: .8rem;
+        }
+        .view-toggle .btn {
+            min-width: 90px;
+        }
+        .search-input {
+            max-width: 360px;
+        }
+        .meta {
+            font-size: .85rem;
+            color: #6c757d;
+        }
+        .truncate-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .filter-card {
+            background: #f8f9fb;
+            border: 1px solid #e9ecef;
+            border-radius: .75rem;
+        }
+        .toolbar-actions .btn {
+            min-width: 44px;
+        }
+        .segmented .btn {
+            border-radius: 20px;
+        }
+        .segmented .btn.active {
+            color: #fff;
+        }
+        .form-text-sm {
+            font-size: .8rem;
+            color: #6c757d;
+        }
+    </style>
+}
+
+<div class="container-fluid">
+    <div class="row align-items-center mb-2">
+        <div class="col">
+            <h3 class="mb-0"><i class="fa fa-calendar-alt me-2"></i>Events</h3>
+        </div>
+        <div class="col-auto d-flex align-items-center gap-2 toolbar-actions">
+            <div class="btn-group segmented view-toggle" role="group" aria-label="View toggle">
+                <button id="btnGrid" class="btn btn-outline-primary active" title="Grid view"><i class="fa fa-th-large"></i></button>
+                <button id="btnTable" class="btn btn-outline-primary" title="Table view"><i class="fa fa-table"></i></button>
+            </div>
+            <a href="@Url.Action("Form", "EventMaster")" class="btn btn-primary">
+                <i class="fa fa-plus"></i> New Event
+            </a>
+        </div>
+    </div>
+
+    <div class="card filter-card mb-3">
+        <div class="card-body py-3">
+            <div class="row g-2 align-items-end">
+                <div class="col-12 col-lg-4">
+                    <label class="form-label mb-1">Search</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                        <input id="searchText" type="text" class="form-control" placeholder="Search heading, caption, location..." />
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <label class="form-label mb-1">Status</label>
+                    <select id="statusFilter" class="form-select">
+                        <option value="">All</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <label class="form-label mb-1">From date</label>
+                    <input id="dateFrom" type="date" class="form-control" />
+                </div>
+                <div class="col-6 col-lg-2">
+                    <label class="form-label mb-1">To date</label>
+                    <input id="dateTo" type="date" class="form-control" />
+                </div>
+                <div class="col-6 col-lg-2 d-grid d-lg-block">
+                    <button id="resetFilters" class="btn btn-outline-secondary w-100"><i class="fa fa-rotate"></i> Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa fa-check-circle"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Grid View -->
+    <div id="gridView">
+        <div class="row g-4" id="eventGrid">
+            @foreach (var item in Model)
+            {
+                var month = item.EventTime.ToString("MMM");
+                var day = item.EventTime.ToString("dd");
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-3 event-card-wrapper" data-status="@(item.Status == 0 ? "Active" : "Inactive")" data-date="@item.EventTime.ToString("yyyy-MM-dd")">
+                    <div class="card event-card h-100">
+                        <div class="event-media">
+                            @if (!string.IsNullOrEmpty(item.MainImage))
+                            {
+                                var imgSrc = item.MainImage ?? "";
+                                if (!string.IsNullOrWhiteSpace(imgSrc) && !imgSrc.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    imgSrc = Url.Content("~/" + imgSrc.TrimStart('~','/'));
+                                }
+                                <img src="@imgSrc" alt="Event image" />
+                            }
+                            else
+                            {
+                                <div class="text-muted text-center w-100">
+                                    <i class="fa fa-image fa-2x"></i>
+                                    <div>No Image</div>
+                                </div>
+                            }
+                            <div class="date-badge text-center">
+                                <div style="font-weight:700; letter-spacing:.5px;">@month</div>
+                                <div>@day</div>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title mb-1" title="@item.Heading">@item.Heading</h5>
+                            <div class="meta mb-2">
+                                <i class="fa fa-clock me-1"></i>@item.EventTime.ToString("dd/MM/yyyy HH:mm")
+                                <span class="mx-2">|</span>
+                                <i class="fa fa-location-dot me-1"></i>@(string.IsNullOrEmpty(item.EventLocation) ? "-" : item.EventLocation)
+                            </div>
+                            <p class="card-text truncate-2">@(!string.IsNullOrEmpty(item.Caption) && item.Caption.Length > 100 ? item.Caption.Substring(0, 100) + "..." : (item.Caption ?? ""))</p>
+                            <div class="mt-auto d-flex align-items-center justify-content-between">
+                                <span class="badge @(item.Status == 0 ? "bg-success" : "bg-secondary")">
+                                    @(item.Status == 0 ? "Active" : "Inactive")
+                                </span>
+                                <small class="text-muted">Created @item.CreatedDate.ToString("dd/MM/yyyy")</small>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-0 pt-0 pb-3 px-3">
+                            <div class="d-flex gap-2">
+                                <a href="@Url.Action("Form", "EventMaster", new { id = item.EventId })" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
+                                <a href="@Url.Action("Delete", "EventMaster", new { id = item.EventId })" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this event?')">
+                                    <i class="fa fa-trash"></i> Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Table View -->
+    <div id="tableView" class="d-none">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="eventTable" class="table table-striped table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Heading</th>
+                                <th>Caption</th>
+                                <th>Event Time</th>
+                                <th>Location</th>
+                                <th>Main Image</th>
+                                <th>Status</th>
+                                <th>Created Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr data-status="@(item.Status == 0 ? "Active" : "Inactive")" data-date="@item.EventTime.ToString("yyyy-MM-dd")">
+                                    <td>@item.EventId</td>
+                                    <td>@item.Heading</td>
+                                    <td>@(!string.IsNullOrEmpty(item.Caption) && item.Caption.Length > 50 ? item.Caption.Substring(0, 50) + "..." : (item.Caption ?? ""))</td>
+                                    <td>@item.EventTime.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@(!string.IsNullOrEmpty(item.EventLocation) && item.EventLocation.Length > 30 ? item.EventLocation.Substring(0, 30) + "..." : (item.EventLocation ?? ""))</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.MainImage))
+                                        {
+                                            var thumb = item.MainImage ?? "";
+                                            if (!string.IsNullOrWhiteSpace(thumb) && !thumb.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                thumb = Url.Content("~/" + thumb.TrimStart('~','/'));
+                                            }
+                                            <img src="@thumb" alt="Main Image" class="img-thumbnail" style="max-width: 50px; max-height: 50px;" />
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No Image</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span class="badge @(item.Status == 0 ? "bg-success" : "bg-secondary")">
+                                            @(item.Status == 0 ? "Active" : "Inactive")
+                                        </span>
+                                    </td>
+                                    <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="@Url.Action("Form", "EventMaster", new { id = item.EventId })" class="btn btn-sm btn-outline-primary" title="Edit">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete", "EventMaster", new { id = item.EventId })" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this event?')">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            // Init DataTable for table view
+            var tableInitialized = false;
+            function ensureTable() {
+                if (!tableInitialized && $('#eventTable').length) {
+                    $('#eventTable').DataTable({
+                        pageLength: 25,
+                        order: [[3, 'desc']],
+                        responsive: true,
+                        language: {
+                            search: 'Search:',
+                            lengthMenu: 'Show _MENU_ entries per page',
+                            info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                            infoEmpty: 'Showing 0 to 0 of 0 entries',
+                            infoFiltered: '(filtered from _MAX_ total entries)',
+                            emptyTable: 'No data available in table'
+                        }
+                    });
+                    tableInitialized = true;
+                }
+            }
+
+            // View toggles
+            $('#btnGrid').on('click', function () {
+                $('#btnTable').removeClass('active');
+                $(this).addClass('active');
+                $('#tableView').addClass('d-none');
+                $('#gridView').removeClass('d-none');
+            });
+            $('#btnTable').on('click', function () {
+                $('#btnGrid').removeClass('active');
+                $(this).addClass('active');
+                $('#gridView').addClass('d-none');
+                $('#tableView').removeClass('d-none');
+                ensureTable();
+            });
+
+            function applyFilters() {
+                var q = $('#searchText').val().toString().toLowerCase();
+                var status = $('#statusFilter').val();
+                var from = $('#dateFrom').val();
+                var to = $('#dateTo').val();
+
+                // Grid
+                $('#eventGrid .event-card-wrapper').each(function () {
+                    var $el = $(this);
+                    var text = $el.text().toLowerCase();
+                    var okQ = q === '' || text.indexOf(q) !== -1;
+                    var okS = status === '' || $el.data('status') === status;
+                    var d = $el.data('date');
+                    var okF = !from || d >= from;
+                    var okT = !to || d <= to;
+                    $el.toggle(okQ && okS && okF && okT);
+                });
+
+                // Table
+                $('#eventTable tbody tr').each(function () {
+                    var $tr = $(this);
+                    var text = $tr.text().toLowerCase();
+                    var okQ = q === '' || text.indexOf(q) !== -1;
+                    var okS = status === '' || $tr.data('status') === status;
+                    var d = $tr.data('date');
+                    var okF = !from || d >= from;
+                    var okT = !to || d <= to;
+                    $tr.toggle(okQ && okS && okF && okT);
+                });
+            }
+
+            $('#searchText, #statusFilter, #dateFrom, #dateTo').on('input change', applyFilters);
+            $('#resetFilters').on('click', function (e) { e.preventDefault(); $('#searchText').val(''); $('#statusFilter').val(''); $('#dateFrom').val(''); $('#dateTo').val(''); applyFilters(); });
+
+            // View full-size image with SweetAlert2
+            $(document).on('click', '.js-full-image', function (e) {
+                e.preventDefault();
+                var src = $(this).data('fullsrc');
+                if (!src) return;
+                Swal.fire({
+                    imageUrl: src,
+                    imageAlt: 'Event image',
+                    showConfirmButton: false,
+                    background: '#111',
+                    width: 'auto',
+                    padding: 0
+                });
+            });
+        });
+    </script>
+}

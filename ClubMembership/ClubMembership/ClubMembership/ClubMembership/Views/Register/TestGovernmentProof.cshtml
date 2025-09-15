@@ -1,0 +1,72 @@
+@{
+    ViewBag.Title = "Test Government Proof";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Government Proof Test Page</h4>
+                </div>
+                <div class="card-body">
+                    <h5>Implementation Status:</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success"></i> 
+                            Government Proof Model Created
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success"></i> 
+                            Database Context Updated
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success"></i> 
+                            RegisterController Modified
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success"></i> 
+                            View Updated with File Upload
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success"></i> 
+                            Migration Files Created
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success"></i> 
+                            SQL Script Created
+                        </li>
+                    </ul>
+
+                    <hr />
+
+                    <h5>Next Steps:</h5>
+                    <ol>
+                        <li>Run the SQL script: <code>SQL/Create_GovernmentProof_Table.sql</code></li>
+                        <li>Ensure the upload directory exists: <code>~/Uploads/GovProofs/</code></li>
+                        <li>Test the registration process at: <a href="/Register/Index">Registration Page</a></li>
+                        <li>Verify file upload and database storage</li>
+                    </ol>
+
+                    <hr />
+
+                    <h5>Database Query to Test:</h5>
+                    <div class="bg-light p-3 rounded">
+                        <code>
+                            SELECT TOP (1000) [gp_id], [MemberID], [gov_path]<br/>
+                            FROM [ClubMembershipDB].[dbo].[govrmnet_proof]
+                        </code>
+                    </div>
+
+                    <hr />
+
+                    <div class="text-center">
+                        <a href="/Register/Index" class="btn btn-primary">Go to Registration Page</a>
+                        <a href="/" class="btn btn-secondary">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

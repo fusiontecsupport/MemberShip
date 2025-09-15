@@ -1,0 +1,220 @@
+@model ClubMembership.Models.EventMaster
+
+@{
+    ViewBag.Title = Model.EventId == 0 ? "New Event" : "Edit Event";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h4 class="card-title mb-0">
+                                <i class="fa fa-calendar"></i> @ViewBag.Title
+                            </h4>
+                        </div>
+                        <div class="col-auto">
+                            <a href="@Url.Action("Index", "EventMaster")" class="btn btn-secondary">
+                                <i class="fa fa-arrow-left"></i> Back to List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Form", "EventMaster", FormMethod.Post, new { enctype = "multipart/form-data", id = "eventForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.EventId)
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="Heading" class="form-label">Heading *</label>
+                                        @Html.TextBoxFor(m => m.Heading, new { @class = "form-control", required = "required" })
+                                        @Html.ValidationMessageFor(m => m.Heading, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="Caption" class="form-label">Caption</label>
+                                        @Html.TextBoxFor(m => m.Caption, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Caption, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="Description" class="form-label">Description</label>
+                                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "4" })
+                                        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Category Types</label>
+                                        <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                                            @if (ViewBag.CategoryTypes != null)
+                                            {
+                                                var categoryTypes = ViewBag.CategoryTypes as IEnumerable<dynamic>;
+                                                if (categoryTypes != null && categoryTypes.Any())
+                                                {
+                                                    var selectedCategories = string.IsNullOrEmpty(Model.CategoryTypeIds)
+                                                        ? new List<int>()
+                                                        : Model.CategoryTypeIds
+                                                            .Split(',')
+                                                            .Select(s => { int v; return int.TryParse((s ?? "").Trim(), out v) ? (int?)v : null; })
+                                                            .Where(v => v.HasValue)
+                                                            .Select(v => v.Value)
+                                                            .ToList();
+                                                    foreach (var category in categoryTypes)
+                                                    {
+                                                        int cateTid = (int)category.CateTid;
+                                                        string cateTDesc = (string)category.CateTDesc;
+                                                        var isChecked = selectedCategories.Contains(cateTid);
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" 
+                                                                   name="selectedCategoryIds" 
+                                                                   value="@cateTid" 
+                                                                   id="category_@cateTid"
+                                                                   @(isChecked ? "checked" : "") />
+                                                            <label class="form-check-label" for="category_@cateTid">
+                                                                @cateTDesc
+                                                            </label>
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <p class="text-muted small mb-0">No categories available</p>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <p class="text-muted small mb-0">Loading categories...</p>
+                                            }
+                                        </div>
+                                        <div class="form-text">Select one or more categories for this event</div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="EventTime" class="form-label">Event Time *</label>
+                                        @Html.TextBoxFor(m => m.EventTime, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local", required = "required" })
+                                        @Html.ValidationMessageFor(m => m.EventTime, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="EventLocation" class="form-label">Event Location</label>
+                                        @Html.TextBoxFor(m => m.EventLocation, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.EventLocation, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="EventPlan" class="form-label">Event Plan</label>
+                                        @Html.TextAreaFor(m => m.EventPlan, new { @class = "form-control", rows = "3" })
+                                        @Html.ValidationMessageFor(m => m.EventPlan, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="Status" class="form-label">Status</label>
+                                        @Html.DropDownListFor(m => m.Status, ViewBag.Status as SelectList, new { @class = "form-select" })
+                                        @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <label for="mainImage" class="form-label">Main Image</label>
+                                        <input type="file" id="mainImage" name="mainImage" class="form-control" accept="image/*" />
+                                        <div class="form-text">Upload a main image for this event</div>
+                                        @if (!string.IsNullOrEmpty(Model.MainImage))
+                                        {
+                                            var mainSrc = Model.MainImage.StartsWith("http", StringComparison.OrdinalIgnoreCase) ? Model.MainImage : Url.Content("~/" + Model.MainImage.TrimStart('~','/'));
+                                            <div class="mt-2">
+                                                <img src="@mainSrc" alt="Current Main Image" class="img-thumbnail" style="max-width: 200px;" />
+                                                <div class="form-check mt-2">
+                                                    <input class="form-check-input" type="checkbox" value="true" id="removeMainImage" name="removeMainImage">
+                                                    <label class="form-check-label" for="removeMainImage">Remove current main image</label>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="@Url.Action("Index", "EventMaster")" class="btn btn-secondary">
+                                        <i class="fa fa-times"></i> Cancel
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-save"></i> Save Event
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Preview main image before upload
+            $('#mainImage').change(function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const preview = $('<img>', {
+                            src: e.target.result,
+                            class: 'img-thumbnail mt-2',
+                            style: 'max-width: 200px;'
+                        });
+                        $('#mainImage').next('.form-text').after(preview);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Preview additional images before upload
+            $('#additionalImages').change(function () {
+                const files = this.files;
+                const previewContainer = $('<div class="mt-2"><label class="form-label">Preview:</label><div class="row"></div></div>');
+                
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const preview = $('<div class="col-6 mb-2"><img src="' + e.target.result + '" class="img-thumbnail" style="max-width: 100px;" /></div>');
+                        previewContainer.find('.row').append(preview);
+                    };
+                    reader.readAsDataURL(file);
+                }
+                
+                $('#additionalImages').next('.form-text').after(previewContainer);
+            });
+
+            // Require at least one Category Type checkbox before submit
+            $('#eventForm').off('submit.categoryRequired').on('submit.categoryRequired', function (e) {
+                var anyChecked = $('input[name="selectedCategoryIds"]:checked').length > 0;
+                if (!anyChecked) {
+                    e.preventDefault();
+                    alert('Please select the category type');
+                    var first = $('input[name="selectedCategoryIds"]').first();
+                    if (first.length) first.focus();
+                    return false;
+                }
+                return true;
+            });
+        });
+    </script>
+}

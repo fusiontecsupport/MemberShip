@@ -1,0 +1,188 @@
+﻿@using ClubMembership.Models
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var paymentDetails = ViewBag.PaymentDetails as List<MemberShipPaymentDetail>;
+}
+
+@section Styles {
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f72585;
+        }
+
+        .payment-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            border: none;
+        }
+
+            .payment-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+
+        .payment-header {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            padding: 15px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .payment-body {
+            padding: 20px;
+        }
+
+        .payment-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .status-completed {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .status-pending {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .payment-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin: 10px 0;
+        }
+
+        .payment-method {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .payment-detail {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .payment-detail-label {
+            font-weight: 600;
+            color: #6c757d;
+        }
+
+        .payment-actions {
+            margin-top: 15px;
+        }
+
+        .no-payments {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        .section-title {
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+    </style>
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <h4 class="section-title"><i class="fas fa-credit-card me-2"></i> My Payment History</h4>
+
+            @if (paymentDetails != null && paymentDetails.Any())
+            {
+                <div class="row">
+                    @foreach (var payment in paymentDetails)
+                    {
+                        <div class="col-md-6 col-lg-4">
+                            <div class="payment-card">
+                                <div class="payment-header d-flex justify-content-between align-items-center">
+                                    <span>@payment.Payment_Date.ToString("dd MMM yyyy")</span>
+                                    <span>@payment.Payment_Receipt_No</span>
+                                </div>
+                                <div class="payment-body">
+                                    <span class="payment-status @(payment.Payment_Status == "Completed" ? "status-completed" : "status-pending")">
+                                        @payment.Payment_Status
+                                    </span>
+
+                                    <div class="payment-amount">₹@payment.Amount.ToString("N2")</div>
+
+                                    <span class="payment-method">@payment.Payment_Type</span>
+
+                                    <div class="payment-details mt-3">
+                                        <div class="payment-detail">
+                                            <span class="payment-detail-label">Plan:</span>
+                                            <span>@payment.Payment_Plan</span>
+                                        </div>
+                                        <div class="payment-detail">
+                                            <span class="payment-detail-label">Renewal Date:</span>
+                                            <span>@payment.Renewal_Date.ToString("dd MMM yyyy")</span>
+                                        </div>
+                                        <div class="payment-detail">
+                                            <span class="payment-detail-label">Reference:</span>
+                                            <span>@payment.RRN_NO</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="payment-actions d-flex justify-content-end">
+                                        <button class="btn btn-sm btn-outline-primary me-2" title="View Receipt" onclick="viewReceipt('@payment.Payment_Receipt_No')">
+                                            <i class="fas fa-receipt me-1"></i> View
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" title="Download" onclick="downloadReceipt('@payment.Payment_Receipt_No')">
+                                            <i class="fas fa-download me-1"></i> Download
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="no-payments">
+                    <i class="fas fa-credit-card fa-3x mb-3" style="color: #dee2e6;"></i>
+                    <h5>No payment history found</h5>
+                    <p class="text-muted">You haven't made any payments yet.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function viewReceipt(receiptNo) {
+            alert('View receipt: ' + receiptNo);
+            // Implement your receipt viewing logic here
+            // window.location.href = '/Payments/ViewReceipt/' + receiptNo;
+        }
+
+        function downloadReceipt(receiptNo) {
+            alert('Download receipt: ' + receiptNo);
+            // Implement your download logic here
+            // window.location.href = '/Payments/DownloadReceipt/' + receiptNo;
+        }
+    </script>
+}

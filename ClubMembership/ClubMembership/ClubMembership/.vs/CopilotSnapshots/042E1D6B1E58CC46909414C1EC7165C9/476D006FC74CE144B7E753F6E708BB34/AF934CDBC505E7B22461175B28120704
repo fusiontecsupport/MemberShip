@@ -1,0 +1,30 @@
+﻿@model ClubMembership.Models.MemberProfileViewModel
+@{
+    ViewBag.Title = "Edit Member";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Edit Member</h2>
+@using (Html.BeginForm(null, "Members"))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Member Details</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.EditorFor(m => m.Member)
+        <h4>Family Details</h4>
+        <div id="family-details">
+            @Html.EditorFor(m => m.Children)
+        </div>
+        <h4>Organization Details</h4>
+        <div id="org-details">
+            @Html.EditorFor(m => m.OrganizationDetails)
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                @Html.ActionLink("Back to List", "Index", "Members", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}

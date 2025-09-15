@@ -1,0 +1,207 @@
+﻿using ClubMembership.Models;
+using System;
+using System.Data.Entity.Validation;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Helpers;
+using System.Web.Mvc;
+
+namespace ClubMembership.Controllers
+{
+    public class ProfileMasterController : Controller
+    {
+        private readonly ApplicationDbContext _db;
+
+        public ProfileMasterController()
+        {
+            _db = new ApplicationDbContext();
+        }
+
+        // GET: ProfileMaster
+        public ActionResult Index()
+        {
+            return RedirectToAction("Create");
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            // Initialize with default values
+            var model = new MemberShipMaster
+            {
+                Member_Reg_Date = DateTime.Now,
+                Member_Sdate = DateTime.Now,
+                Member_Edate = DateTime.Now.AddYears(1),
+                DispStatus = 1 // Assuming 1 means active
+            };
+
+            // Populate dropdowns
+            PopulateViewBags();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(MemberShipMaster model, HttpPostedFileBase Photo)
+        {
+            try
+            {
+                // Set RegstrId default value
+                model.RegstrId = "1";
+
+                // Set MemberNo as next available integer
+                model.MemberNo = GenerateMemberNumber();
+
+                // Set MemberDNo as registeryear + dob year + "000" + MemberNo
+                var registerYear = DateTime.Now.Year.ToString();
+                var dobYear = model.Member_DOB.Year.ToString();
+                var memberNoStr = model.MemberNo.ToString().PadLeft(3, '0');
+                model.MemberDNo = $"{registerYear}{dobYear}{memberNoStr}";
+
+                model.DispStatus = 1;
+                model.CreatedBy = User.Identity.Name;
+                model.CreatedDateTime = DateTime.Now;
+                model.UIserID = User.Identity.Name;
+                model.Member_Age = CalculateAge(model.Member_DOB).ToString();
+                model.Member_Reg_Date = DateTime.Now;
+                model.Member_Sdate = DateTime.Now;
+                model.Member_Edate = DateTime.Now.AddYears(1);
+
+                // Remove ModelState errors for these fields so they are re-validated
+                ModelState.Remove("UIserID");
+                ModelState.Remove("MemberDNo");
+                ModelState.Remove("CreatedBy");
+                ModelState.Remove("RegstrId");
+                ModelState.Remove("MemberNo");
+
+                // Debug: Log model state before validation
+                System.Diagnostics.Debug.WriteLine("Model state before validation:");
+                foreach (var state in ModelState)
+                {
+                    System.Diagnostics.Debug.WriteLine($"{state.Key}: {state.Value.Value?.AttemptedValue}");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    using (var transaction = _db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            // Handle photo upload
+                            if (Photo != null && Photo.ContentLength > 0)
+                            {
+                                string uploadsFolder = Server.MapPath("~/Uploads/MemberPhotos");
+                                Directory.CreateDirectory(uploadsFolder);
+                                string uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(Photo.FileName)}";
+                                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                                Photo.SaveAs(filePath);
+                                model.Member_Photo_Path = $"/Uploads/MemberPhotos/{uniqueFileName}";
+                            }
+
+                            _db.MemberShipMasters.Add(model);
+
+                            // Debug: Check entity validation errors
+                            var validationErrors = _db.GetValidationErrors();
+                            if (validationErrors.Any())
+                            {
+                                System.Diagnostics.Debug.WriteLine("Validation errors found:");
+                                foreach (var error in validationErrors)
+                                {
+                                    foreach (var err in error.ValidationErrors)
+                                    {
+                                        System.Diagnostics.Debug.WriteLine($"{err.PropertyName}: {err.ErrorMessage}");
+                                        ModelState.AddModelError(err.PropertyName, err.ErrorMessage);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                _db.SaveChanges();
+                                transaction.Commit();
+                                TempData["SuccessMessage"] = "Member registered successfully!";
+                                return RedirectToAction("Index");
+                            }
+                        }
+                        catch (DbEntityValidationException ex)
+                        {
+                            transaction.Rollback();
+                            foreach (var validationErrors in ex.EntityValidationErrors)
+                            {
+                                foreach (var validationError in validationErrors.ValidationErrors)
+                                {
+                                    ModelState.AddModelError(validationError.PropertyName, validationError.ErrorMessage);
+                                    System.Diagnostics.Debug.WriteLine($"Validation Error: {validationError.PropertyName} - {validationError.ErrorMessage}");
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            ModelState.AddModelError("", $"Error: {ex.Message}");
+                            System.Diagnostics.Debug.WriteLine($"Exception: {ex.ToString()}");
+                        }
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("ModelState is invalid:");
+                    foreach (var error in ModelState.Where(ms => ms.Value.Errors.Any()))
+                    {
+                        System.Diagnostics.Debug.WriteLine($"{error.Key}: {string.Join(", ", error.Value.Errors.Select(e => e.ErrorMessage))}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Unexpected error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Unexpected Exception: {ex.ToString()}");
+            }
+
+            PopulateViewBags();
+            return View(model);
+        }
+
+        private int GenerateMemberNumber()
+        {
+            // Implement your logic to generate unique member number
+            return _db.MemberShipMasters.Max(m => (int?)m.MemberNo) + 1 ?? 1000;
+        }
+
+        private void PopulateViewBags()
+        {
+            // Blood groups
+            var bloodGroups = _db.BloodGroupMasters
+                                .Where(b => b.DISPSTATUS == 0) // Active records only
+                                .OrderBy(b => b.BLDGDESC)
+                                .ToList();
+            ViewBag.BloodGroups = new SelectList(bloodGroups, "BldGID", "BLDGDESC");
+
+            // States - assuming you have a StateMaster table
+            var states = _db.StateMasters
+                          .Where(s => s.DISPSTATUS == 0)
+                          .OrderBy(s => s.STATEDESC)
+                          .ToList();
+            ViewBag.States = new SelectList(states, "STATEID", "STATEDESC");
+        }
+
+        private int CalculateAge(DateTime dob)
+        {
+            DateTime today = DateTime.Today;
+            int age = today.Year - dob.Year;
+            if (dob.Date > today.AddYears(-age)) age--;
+            return age;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}
+

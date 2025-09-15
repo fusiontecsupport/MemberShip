@@ -1,0 +1,66 @@
+﻿using ClubMembership.Data;
+using ClubMembership.Filters;
+using ClubMembership.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using log4net;
+using Microsoft.AspNet.Identity;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace ClubMembership.Controllers
+{
+    // [AuthActionFilter]
+    public class HomeController : Controller
+    {
+        private readonly ApplicationDbContext _db;
+        //private static readonly ILog log = LogManager.GetLogger(typeof(MembersController));
+
+        public HomeController()
+        {
+            _db = new ApplicationDbContext();
+        }
+
+        public ActionResult Index()
+        {
+            var userId = User.Identity.GetUserId();
+
+            // Check if user is in Admin role
+            bool isAdmin = User.IsInRole("Admin"); // Make sure "Admin" matches your role name exactly
+
+            List<MemberShipPaymentDetail> payments;
+
+            if (isAdmin)
+            {
+                // Admin sees all payments
+                payments = _db.MemberShipPaymentDetails
+                             .OrderByDescending(p => p.Payment_Date)
+                             .ToList();
+            }
+            else
+            {
+                // Regular user sees only their payments
+                var member = _db.MemberShipMasters.FirstOrDefault(m => m.UIserID == userId);
+
+                if (member == null)
+                {
+                    ViewBag.Message = "No member record found";
+                    return View();
+                }
+
+                payments = _db.MemberShipPaymentDetails
+                             .Where(p => p.MemberID == member.MemberID)
+                             .OrderByDescending(p => p.Payment_Date)
+                             .ToList();
+            }
+
+            ViewBag.PaymentDetails = payments;
+            ViewBag.IsAdmin = isAdmin; // Optional: pass to view if needed
+            return View();
+        }
+    }
+}

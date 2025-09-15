@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\ClubMembership",
+    "\\ClubMembership\\ClubMembership",
+    "\\ClubMembership\\ClubMembership\\ClubMembership",
+    "\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers"
+  ],
+  "SelectedNode": "\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\HomeController.cs",
+  "PreviewInSolutionExplorer": false
+}

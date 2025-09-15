@@ -1,0 +1,245 @@
+@model ClubMembership.Models.GalleryMaster
+
+@{
+    ViewBag.Title = Model.GalleryId == 0 ? "New Gallery Item" : "Edit Gallery Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .uploader-preview { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:.5rem }
+    .uploader-preview img { width:100%; height:90px; object-fit:cover; border-radius:.5rem; border:1px solid #e9ecef; background:#f8f9fa }
+    .sticky-actions { position:sticky; bottom:0; background:#fff; border-top:1px solid #e9ecef; padding-top:.75rem }
+</style>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-9">
+            <div class="card shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fa fa-images me-2"></i>@ViewBag.Title</h5>
+                    <a href="@Url.Action("Index", "GalleryMaster")" class="btn btn-outline-secondary btn-sm">
+                        <i class="fa fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Form", "GalleryMaster", FormMethod.Post, new { enctype = "multipart/form-data", id = "galleryForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.GalleryId)
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="Heading" class="form-label">Heading *</label>
+                                        @Html.TextBoxFor(m => m.Heading, new { @class = "form-control", required = "required" })
+                                        @Html.ValidationMessageFor(m => m.Heading, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="Caption" class="form-label">Caption</label>
+                                        @Html.TextBoxFor(m => m.Caption, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Caption, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="Description" class="form-label">Description</label>
+                                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "4" })
+                                        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Category Types</label>
+                                        <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                                            @if (ViewBag.CategoryTypes != null)
+                                            {
+                                                var categoryTypes = ViewBag.CategoryTypes as IEnumerable<dynamic>;
+                                                if (categoryTypes != null && categoryTypes.Any())
+                                                {
+                                                    var selectedCategories = string.IsNullOrEmpty(Model.CategoryTypeIds)
+                                                        ? new List<int>()
+                                                        : Model.CategoryTypeIds
+                                                            .Split(',')
+                                                            .Select(s => { int v; return int.TryParse((s ?? "").Trim(), out v) ? (int?)v : null; })
+                                                            .Where(v => v.HasValue)
+                                                            .Select(v => v.Value)
+                                                            .ToList();
+                                                    foreach (var category in categoryTypes)
+                                                    {
+                                                        int cateTid = (int)category.CateTid;
+                                                        string cateTDesc = (string)category.CateTDesc;
+                                                        var isChecked = selectedCategories.Contains(cateTid);
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" 
+                                                                   name="selectedCategoryIds" 
+                                                                   value="@cateTid" 
+                                                                   id="category_@cateTid"
+                                                                   @(isChecked ? "checked" : "") />
+                                                            <label class="form-check-label" for="category_@cateTid">
+                                                                @cateTDesc
+                                                            </label>
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <p class="text-muted small mb-0">No categories available</p>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <p class="text-muted small mb-0">Loading categories...</p>
+                                            }
+                                        </div>
+                                        <div class="form-text">Select one or more categories for this gallery item</div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="Category" class="form-label">Category</label>
+                                        @Html.TextBoxFor(m => m.Category, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Category, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="Status" class="form-label">Status</label>
+                                        @Html.DropDownListFor(
+                                            m => m.Status,
+                                            ViewBag.Status as SelectList,
+                                            new { @class = "form-select" }
+                                        )
+                                        @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <label for="mainImage" class="form-label">Main Image</label>
+                                        <input type="file" id="mainImage" name="mainImage" class="form-control" accept="image/*" />
+                                        <div class="form-text">Upload a main image for this gallery item</div>
+                                        
+                                        @if (!string.IsNullOrEmpty(Model.MainImage))
+                                        {
+                                            <div class="mt-2">
+                                                <img src="@Model.MainImage" alt="Current Main Image" class="img-thumbnail" style="max-width: 100%; max-height: 180px; object-fit: cover;" />
+                                                <div class="form-check mt-2">
+                                                    <input class="form-check-input" type="checkbox" value="true" id="removeMainImage" name="removeMainImage">
+                                                    <label class="form-check-label" for="removeMainImage">Remove main image</label>
+                                                </div>
+                                                <small class="text-muted d-block mt-1">Current main image</small>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="col-12 mb-3">
+                                        <label for="additionalImages" class="form-label">Additional Images</label>
+                                        <input type="file" id="additionalImages" name="additionalImages" class="form-control" accept="image/*" multiple />
+                                        <div class="form-text">Upload multiple additional images (hold Ctrl/Cmd to select multiple)</div>
+                                        
+                                        @if (!string.IsNullOrEmpty(Model.AdditionalImages))
+                                        {
+                                            <div class="mt-2">
+                                                <label class="form-label">Current Additional Images:</label>
+                                                <div class="uploader-preview">
+                                                    @foreach (var imagePath in Model.ImageList)
+                                                    {
+                                                        <div>
+                                                            <img src="@imagePath" alt="Additional Image" />
+                                                            <div class="form-check mt-1">
+                                                                <input class="form-check-input" type="checkbox" name="deleteImages" value="@imagePath" id="del_@imagePath.GetHashCode()">
+                                                                <label class="form-check-label small" for="del_@imagePath.GetHashCode()">Remove</label>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 sticky-actions">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="@Url.Action("Index", "GalleryMaster")" class="btn btn-secondary">
+                                        <i class="fa fa-times"></i> Cancel
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-save"></i> Save Gallery Item
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Preview main image before upload
+            $('#mainImage').change(function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'img-thumbnail mt-2';
+                        img.style.maxWidth = '100%';
+                        img.style.maxHeight = '180px';
+                        img.style.objectFit = 'cover';
+                        const formText = document.querySelector('#mainImage').nextElementSibling;
+                        formText.parentNode.insertBefore(img, formText.nextSibling);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Preview additional images before upload
+            $('#additionalImages').change(function () {
+                const files = this.files;
+                const container = document.createElement('div');
+                container.className = 'mt-2';
+                const label = document.createElement('label');
+                label.className = 'form-label';
+                label.textContent = 'Preview:';
+                const grid = document.createElement('div');
+                grid.className = 'uploader-preview';
+                container.appendChild(label);
+                container.appendChild(grid);
+                
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        grid.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+                const formText = document.querySelector('#additionalImages').nextElementSibling;
+                formText.parentNode.insertBefore(container, formText.nextSibling);
+            });
+
+            // Require at least one Category Type checkbox before submit
+            $('#galleryForm').off('submit.categoryRequired').on('submit.categoryRequired', function (e) {
+                var anyChecked = $('input[name="selectedCategoryIds"]:checked').length > 0;
+                if (!anyChecked) {
+                    e.preventDefault();
+                    alert('Please select the category type');
+                    var first = $('input[name="selectedCategoryIds"]').first();
+                    if (first.length) first.focus();
+                    return false;
+                }
+                return true;
+            });
+        });
+    </script>
+}

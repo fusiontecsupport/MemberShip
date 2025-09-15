@@ -1,0 +1,148 @@
+@model IEnumerable<ClubMembership.Models.MinutesOfMeeting>
+
+@{
+    ViewBag.Title = "Minutes of Meeting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid mt-3">
+    <div class="mom-hero d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="mb-0">Minutes of Meeting</h2>
+            <div class="text-muted">Browse and view meeting summaries</div>
+        </div>
+    </div>
+
+    <form class="card mom-filter p-3 mb-3" method="get" action="@Url.Action("UserView")">
+        <div class="row g-2">
+            <div class="col-md-4">
+                <label class="form-label">Search</label>
+                <input type="text" name="q" value="@Request["q"]" class="form-control" placeholder="Heading, caption, place..." />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">From</label>
+                <input type="date" name="from" value="@Request["from"]" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">To</label>
+                <input type="date" name="to" value="@Request["to"]" class="form-control" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Place</label>
+                <input type="text" name="place" value="@Request["place"]" class="form-control" placeholder="Place" />
+            </div>
+        </div>
+        <div class="mt-3 d-flex gap-2">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Filter</button>
+            <a href="@Url.Action("UserView")" class="btn btn-outline-secondary">Clear</a>
+        </div>
+    </form>
+
+    <div class="table-responsive mom-table-wrap">
+        <table class="table align-middle mom-table">
+            <thead>
+                <tr>
+                    <th style="width:30%">Heading</th>
+                    <th style="width:30%">Caption</th>
+                    <th style="width:20%">Meeting Date & Time</th>
+                    <th style="width:20%">Place</th>
+                    <th style="width:10%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">No meetings found.</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="fw-semibold">@item.Heading</div>
+                                <div class="small text-muted">@item.ConductedBy @((!string.IsNullOrWhiteSpace(item.OrganizedBy) ? " | " + item.OrganizedBy : ""))</div>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border">@item.Caption</span>
+                            </td>
+                            <td>@(item.MeetingDateAndTime.HasValue ? item.MeetingDateAndTime.Value.ToString("dd/MM/yyyy HH:mm") : "")</td>
+                            <td>@item.MeetingPlace</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-primary js-view-mom" data-id="@item.MomId">
+                                    <i class="fa fa-eye"></i> View
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="momDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content mom-modal">
+                <div class="modal-header mom-modal-header">
+                    <h5 class="modal-title">Minutes of Meeting</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="momModalBody"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .mom-hero { padding: 16px 18px; border-radius: 14px; color: #fff; background: linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%); box-shadow: 0 10px 26px rgba(13,110,253,.25); }
+    .mom-filter { border: 1px solid #eef1f5; border-radius: 12px; box-shadow: 0 10px 24px rgba(31,45,61,.06); }
+    .mom-table-wrap { border: 1px solid #eef1f5; border-radius: 12px; overflow: hidden; box-shadow: 0 14px 28px rgba(31,45,61,.06); }
+    .mom-table thead { background: #f8f9fa; }
+    .mom-table th { font-weight: 700; color: #495057; }
+    .mom-table tbody tr:hover { background: #f9fbff; }
+    .mom-modal { border: 0; border-radius: 16px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,.25); }
+    .mom-modal-header { background: linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%); color: #fff; }
+</style>
+
+<script>
+    (function() {
+        var modalEl = document.getElementById('momDetailsModal');
+        var modalBody = document.getElementById('momModalBody');
+
+        function showModal() {
+            var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            modal.show();
+        }
+
+        function loadDetails(id) {
+            modalBody.innerHTML = '';
+            fetch('@Url.Action("Details", "MinutesOfMeeting")?id=' + encodeURIComponent(id), {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(function(r) { return r.text(); })
+            .then(function(html) {
+                modalBody.innerHTML = html;
+            })
+            .catch(function() {
+                modalBody.innerHTML = '<div class="text-danger">Failed to load details.</div>';
+            });
+        }
+
+        document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.js-view-mom');
+            if (!btn) return;
+            var id = btn.getAttribute('data-id');
+            showModal();
+            loadDetails(id);
+        });
+    })();
+</script>
+
+

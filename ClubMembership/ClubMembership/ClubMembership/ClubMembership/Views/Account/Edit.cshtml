@@ -1,0 +1,213 @@
+﻿@model ClubMembership.Models.AccountViewModels.EditUserViewModel
+@{
+    ViewBag.Title = "Edit User";
+}
+
+<div class="container">
+    <div class="card shadow" style="max-width: 800px; margin: 2rem auto;">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h2 class="h4 mb-0">
+                <i class="fas fa-user-edit me-2"></i>Edit User
+            </h2>
+        </div>
+
+        <div class="card-body">
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger mb-4" })
+            @if (ViewBag.msg != null && !string.IsNullOrEmpty(ViewBag.msg.ToString()))
+            {
+                <div class="alert alert-info alert-dismissible fade show mb-4">
+                    @Html.Raw(ViewBag.msg)
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger mb-4" })
+
+                <!-- Header Section -->
+                <div class="mb-4">
+                    <h3 class="h5 text-primary">User Information</h3>
+                    <p class="text-muted">Update user details below</p>
+                </div>
+
+                <!-- User Details Section -->
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold d-block mb-2">Username</label>
+                        @Html.TextBoxFor(model => model.UserName, new
+                        {
+                            @class = "form-control",
+                            @readonly = "readonly",
+                            required = "required",
+                            placeholder = "Username",
+                            data_val = "true",
+                            data_val_required = "Username is required"
+                        })
+                        <span class="text-danger small field-validation-error" data-valmsg-for="UserName" data-valmsg-replace="true">
+                            @Html.ValidationMessageFor(model => model.UserName)
+                        </span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold d-block mb-2">Email</label>
+                        @Html.TextBoxFor(model => model.Email, new
+                        {
+                            @class = "form-control",
+                            type = "email",
+                            required = "required",
+                            placeholder = "Email address",
+                            data_val = "true",
+                            data_val_required = "Email is required",
+                            data_val_email = "Please enter a valid email address"
+                        })
+                        <span class="text-danger small field-validation-error" data-valmsg-for="Email" data-valmsg-replace="true">
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Personal Information Section -->
+                <div class="row mb-4">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold d-block mb-2">First Name</label>
+                        @Html.TextBoxFor(model => model.FirstName, new
+                        {
+                            @class = "form-control",
+                            required = "required",
+                            placeholder = "First name",
+                            data_val = "true",
+                            data_val_required = "First name is required"
+                        })
+                        <span class="text-danger small field-validation-error" data-valmsg-for="FirstName" data-valmsg-replace="true">
+                            @Html.ValidationMessageFor(model => model.FirstName)
+                        </span>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold d-block mb-2">Last Name</label>
+                        @Html.TextBoxFor(model => model.LastName, new
+                        {
+                            @class = "form-control",
+                            required = "required",
+                            placeholder = "Last name",
+                            data_val = "true",
+                            data_val_required = "Last name is required"
+                        })
+                        <span class="text-danger small field-validation-error" data-valmsg-for="LastName" data-valmsg-replace="true">
+                            @Html.ValidationMessageFor(model => model.LastName)
+                        </span>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold d-block mb-2">Mobile Number</label>
+                        @Html.TextBoxFor(model => model.MobileNo, new
+                        {
+                            @class = "form-control",
+                            required = "required",
+                            placeholder = "Mobile number",
+                            data_val = "true",
+                            data_val_required = "Mobile number is required",
+                            data_val_length = "Mobile number must be 10 digits",
+                            data_val_length_min = "10",
+                            data_val_length_max = "10",
+                            data_val_regex = "Please enter numbers only",
+                            data_val_regex_pattern = "^[0-9]+$"
+                        })
+                        <span class="text-danger small field-validation-error" data-valmsg-for="MobileNo" data-valmsg-replace="true">
+                            @Html.ValidationMessageFor(model => model.MobileNo)
+                        </span>
+                    </div>
+                </div>
+
+                <!-- New Fields Section -->
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold d-block mb-2">Date of Birth</label>
+                        @Html.TextBoxFor(model => model.DOB, "{0:yyyy-MM-dd}", new
+                        {
+                            @class = "form-control",
+                            type = "date",
+                            required = "required",
+                            data_val = "true",
+                            data_val_required = "Date of birth is required"
+                        })
+                        <span class="text-danger small field-validation-error" data-valmsg-for="DOB" data-valmsg-replace="true">
+                            @Html.ValidationMessageFor(model => model.DOB)
+                        </span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold d-block mb-2">Gender</label>
+                        @Html.DropDownListFor(model => model.Gender, new SelectList(new List<string> { "Male", "Female", "Other" }), "Select Gender", new
+                        {
+                            @class = "form-select",
+                            required = "required",
+                            data_val = "true",
+                            data_val_required = "Gender is required"
+                        })
+                        <span class="text-danger small field-validation-error" data-valmsg-for="Gender" data-valmsg-replace="true">
+                            @Html.ValidationMessageFor(model => model.Gender)
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex gap-3 mt-4">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="fas fa-save me-2"></i>Save Changes
+                    </button>
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary px-4">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: none;
+        border-radius: 8px;
+    }
+
+    .card-header {
+        padding: 1rem 1.5rem;
+    }
+
+    .card-body {
+        padding: 1.5rem 2rem;
+    }
+
+    .form-control, .form-select {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .btn {
+        min-width: 160px;
+    }
+
+    .text-danger.small {
+        font-size: 0.875rem;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Bootstrap validation
+            (function () {
+                'use strict'
+                var forms = document.querySelectorAll('.needs-validation')
+                Array.prototype.slice.call(forms).forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })();
+        });
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

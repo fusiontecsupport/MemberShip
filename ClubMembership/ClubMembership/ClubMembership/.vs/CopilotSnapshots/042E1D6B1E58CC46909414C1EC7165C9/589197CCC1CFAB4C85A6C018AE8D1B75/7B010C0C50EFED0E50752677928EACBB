@@ -1,0 +1,1399 @@
+﻿@model ClubMembership.Models.MemberProfileViewModel
+@{
+    ViewBag.Title = "Create Member";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Add Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<div class="container-fluid">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    <div class="row justify-content-center">
+        <div class="col-lg-10 mt-3">
+            <div class="card border-0 shadow-lg rounded-lg overflow-hidden">
+                <!-- Header -->
+                <div class="card-header bg-gradient-primary text-white py-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0"><i class="fas fa-user-plus mr-2"></i> Membership Registration</h3>
+                    </div>
+                </div>
+
+                @using (Html.BeginForm("Create", "Members", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "membershipForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="card-body p-5">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <!-- Basic Information Section -->
+                        <div class="section-container" id="basicSection">
+                            <div class="section-header bg-light p-3 mb-4 rounded d-flex justify-content-between align-items-center flex-wrap">
+                                <h4 class="mb-0"><i class="fas fa-id-card mr-2 text-primary"></i> Basic Information</h4>
+                                <button type="button" class="btn btn-sm btn-primary section-save-btn">
+                                    <i class="fas fa-save mr-1"></i> Save
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <!-- Row 1: Name and Gender -->
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="Member_Name" class="font-weight-bold">Member Name <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <i class="fas fa-user"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Member_Name, new { @class = "form-control", required = "required" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Member.Member_Name, "", new { @class = "text-danger" })
+                                        </div>
+                                        @Html.HiddenFor(m => m.Member.MemberNo)
+                                        @Html.HiddenFor(m => m.Member.DispStatus)
+                                        @Html.HiddenFor(m => m.Member.Member_Reg_Date)
+                                        @Html.HiddenFor(m => m.Member.Member_Sdate)
+                                        @Html.HiddenFor(m => m.Member.Member_Edate)
+                                        @Html.HiddenFor(m => m.Member.Member_Photo_Path)
+                                        @Html.HiddenFor(m => m.Member.ModifiedBy)
+                                        @Html.HiddenFor(m => m.Member.ModifiedDateTime)
+                                        @Html.HiddenFor(m => m.Member.UIserID)
+                                        @Html.HiddenFor(m => m.Member.MemberDNo)
+                                        @Html.HiddenFor(m => m.Member.CreatedBy)
+                                        <div class="col-md-6">
+                                            <label for="Gender" class="font-weight-bold">Gender <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <i class="fas fa-venus-mars"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.DropDownListFor(m => m.Member.Gender,
+                                                         new SelectList(new[]
+                                                         {
+                                                        new { Value = "1", Text = "Male" },
+                                                        new { Value = "2", Text = "Female" }
+                                                         }, "Value", "Text"),
+                                                         "-- Select Gender --",
+                                                         new { @class = "form-control", required = "required" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Member.Gender, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <!-- Row 2: DOB, Age, Blood Group -->
+                                    <div class="row g-3 mt-3">
+                                        <div class="col-md-4">
+                                            <label for="Member_DOB" class="font-weight-bold">Date of Birth <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <i class="fas fa-calendar-alt"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Member_DOB, new { @class = "form-control", type = "date", required = "required", id = "Member_DOB" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Member.Member_DOB, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="Member_Age" class="font-weight-bold">Age <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <i class="fas fa-calculator"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Member_Age, new { @class = "form-control", required = "required", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="BldGID" class="font-weight-bold">Blood Group <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <i class="fas fa-tint"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.DropDownListFor(m => m.Member.BldGID, ViewBag.BloodGroups as SelectList, "-- Select Blood Group --", new { @class = "form-control", required = "required" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Member.BldGID, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <!-- Row 3: Mobile, WhatsApp, Landline -->
+                                    <div class="row g-3 mt-3">
+                                        <div class="col-md-4">
+                                            <label for="Member_Mobile_No" class="font-weight-bold">Mobile No <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <i class="fas fa-mobile-alt"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Member_Mobile_No, new { @class = "form-control", required = "required", pattern = "[0-9]{10}" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Member.Member_Mobile_No, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="Member_WhatsApp_No" class="font-weight-bold">WhatsApp No</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <i class="fab fa-whatsapp"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Member_WhatsApp_No, new { @class = "form-control", pattern = "[0-9]{10}" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="Member_Landline_No" class="font-weight-bold">Landline No</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <i class="fas fa-phone"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Member_Landline_No, new { @class = "form-control", pattern = "[0-9]{6,12}" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Row 4: Email and Photo Upload -->
+                                    <div class="row g-3 mt-3">
+                                        <div class="col-md-8">
+                                            <label for="Member_EmailID" class="font-weight-bold">Email Address <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <i class="fas fa-envelope"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Member_EmailID, new { @class = "form-control", type = "email", required = "required" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Member.Member_EmailID, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="Photo" class="font-weight-bold">Photo</label>
+                                            <div class="custom-file">
+                                                <input type="file" name="Photo" id="Photo" class="custom-file-input" />
+                                                <label class="custom-file-label" for="Photo">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Right column for photo preview (4 columns) -->
+                                <div class="col-md-4">
+                                    <div class="card border-0 shadow-sm h-100">
+                                        <div class="card-header bg-light">
+                                            <h5 class="mb-0"><i class="fas fa-image mr-2 text-primary"></i> Photo Preview</h5>
+                                        </div>
+                                        <div class="card-body text-center d-flex flex-column justify-content-center position-relative">
+                                            <div class="position-relative" style="width: 150px; height: 150px; margin: 0 auto;">
+                                                <img id="photoPreview" src="https://via.placeholder.com/150" class="img-thumbnail rounded-circle mx-auto" style="width: 100%; height: 100%; object-fit: cover;">
+                                                <button id="removePhotoBtn" class="btn btn-danger btn-sm position-absolute rounded-circle" style="top: -5px; right: -5px; width: 25px; height: 25px; display: none;">
+                                                    <i class="fas fa-times" style="font-size: 12px;"></i>
+                                                </button>
+                                            </div>
+                                            <p class="small text-muted mt-2">Member Photo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Address Information -->
+                            <div class="card mb-4 border-0 shadow-sm mt-4">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0"><i class="fas fa-home mr-2 text-primary"></i> Address Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <!-- Resident Address -->
+                                        <div class="col-md-6">
+                                            <h6 class="font-weight-bold text-primary mb-3"><i class="fas fa-map-marker-alt mr-2"></i> Resident (Current) Address</h6>
+                                            <div class="form-row">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="ResidentAddressLine1">Address Line 1 <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-map-marked-alt fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.TextBoxFor(m => m.Member.Member_Addr1, new { @class = "form-control", required = "required" })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(m => m.Member.Member_Addr1, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="ResidentAddressLine2">Address Line 2</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-map-marked-alt fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.TextBoxFor(m => m.Member.Member_Addr2, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="ResidentCity">City</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-city fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.TextBoxFor(m => m.Member.Member_City, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="ResidentState">State <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-landmark fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.DropDownListFor(m => m.Member.StateID, ViewBag.States as SelectList, "-- Select State --", new { @class = "form-control", required = "required" })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(m => m.Member.StateID, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="ResidentCountry">Country <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-globe fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.TextBoxFor(m => m.Member.Member_Country, new { @class = "form-control", required = "required" })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(m => m.Member.Member_Country, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="ResidentPincode">Pincode <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-map-pin fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.TextBoxFor(m => m.Member.Member_Pincode, new { @class = "form-control", required = "required" })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(m => m.Member.Member_Pincode, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Permanent Address -->
+                                        <div class="col-md-6">
+                                            <h6 class="font-weight-bold text-primary mb-3"><i class="fas fa-map-marked-alt mr-2"></i> Permanent Address</h6>
+                                            <div class="form-row">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="PermanentAddressLine1">Address Line 1 <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-map-marked-alt fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.TextBoxFor(m => m.Member.Member_Per_Addr1, new { @class = "form-control", required = "required" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="PermanentAddressLine2">Address Line 2</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-map-marked-alt fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.TextBoxFor(m => m.Member.Member_Per_Addr2, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="PermanentCity">City</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-city fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.TextBoxFor(m => m.Member.Member_Per_City, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="PermanentState">State <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-landmark fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.DropDownListFor(m => m.Member.PStateID, ViewBag.States as SelectList, "-- Select State --", new { @class = "form-control", required = "required" })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(m => m.Member.PStateID, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="PermanentCountry">Country <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-globe fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.TextBoxFor(m => m.Member.Member_Per_Country, new { @class = "form-control", required = "required" })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(m => m.Member.Member_Per_Country, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="PermanentPincode">Pincode <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-map-pin fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        @Html.TextBoxFor(m => m.Member.Member_Per_Pincode, new { @class = "form-control", required = "required" })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(m => m.Member.Member_Per_Pincode, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check mb-3">
+                                        <input type="checkbox" class="form-check-input" id="sameAsResident">
+                                        <label class="form-check-label" for="sameAsResident">
+                                            Same as Resident Address
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Personal Information Section -->
+                        <div class="section-container" id="personalSection">
+                            <div class="section-header bg-light p-3 mb-4 rounded d-flex justify-content-between align-items-center flex-wrap">
+                                <h4 class="mb-0"><i class="fas fa-user-circle mr-2 text-primary"></i> Personal Information</h4>
+                                <button type="button" class="btn btn-sm btn-primary section-save-btn">
+                                    <i class="fas fa-save mr-1"></i> Save
+                                </button>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <!-- Family Information -->
+                                    <div class="card mb-4 border-0 shadow-sm">
+                                        <div class="card-header bg-light">
+                                            <h5 class="mb-0"><i class="fas fa-users mr-2 text-primary"></i> Family Information</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label class="font-weight-bold">Marital Status <span class="text-danger">*</span></label>
+                                                <div class="d-flex align-items-center" style="gap: 20px;">
+                                                    <div class="custom-control custom-radio" style="display: inline-block; margin-right: 0;">
+                                                        <input type="radio" id="Single" name="MaritalStatus" class="custom-control-input" value="Single" required>
+                                                        <label class="custom-control-label" for="Single">Single</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio" style="display: inline-block; margin-right: 0;">
+                                                        <input type="radio" id="Married" name="MaritalStatus" class="custom-control-input" value="Married">
+                                                        <label class="custom-control-label" for="Married">Married</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="spouseSection" style="display: none;">
+                                                <hr class="my-4">
+                                                <h6 class="font-weight-bold text-primary"><i class="fas fa-heart mr-2"></i> Spouse Details</h6>
+
+                                                <!-- First Row: Spouse Name and Spouse DOB -->
+                                                <div class="row g-3">
+                                                    <div class="col-md-6">
+                                                        <label for="SpouseName" class="font-weight-bold">Spouse Name <span class="text-danger">*</span></label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                    <i class="fas fa-user fa-lg"></i>
+                                                                </span>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.Member.Spouse_Name, new { @class = "form-control" })
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.Member.Spouse_Name, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="SpouseDOB">Spouse DOB</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                    <i class="fas fa-calendar-alt fa-lg"></i>
+                                                                </span>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.Member.Spouse_DOB, new { @class = "form-control", type = "date" })
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.Member.Spouse_DOB, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <!-- Second Row: Date of Marriage and Total Children -->
+                                                <div class="row g-3">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="DateOfMarriage">Date of Marriage</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                    <i class="fas fa-heart fa-lg"></i>
+                                                                </span>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.Member.Date_Of_Marriage, new { @class = "form-control", type = "date" })
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.Member.Date_Of_Marriage, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="TotalChildren">Total Children</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                    <i class="fas fa-child fa-lg"></i>
+                                                                </span>
+                                                            </div>
+                                                            @Html.TextBoxFor(m => m.Member.Total_Children, new { @class = "form-control", type = "number", min = "0", name = "TotalChildren", id = "TotalChildren" })
+                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.Member.Total_Children, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <!-- Family Photo -->
+                                    <div class="card mb-4 border-0 shadow-sm">
+                                        <div class="card-header bg-light">
+                                            <h5 class="mb-0"><i class="fas fa-camera mr-2 text-primary"></i> Family Photo</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="FamilyPhoto" class="font-weight-bold">Upload Family Photo</label>
+                                                <div class="custom-file">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                                <i class="fas fa-users fa-lg"></i>
+                                                            </span>
+                                                        </div>
+                                                        <div class="custom-file">
+                                                            <input type="file" name="FamilyPhoto" id="FamilyPhoto" class="custom-file-input" />
+                                                            <label class="custom-file-label" for="FamilyPhoto">Choose file</label>
+                                                        </div>
+                                                        @Html.HiddenFor(m => m.Member.Family_Photo_Path)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt-3 position-relative">
+                                                <div class="position-relative" style="width: 100%; height: 200px; margin: 0 auto;">
+                                                    <img id="familyPhotoPreview" src="https://via.placeholder.com/300x150" class="img-thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                                                    <button id="removeFamilyPhotoBtn" class="btn btn-danger btn-sm position-absolute rounded-circle" style="top: -5px; right: -5px; width: 25px; height: 25px; display: none;">
+                                                        <i class="fas fa-times" style="font-size: 12px;"></i>
+                                                    </button>
+                                                </div>
+                                                <p class="small text-muted mt-2">Family Photo Preview</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- New separate Children Information Section -->
+                        <div class="section-container" id="childrenSection" style="display: none;">
+                            <div class="section-header bg-light p-3 mb-4 rounded d-flex justify-content-between align-items-center flex-wrap">
+                                <h4 class="mb-0"><i class="fas fa-child mr-2 text-primary"></i> Children Information</h4>
+                                <button type="button" class="btn btn-sm btn-primary section-save-btn">
+                                    <i class="fas fa-save mr-1"></i> Save
+                                </button>
+                            </div>
+
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="childrenTable">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Name</th>
+                                                    <th>Date of Birth</th>
+                                                    <th>Age</th>
+                                                    <th>Gender</th>
+                                                    <th>Current Position</th>
+                                                    <th>Marital Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="childrenTableBody">
+                                                <!-- Rows will be added here dynamically -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Professional Information Section -->
+                        <div class="section-container" id="professionalSection">
+                            <div class="section-header bg-light p-3 mb-4 rounded d-flex justify-content-between align-items-center flex-wrap">
+                                <h4 class="mb-0"><i class="fas fa-briefcase mr-2 text-primary"></i> Professional Information</h4>
+                                <button type="button" class="btn btn-sm btn-primary section-save-btn">
+                                    <i class="fas fa-save mr-1"></i> Save
+                                </button>
+                            </div>
+
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold">Employment Type <span class="text-danger">*</span></label>
+                                        <div class="d-flex align-items-center" style="gap: 20px;">
+                                            <div class="custom-control custom-radio" style="display: inline-block; margin-right: 0;">
+                                                <input type="radio" id="empSalaried" name="EmploymentType" class="custom-control-input" value="Salaried" checked>
+                                                <label class="custom-control-label" for="empSalaried">Salaried</label>
+                                            </div>
+                                            <div class="custom-control custom-radio" style="display: inline-block; margin-right: 0;">
+                                                <input type="radio" id="empSelf" name="EmploymentType" class="custom-control-input" value="Self">
+                                                <label class="custom-control-label" for="empSelf">Self-Employed</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Salaried Details -->
+                                    <div id="salariedDetails" class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="SalariedLocation" class="font-weight-bold">Location</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                        <i class="fas fa-building fa-lg"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" name="SalariedLocation" id="SalariedLocation" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Business Details -->
+                                    <div id="businessDetails" class="row" style="display: none;">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="BusinessName" class="font-weight-bold">Business Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                        <i class="fas fa-store fa-lg"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Business_Name, new { @class = "form-control" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Member.Business_Name, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="BusinessLocation" class="font-weight-bold">Business Location</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                        <i class="fas fa-map-marker-alt fa-lg"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Business_Location, new { @class = "form-control" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Member.Business_Location, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="Occupation" class="font-weight-bold">Occupation</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                        <i class="fas fa-user-tie fa-lg"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Occupation, new { @class = "form-control" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Member.Occupation, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other Social Status Section -->
+                        <div class="section-container" id="socialSection">
+                            <div class="section-header bg-light p-3 mb-4 rounded d-flex justify-content-between align-items-center flex-wrap">
+                                <h4 class="mb-0"><i class="fas fa-users mr-2 text-primary"></i> Other Social Status</h4>
+                                <button type="button" class="btn btn-sm btn-primary section-save-btn">
+                                    <i class="fas fa-save mr-1"></i> Save
+                                </button>
+                            </div>
+
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-0" id="socialStatusTable">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th>Member In</th>
+                                                    <th>Since</th>
+                                                    <th>Current Designation</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="MemberIn[]" class="form-control" placeholder="Organization name">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" name="Since[]" class="form-control" placeholder="Year">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="CurrentDesignation[]" class="form-control" placeholder="Your designation">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-danger remove-row">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-primary mt-3" id="addSocialRow">
+                                        <i class="fas fa-plus mr-2"></i> Add Another
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interest of Hobbies Section -->
+                        <div class="section-container" id="hobbiesSection">
+                            <div class="section-header bg-light p-3 mb-4 rounded d-flex justify-content-between align-items-center flex-wrap">
+                                <h4 class="mb-0"><i class="fas fa-heart mr-2 text-primary"></i> Interest of Hobbies</h4>
+                                <button type="button" class="btn btn-sm btn-primary section-save-btn">
+                                    <i class="fas fa-save mr-1"></i> Save
+                                </button>
+                            </div>
+
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="InterestsHobbies" class="font-weight-bold">Interests & Hobbies</label>
+                                        @Html.TextAreaFor(m => m.Member.Interests_and_Hobbies, new { @class = "form-control", rows = "5", placeholder = "Describe your interests and hobbies..." })
+                                    </div>
+
+                                    <div class="row g-3">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="ReferenceBy" class="font-weight-bold">Reference By <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                        <i class="fas fa-user-tag fa-lg"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Reference_By, new { @class = "form-control", required = "required", placeholder = "Person's name" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Member.Reference_By, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="ReferenceContact" class="font-weight-bold">Contact No <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light d-flex align-items-center justify-content-center" style="width: 50px;">
+                                                        <i class="fas fa-phone fa-lg"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(m => m.Member.Reference_Contact_No, new { @class = "form-control", required = "required", placeholder = "Reference contact number" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Member.Reference_Contact_No, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Common Submit Button at Bottom -->
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn btn-success px-4">
+                                <i class="fas fa-check-circle mr-2"></i> Submit Application
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card-header.bg-gradient-primary {
+            background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
+        }
+
+        .section-container {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-header {
+            background-color: #f8f9fa;
+            border-left: 4px solid #5e72e4;
+        }
+
+        .custom-file-label::after {
+            content: "Browse";
+        }
+
+        .form-control:focus, .custom-select:focus, .custom-file-input:focus ~ .custom-file-label {
+            border-color: #5e72e4;
+            box-shadow: 0 0 0 0.2rem rgba(94, 114, 228, 0.25);
+        }
+
+        .btn-success {
+            background-color: #2dce89;
+            border-color: #2dce89;
+        }
+
+        .btn-primary {
+            background-color: #5e72e4;
+            border-color: #5e72e4;
+        }
+
+        /* Enhanced icon and input styling */
+        .input-group-prepend {
+            width: 50px;
+        }
+
+        .input-group-text {
+            width: 100%;
+            height: 100%;
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-right: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+            .input-group-text i {
+                font-size: 1.25rem;
+                color: #495057;
+            }
+
+        .form-control {
+            border-left: none;
+            padding-left: 10px;
+        }
+
+        /* Make date input look consistent */
+        input[type="date"].form-control {
+            appearance: none;
+            -webkit-appearance: none;
+            padding-left: 10px;
+        }
+
+        /* Ensure all inputs have same height */
+        .input-group-text,
+        .form-control,
+        .form-control:not(select),
+        select.form-control:not([size]):not([multiple]) {
+            height: calc(2.25rem + 2px);
+        }
+
+        /* Make select dropdowns look consistent */
+        select.form-control:not([size]):not([multiple]) {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1rem;
+            padding-right: 2.5rem;
+        }
+
+        /* File input styling */
+        .custom-file {
+            width: 100%;
+        }
+
+        .custom-file-input {
+            height: calc(2.25rem + 2px);
+        }
+
+        .custom-file-label {
+            height: calc(2.25rem + 2px);
+            line-height: 1.5;
+            border-left: none;
+        }
+
+        /* Card styles for children */
+        .child-card {
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .child-card-header {
+            background-color: #f8f9fa;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+            font-weight: 600;
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+
+        .child-card-body {
+            padding: 1rem;
+            flex-grow: 1;
+        }
+
+        .gender-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Better spacing for form elements */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        /* Responsive adjustments */
+        @@media (max-width: 768px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+
+                .section-header h4 {
+                    margin-bottom: 10px;
+                }
+
+            .section-save-btn {
+                align-self: flex-end;
+                margin-top: 10px;
+            }
+
+            .col-md-4, .col-lg-4 {
+                margin-top: 20px;
+            }
+
+            .input-group-prepend {
+                width: 40px;
+            }
+
+            .input-group-text i {
+                font-size: 1rem;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .card-body {
+                padding: 15px;
+            }
+
+            .section-container {
+                padding: 15px;
+            }
+
+            .btn {
+                padding: 0.375rem 0.75rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        // 1. Auto-calculate age from DOB (Basic Information)
+        document.getElementById("Member_DOB").addEventListener("change", function () {
+            const dob = new Date(this.value);
+            if (isNaN(dob.getTime())) return;
+
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const monthDiff = today.getMonth() - dob.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+
+            document.getElementById("Member_Age").value = age;
+        });
+
+        // Show/Hide Spouse Section and Children Section based on Marital Status
+        document.querySelectorAll('input[name="MaritalStatus"]').forEach(function (radio) {
+            radio.addEventListener("change", function () {
+                const section = document.getElementById("spouseSection");
+                const childrenSection = document.getElementById("childrenSection");
+                const totalChildrenInput = document.getElementById("TotalChildren");
+                const childrenTableBody = document.getElementById("childrenTableBody");
+
+                if (this.value === "Married") {
+                    section.style.display = "block";
+                    // If TotalChildren > 0, show children section
+                    if (parseInt(totalChildrenInput.value) > 0) {
+                        childrenSection.style.display = "block";
+                        generateChildrenTable();
+                    }
+                } else {
+                    section.style.display = "none";
+                    childrenSection.style.display = "none";
+                    totalChildrenInput.value = "";
+                    childrenTableBody.innerHTML = "";
+                }
+            });
+        });
+
+        // When TotalChildren changes, only show children section if Married
+        document.getElementById("TotalChildren").addEventListener("input", function () {
+            const total = parseInt(this.value) || 0;
+            const childrenSection = document.getElementById("childrenSection");
+            const maritalStatus = document.querySelector('input[name="MaritalStatus"]:checked');
+            if (maritalStatus && maritalStatus.value === "Married" && total > 0) {
+                childrenSection.style.display = "block";
+                generateChildrenTable();
+            } else {
+                childrenSection.style.display = "none";
+                document.getElementById("childrenTableBody").innerHTML = "";
+            }
+        });
+
+        // 2. Photo preview and removal (Basic Information)
+        document.getElementById("Photo").addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById("photoPreview");
+            const removeBtn = document.getElementById("removePhotoBtn");
+
+            if (file) {
+                // Validate file type and size
+                const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!validTypes.includes(file.type)) {
+                    alert("Please upload a valid image (JPEG, PNG, GIF)");
+                    this.value = "";
+                    return;
+                }
+
+                if (file.size > 2 * 1024 * 1024) { // 2MB
+                    alert("Image must be less than 2MB");
+                    this.value = "";
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    removeBtn.style.display = "block";
+
+                    // Update file label
+                    const label = document.querySelector('.custom-file-label[for="Photo"]');
+                    if (label) label.textContent = file.name;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Remove photo functionality
+        document.getElementById("removePhotoBtn").addEventListener("click", function (e) {
+            e.preventDefault();
+            document.getElementById("Photo").value = "";
+            document.getElementById("photoPreview").src = "https://via.placeholder.com/150";
+            this.style.display = "none";
+
+            // Reset file label
+            const label = document.querySelector('.custom-file-label[for="Photo"]');
+            if (label) label.textContent = "Choose file";
+        });
+
+
+
+        // Family Photo Preview with Remove Button functionality
+        document.getElementById("FamilyPhoto").addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            const familyPhotoPreview = document.getElementById("familyPhotoPreview");
+            const removeBtn = document.getElementById("removeFamilyPhotoBtn");
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    familyPhotoPreview.src = event.target.result;
+                    removeBtn.style.display = "block";
+
+                    // Update the file input label
+                    const label = document.querySelector('.custom-file-label[for="FamilyPhoto"]');
+                    if (label) {
+                        label.textContent = file.name;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Remove family photo functionality
+        document.getElementById("removeFamilyPhotoBtn").addEventListener("click", function (e) {
+            e.preventDefault();
+            const familyPhotoInput = document.getElementById("FamilyPhoto");
+            const familyPhotoPreview = document.getElementById("familyPhotoPreview");
+            const removeBtn = document.getElementById("removeFamilyPhotoBtn");
+
+            // Reset the file input
+            familyPhotoInput.value = "";
+
+            // Reset the preview image
+            familyPhotoPreview.src = "https://via.placeholder.com/300x150";
+
+            // Hide the remove button
+            removeBtn.style.display = "none";
+
+            // Reset the file input label
+            const label = document.querySelector('.custom-file-label[for="FamilyPhoto"]');
+            if (label) {
+                label.textContent = "Choose file";
+            }
+        });
+
+        // Update file input labels
+        document.querySelectorAll('.custom-file-input').forEach(function (input) {
+            input.addEventListener('change', function () {
+                let fileName = this.files[0] ? this.files[0].name : "Choose file";
+                let label = this.nextElementSibling;
+                label.textContent = fileName;
+            });
+        });
+
+        // Form validation
+        document.getElementById('membershipForm').addEventListener('submit', function (e) {
+            if (!this.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            this.classList.add('was-validated');
+
+            // Optional: Scroll to first invalid field
+            const firstInvalid = this.querySelector(':invalid');
+            if (firstInvalid) {
+                firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstInvalid.focus();
+            }
+        });
+
+        // Section save buttons
+        document.querySelectorAll('.section-save-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const section = this.closest('.section-container');
+                const inputs = section.querySelectorAll('[required]');
+                let isValid = true;
+
+                inputs.forEach(input => {
+                    if (!input.checkValidity()) {
+                        input.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        input.classList.remove('is-invalid');
+                    }
+                });
+
+                if (isValid) {
+                    // Show success feedback
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check mr-1"></i> Saved';
+                    this.classList.remove('btn-primary');
+                    this.classList.add('btn-success');
+
+                    // Reset button after 2 seconds
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.classList.remove('btn-success');
+                        this.classList.add('btn-primary');
+                    }, 2000);
+                }
+            });
+        });
+
+        // 3. Same as Resident Address functionality
+        document.getElementById("sameAsResident").addEventListener("change", function () {
+            const addressFields = {
+                // Resident fields => Permanent fields
+                "Member_Addr1": "Member_Per_Addr1",
+                "Member_Addr2": "Member_Per_Addr2",
+                "Member_City": "Member_Per_City",
+                "StateID": "PStateID",
+                "Member_Country": "Member_Per_Country",
+                "Member_Pincode": "Member_Per_Pincode"
+            };
+
+            for (const [resField, permField] of Object.entries(addressFields)) {
+                const residentValue = document.getElementById(resField).value;
+                const permElement = document.getElementById(permField);
+
+                if (this.checked) {
+                    permElement.value = residentValue;
+                    permElement.setAttribute("readonly", true);
+                } else {
+                    permElement.value = "";
+                    permElement.removeAttribute("readonly");
+                }
+            }
+        });
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('input[name="EmploymentType"]').forEach(function (elem) {
+                elem.addEventListener('change', function () {
+                    const businessSection = document.getElementById("businessDetails");
+                    const salariedSection = document.getElementById("salariedDetails");
+
+                    // Get elements using the actual IDs generated by ASP.NET
+                    const salariedLocation = document.getElementById("SalariedLocation");
+                    const businessName = document.querySelector('[name="Business_Name"]');
+                    const businessLocation = document.querySelector('[name="Business_Location"]');
+
+                    if (this.value === "Self") {
+                        if (businessSection) businessSection.style.display = "flex";
+                        if (salariedSection) salariedSection.style.display = "none";
+                        if (salariedLocation) salariedLocation.value = "-";
+                    } else {
+                        if (businessSection) businessSection.style.display = "none";
+                        if (salariedSection) salariedSection.style.display = "flex";
+                        if (businessName) businessName.value = "-";
+                        if (businessLocation) businessLocation.value = "-";
+                    }
+                });
+            });
+        });
+
+        // Children Table Generation with enhanced error handling
+        function generateChildrenTable() {
+            try {
+                const totalInput = document.getElementById("TotalChildren");
+                if (!totalInput) throw new Error("TotalChildren input not found");
+
+                const total = parseInt(totalInput.value) || 0;
+                const tableBody = document.getElementById("childrenTableBody");
+                if (!tableBody) throw new Error("childrenTableBody not found");
+
+                tableBody.innerHTML = "";
+
+                for (let i = 0; i < total; i++) {
+                    try {
+                        const row = createChildRow(i);
+                        if (row) tableBody.appendChild(row);
+                    } catch (e) {
+                        console.error(`Error creating row ${i}:`, e);
+                    }
+                }
+            } catch (e) {
+                console.error("Error in generateChildrenTable:", e);
+            }
+        }
+
+        // Create a child row
+        function createChildRow(index) {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>Child ${index + 1}</td>
+                <td>
+                    <input type="text" name="Children[${index}].Child_Name" class="form-control form-control-sm" required />
+                </td>
+                <td>
+                    <input type="date" name="Children[${index}].Child_DOB" class="form-control form-control-sm dob-input" data-age-id="age-${index}" required />
+                </td>
+                <td>
+                    <input type="text" id="age-${index}" name="Children[${index}].Child_Age"
+                           class="form-control form-control-sm" readonly />
+                </td>
+                <td>
+                    <select name="Children[${index}].Child_Gender" class="form-control form-control-sm" required>
+                        <option value="">-- Select --</option>
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="Children[${index}].Child_Current_Position" class="form-control form-control-sm" required>
+                        <option value="">-- Select --</option>
+                        <option value="1">Student</option>
+                        <option value="2">Graduated</option>
+                        <option value="3">Employee</option>
+                        <option value="4">Business</option>
+                        <option value="5">Others</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="Children[${index}].Child_MaritalStatus" class="form-control form-control-sm" required>
+                        <option value="">-- Select --</option>
+                        <option value="1">Single</option>
+                        <option value="2">Married</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm remove-child" data-index="${index}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+
+            // Bind Age Calculation
+            const dobInput = row.querySelector(".dob-input");
+            dobInput.addEventListener("change", function () {
+                const ageInputId = this.getAttribute("data-age-id");
+                const ageInput = document.getElementById(ageInputId);
+                const dob = new Date(this.value);
+                if (!isNaN(dob)) {
+                    const age = calculateAge(dob);
+                    ageInput.value = age;
+                } else {
+                    ageInput.value = "";
+                }
+            });
+
+            return row;
+        }
+
+        function calculateAge(dob) {
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const m = today.getMonth() - dob.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        // This existing code will still work with the new structure
+        document.getElementById("TotalChildren").addEventListener("input", function () {
+            const total = parseInt(this.value) || 0;
+            const childrenSection = document.getElementById("childrenSection");
+
+            if (total > 0) {
+                childrenSection.style.display = "block";
+                generateChildrenTable();
+            } else {
+                childrenSection.style.display = "none";
+                document.getElementById("childrenTableBody").innerHTML = "";
+            }
+        });
+
+        document.querySelectorAll('input[name="MaritalStatus"]').forEach(function (radio) {
+            radio.addEventListener("change", function () {
+                const section = document.getElementById("spouseSection");
+                section.style.display = (this.value === "Married") ? "block" : "none";
+
+                if (this.value !== "Married") {
+                    document.getElementById("childrenSection").style.display = "none";
+                    document.getElementById("TotalChildren").value = "";
+                    document.getElementById("childrenTableBody").innerHTML = "";
+                }
+            });
+        });
+
+        document.getElementById("TotalChildren").addEventListener("input", generateChildrenTable);
+
+        // Handle remove child button clicks
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-child') || e.target.closest('.remove-child')) {
+                const btn = e.target.classList.contains('remove-child') ? e.target : e.target.closest('.remove-child');
+                const row = btn.closest('tr');
+                row.remove();
+
+                // Update the total children count
+                const currentRows = document.querySelectorAll('#childrenTableBody tr').length;
+                document.getElementById("TotalChildren").value = currentRows;
+
+                // Reindex the remaining children
+                const rows = document.querySelectorAll('#childrenTableBody tr');
+                rows.forEach((row, index) => {
+                    row.cells[0].textContent = `Child ${index + 1}`;
+                    // Update all the name attributes in the inputs
+                    const inputs = row.querySelectorAll('input, select');
+                    inputs.forEach(input => {
+                        const name = input.getAttribute('name').replace(/\[\d+\]/, `[${index}]`);
+                        input.setAttribute('name', name);
+                    });
+                });
+            }
+        });
+
+        // Add new row to social status table
+        document.getElementById('addSocialRow').addEventListener('click', function () {
+            const tbody = document.querySelector('#socialStatusTable tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                        <td>
+                            <input type="text" name="MemberIn[]" class="form-control" placeholder="Organization name">
+                        </td>
+                        <td>
+                            <input type="number" name="Since[]" class="form-control" placeholder="Year">
+                        </td>
+                        <td>
+                            <input type="text" name="CurrentDesignation[]" class="form-control" placeholder="Your designation">
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger remove-row">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+            tbody.appendChild(newRow);
+        });
+
+        // Remove row from social status table
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-row') || e.target.closest('.remove-row')) {
+                const btn = e.target.classList.contains('remove-row') ? e.target : e.target.closest('.remove-row');
+                const row = btn.closest('tr');
+                if (document.querySelectorAll('#socialStatusTable tbody tr').length > 1) {
+                    row.remove();
+                } else {
+                    // Clear inputs if it's the last row
+                    const inputs = row.querySelectorAll('input');
+                    inputs.forEach(input => input.value = '');
+                }
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener("DOMContentLoaded", function () {
+            // Employment type
+            const selected = document.querySelector('input[name="EmploymentType"]:checked');
+            if (selected) {
+                selected.dispatchEvent(new Event("change"));
+            }
+
+            // Update all icons to use larger size
+            document.querySelectorAll('.input-group-text i').forEach(icon => {
+                icon.classList.add('fa-lg');
+            });
+        });
+
+
+        // Client-side validation for reference fields
+        document.getElementById('Reference_Contact_No').addEventListener('input', function () {
+            // Validate phone number format if needed
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+    </script>
+}
+

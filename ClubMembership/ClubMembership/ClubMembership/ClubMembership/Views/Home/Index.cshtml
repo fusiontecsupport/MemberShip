@@ -1,0 +1,811 @@
+@model ClubMembership.Models.UserFeedViewModel
+@using System.Linq
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    // Get user information
+    var userName = User.Identity.Name;
+    var isAuthenticated = User.Identity.IsAuthenticated;
+}
+
+<style>
+    /* Instagram-like UI */
+    :root { --ink:#111; --muted:#666; --border:#eaeaea; --bg:#fafafa; }
+    .page-wrap { max-width: 980px; margin: 0 auto; padding: 16px 12px; background: var(--bg); }
+    .card { border:1px solid var(--border); border-radius: 12px; background:#fff; margin-bottom:20px; overflow:hidden }
+    .card-body { padding: 0; }
+
+    /* Stories */
+    .stories { display:flex; gap:14px; overflow-x:auto; padding:14px 8px; }
+    .story { width: 78px; flex: 0 0 auto; text-align:center; }
+    .story .ring { width:66px; height:66px; border-radius:50%; padding:3px; background:
+        radial-gradient(#0000 60%, #0000 0),
+        conic-gradient(#f77737, #c13584, #e1306c, #fd1d1d, #f77737);
+        -webkit-mask: radial-gradient(#0000 63%, #000 64%);
+        mask: radial-gradient(#0000 63%, #000 64%);
+        display:block; margin:0 auto 6px; }
+    .story .avatar { width:100%; height:100%; border-radius:50%; background:#f2f2f2; display:flex; align-items:center; justify-content:center; font-weight:700; color:#333; }
+    .story span { display:block; font-size:12px; color:#333; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+
+    /* Post */
+    .post { background:#fff; border:1px solid var(--border); border-radius:12px; margin-bottom:22px; }
+    .post.clickable { cursor: pointer; }
+    .post-head { display:flex; align-items:center; gap:10px; padding:10px 12px; }
+    .post-head .avatar { width:36px; height:36px; border-radius:50%; background:#f2f2f2; display:flex; align-items:center; justify-content:center; font-weight:700; }
+    .post-head .meta { line-height:1.2 }
+    .post-head .meta .name { font-weight:700; color:#111 }
+    .post-head .meta .sub { font-size:12px; color:#777 }
+    .post-media img { width:100%; display:block; background:#f8f9fa; }
+    /* Center images nicely when requested */
+    .media-center { display:flex; justify-content:center; align-items:center; }
+    .media-center img { width:auto; max-width:100%; max-height:340px; margin:auto; object-fit:contain; }
+    /* Placeholder when no image */
+    .media-placeholder { height: 220px; display:flex; align-items:center; justify-content:center; color:#94a3b8; background:#f5f7fb; border:1px dashed #e5e7eb; border-radius:8px; font-size:13px; }
+    .post-media .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:2px; }
+    .post-actions { display:flex; justify-content:space-between; padding:8px 10px; }
+    .actions-left i, .actions-right i { font-size:22px; margin-right:12px; cursor:pointer; transition: transform .12s ease }
+    .actions-left i:hover, .actions-right i:hover { transform: scale(1.06) }
+    .like.active { color:#e1306c }
+    .post-body { padding:0 12px 12px; }
+    .likes { font-weight:700; margin: 2px 0 6px; }
+    .caption { margin:0; }
+    .caption .user { font-weight:700; margin-right:6px; }
+    .post-meta { color:#8e8e8e; font-size:11px; text-transform:uppercase; letter-spacing:.04em; margin-top:6px }
+
+    /* Feed gallery carousel (Home -> Gallery section) */
+    .feed-carousel { position:relative; overflow:hidden; border:1px solid var(--border); border-radius:8px; background:#f8f9fa; }
+    .feed-carousel .track { display:flex; transition: transform .35s ease; }
+    .feed-carousel .slide { min-width:100%; display:flex; align-items:center; justify-content:center; background:#fff; }
+    .feed-carousel .slide img { width:auto; max-width:100%; max-height:340px; object-fit:contain; display:block; margin:auto; background:#f8f9fa; }
+    .feed-carousel .nav { position:absolute; top:50%; transform:translateY(-50%); width:34px; height:34px; border:none; border-radius:50%; background:rgba(0,0,0,.55); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+    .feed-carousel .prev { left:8px; }
+    .feed-carousel .next { right:8px; }
+    .feed-carousel .dots { position:absolute; bottom:8px; left:0; right:0; display:flex; gap:6px; justify-content:center; }
+    .feed-carousel .dot { width:7px; height:7px; border-radius:50%; background:rgba(0,0,0,.25); cursor:pointer; }
+    .feed-carousel .dot.active { background:#111; }
+
+    /* Responsive */
+    @@media (max-width: 768px) { .page-wrap { padding: 8px 6px } .stories { gap:10px } .story { width:72px } }
+
+    /* Section nav */
+    .section-nav { display:flex; gap:12px; margin:12px 0 18px; }
+    .section-card { flex:1; border:1px solid var(--border); background:#fff; border-radius:10px; padding:12px; cursor:pointer; transition: box-shadow .15s ease, transform .06s ease; user-select:none; }
+    .section-card:hover { box-shadow: 0 6px 16px rgba(0,0,0,.06); }
+    .section-card:active { transform: scale(.995); }
+    .section-card .title { font-weight:700; color:#111; }
+    .section-card .sub { font-size:12px; color:#777; margin-top:2px; }
+
+    /* Search box */
+    .search-box { position:relative; display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #e5e7eb; padding:6px 10px; border-radius:999px; min-width:260px; }
+    .search-box i { color:#6b7280; }
+    .search-box input { border:none; outline:none; width:100%; font-size:14px; color:#111; }
+    .search-dropdown { position:absolute; top:110%; left:0; right:0; background:#fff; border:1px solid #e5e7eb; border-radius:12px; box-shadow:0 10px 20px rgba(0,0,0,.08); z-index:20; padding:6px; max-height:320px; overflow:auto; }
+    .search-item { display:flex; gap:10px; align-items:center; padding:6px; border-radius:8px; cursor:pointer; }
+    .search-item:hover { background:#f8fafc; }
+    .search-thumb { width:40px; height:40px; border-radius:6px; background:#f1f5f9; object-fit:cover; flex:0 0 40px; }
+    .search-meta { display:flex; flex-direction:column; }
+    .search-title { font-size:14px; color:#111; font-weight:600; }
+    .search-sub { font-size:12px; color:#6b7280; }
+</style>
+
+<div class="page-wrap">
+    @Html.AntiForgeryToken()
+    @{ var headerUserName = ViewBag.UserName as string; string headerMemberDNo = ViewBag.MemberDNo as string; }
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px;">
+        <div class="search-box" style="display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #e5e7eb; padding:6px 10px; border-radius:999px; min-width:240px;">
+            <i class="fa fa-search" style="color:#6b7280;"></i>
+            <input id="feedSearch" type="text" placeholder="Search posts..." oninput="searchInputChanged(this.value)" style="border:none; outline:none; width:100%; font-size:14px; color:#111;" />
+            <div id="searchDropdown" class="search-dropdown" style="display:none;"></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border:1px solid #667eea; color:white; font-size:13px; padding:6px 12px; border-radius:999px; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);">
+                <span style="opacity:.85; margin-right:6px;">Member ID</span>
+                <strong style="color:#ffffff; font-weight:700; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">@(string.IsNullOrWhiteSpace(headerMemberDNo) ? "-" : headerMemberDNo)</strong>
+            </div>
+            <div style="background:#f5f7fb; border:1px solid #e3e7ef; color:#334155; font-size:13px; padding:6px 10px; border-radius:999px;">
+                <span style="opacity:.75; margin-right:6px;">User</span>
+                <strong>@headerUserName</strong>
+            </div>
+        </div>
+    </div>
+    @{
+        DateTime? lastLogin = ViewBag.LastLoginAt as DateTime?;
+    }
+    @if (lastLogin.HasValue)
+    {
+        <div class="card">
+            <div class="card-body" style="padding:10px 12px; color:#555; font-size:14px;">
+                <strong>Last login:</strong> @lastLogin.Value.ToString("dd MMM yyyy, hh:mm tt")
+            </div>
+        </div>
+    }
+    
+
+    <!-- Feed split into sections -->
+    @if (Model != null && Model.Items != null && Model.Items.Any())
+    {
+        var announcements = Model.Items.Where(i => i.Type == "Announcement").ToList();
+        var eventsList = Model.Items.Where(i => i.Type == "Event").ToList();
+        var galleries = Model.Items.Where(i => i.Type == "Gallery").ToList();
+        var minutes = Model.Items.Where(i => i.Type == "Minutes").ToList();
+
+        <div id="announcements" class="card">
+            <div class="card-body" style="padding:12px 14px; border-bottom:1px solid #f0f0f0;">
+                <strong>Announcements</strong>
+            </div>
+        </div>
+
+        if (announcements.Any())
+        {
+            foreach (var item in announcements)
+            {
+                var av = !string.IsNullOrEmpty(item.Heading) ? item.Heading.Substring(0,1).ToUpper() : "A";
+                // Normalize announcement image path safely (mirrors Content/Announcements.cshtml)
+                var annResolved = "";
+                if (!string.IsNullOrWhiteSpace(item.MainImage))
+                {
+                    if (item.MainImage.StartsWith("/Uploads/"))
+                    {
+                        annResolved = "~" + item.MainImage;
+                    }
+                    else if (item.MainImage.StartsWith("~"))
+                    {
+                        var trimmed = item.MainImage.Trim();
+                        if (trimmed == "~") { annResolved = ""; }
+                        else if (trimmed.StartsWith("~/")) { annResolved = trimmed; }
+                        else { annResolved = "~/" + trimmed.TrimStart('~', '/'); }
+                    }
+                    else if (item.MainImage.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                    {
+                        annResolved = item.MainImage;
+                    }
+                    else if (!item.MainImage.Contains("/"))
+                    {
+                        annResolved = "~/Uploads/Announcements/" + item.MainImage.TrimStart('/');
+                    }
+                    else
+                    {
+                        annResolved = "~/" + item.MainImage.TrimStart('/');
+                    }
+                }
+                annResolved = (annResolved ?? string.Empty).Trim();
+                if (annResolved == "~") { annResolved = string.Empty; }
+                string annImageSrc = "";
+                if (!string.IsNullOrWhiteSpace(annResolved))
+                {
+                    if (annResolved.StartsWith("http", StringComparison.OrdinalIgnoreCase)) { annImageSrc = annResolved; }
+                    else
+                    {
+                        if (annResolved.StartsWith("~") && !annResolved.StartsWith("~/"))
+                        {
+                            annResolved = "~/" + annResolved.Substring(1).TrimStart('/');
+                        }
+                        annImageSrc = Url.Content(annResolved);
+                    }
+                }
+                <div id="post-ann-@item.Id" class="post clickable" data-type="Announcement" data-id="@item.Id" onclick="window.location='@Url.Action("Announcements","Content")'">
+                    <div class="post-head">
+                        <div class="avatar">@av</div>
+                        <div class="meta">
+                            <div class="name">@item.Heading</div>
+                            <div class="sub">@item.Date.ToString("dd MMM yyyy")</div>
+                        </div>
+                    </div>
+                    <div class="post-media media-center">
+                        @if (!string.IsNullOrEmpty(annImageSrc))
+                        {
+                            <img src="@annImageSrc" alt="@item.Heading" onerror="this.style.display='none'" />
+                        }
+                        else
+                        {
+                            <div class="media-placeholder">No image</div>
+                        }
+                    </div>
+                    <div class="post-body">
+                        @if (!string.IsNullOrEmpty(item.Caption) || !string.IsNullOrEmpty(item.Description))
+                        {
+                            <p class="caption"><span class="user">@item.Heading</span>@(((string.IsNullOrEmpty(item.Caption) ? item.Description : item.Caption) ?? "").Replace("â€¢", " | ").Replace("•", " | "))</p>
+                        }
+                        <div class="post-meta">@item.Date.ToString("dd MMM yyyy")</div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="card"><div class="card-body" style="padding:16px"><div class="text-center text-muted">No announcements.</div></div></div>
+        }
+
+        <div id="events" class="card" style="margin-top:24px;">
+            <div class="card-body" style="padding:12px 14px; border-bottom:1px solid #f0f0f0;">
+                <strong>Events</strong>
+            </div>
+        </div>
+
+        if (eventsList.Any())
+        {
+            foreach (var item in eventsList)
+            {
+                var av = !string.IsNullOrEmpty(item.Heading) ? item.Heading.Substring(0,1).ToUpper() : "E";
+                // Normalize event image path safely (aligns with Views/Content/Events.cshtml approach)
+                var evtResolved = "";
+                if (!string.IsNullOrWhiteSpace(item.MainImage))
+                {
+                    if (item.MainImage.StartsWith("/Uploads/")) { evtResolved = "~" + item.MainImage; }
+                    else if (item.MainImage.StartsWith("~"))
+                    {
+                        var trimmed = item.MainImage.Trim();
+                        if (trimmed == "~") { evtResolved = ""; }
+                        else if (trimmed.StartsWith("~/")) { evtResolved = trimmed; }
+                        else { evtResolved = "~/" + trimmed.TrimStart('~', '/'); }
+                    }
+                    else if (item.MainImage.StartsWith("http", StringComparison.OrdinalIgnoreCase)) { evtResolved = item.MainImage; }
+                    else { evtResolved = "~/" + item.MainImage.TrimStart('/'); }
+                }
+                evtResolved = (evtResolved ?? string.Empty).Trim();
+                if (evtResolved == "~") { evtResolved = string.Empty; }
+                string evtImageSrc = "";
+                if (!string.IsNullOrWhiteSpace(evtResolved))
+                {
+                    if (evtResolved.StartsWith("http", StringComparison.OrdinalIgnoreCase)) { evtImageSrc = evtResolved; }
+                    else
+                    {
+                        if (evtResolved.StartsWith("~") && !evtResolved.StartsWith("~/")) { evtResolved = "~/" + evtResolved.Substring(1).TrimStart('/'); }
+                        evtImageSrc = Url.Content(evtResolved);
+                    }
+                }
+                <div id="post-evt-@item.Id" class="post clickable" onclick="window.location='@Url.Action("Events","Content")'" data-event-id="@item.Id" data-type="Event" data-id="@item.Id">
+                    <div class="post-head">
+                        <div class="avatar">@av</div>
+                        <div class="meta">
+                            <div class="name">@item.Heading</div>
+                            <div class="sub">@item.Date.ToString("dd MMM yyyy") @(string.IsNullOrEmpty(item.Location) ? "" : (" | " + item.Location))</div>
+                        </div>
+                    </div>
+                    <div class="post-media media-center">
+                        @if (!string.IsNullOrEmpty(evtImageSrc))
+                        {
+                            <img src="@evtImageSrc" alt="@item.Heading" onerror="this.style.display='none'" />
+                        }
+                        else
+                        {
+                            <div class="media-placeholder">No image</div>
+                        }
+                    </div>
+                    <div class="post-actions">
+                        <div class="actions-left">
+                            <i class="far fa-heart like" onclick="event.stopPropagation(); toggleLike(this)"></i>
+                            <i class="far fa-comment" onclick="event.stopPropagation();"></i>
+                            <i class="far fa-paper-plane" onclick="event.stopPropagation();"></i>
+                        </div>
+                        <div class="actions-right">
+                            <i class="far fa-bookmark" onclick="event.stopPropagation();"></i>
+                        </div>
+                    </div>
+                    <div class="post-body">
+                        @{
+                            var likes = 0;
+                            if (ViewBag.EventLikeCounts != null)
+                            {
+                                var dict = ViewBag.EventLikeCounts as System.Collections.Generic.Dictionary<int, int>;
+                                if (dict != null && dict.ContainsKey(item.Id))
+                                {
+                                    likes = dict[item.Id];
+                                }
+                            }
+                        }
+                        <div class="likes"><span class="likes-count">@likes</span> likes</div>
+                        @if (!string.IsNullOrEmpty(item.Caption) || !string.IsNullOrEmpty(item.Description))
+                        {
+                            <p class="caption"><span class="user">@item.Heading</span>@(((string.IsNullOrEmpty(item.Caption) ? item.Description : item.Caption) ?? "").Replace("â€¢", " | ").Replace("•", " | "))</p>
+                        }
+                        <div class="post-meta">@item.Date.ToString("dd MMM yyyy")</div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="card"><div class="card-body" style="padding:16px"><div class="text-center text-muted">No events.</div></div></div>
+        }
+
+        <div id="minutes" class="card" style="margin-top:24px;">
+            <div class="card-body" style="padding:12px 14px; border-bottom:1px solid #f0f0f0;">
+                <strong>Minutes of Meeting</strong>
+            </div>
+        </div>
+
+        if (minutes.Any())
+        {
+            foreach (var item in minutes)
+            {
+                var av = !string.IsNullOrEmpty(item.Heading) ? item.Heading.Substring(0,1).ToUpper() : "M";
+                <div id="post-min-@item.Id" class="post clickable" data-type="Minutes" data-id="@item.Id" onclick="window.location='@Url.Action("UserView","MinutesOfMeeting")'">
+                    <div class="post-head">
+                        <div class="avatar">@av</div>
+                        <div class="meta">
+                            <div class="name">@item.Heading</div>
+                            <div class="sub">@item.Date.ToString("dd MMM yyyy") @(string.IsNullOrEmpty(item.Location) ? "" : (" | " + item.Location))</div>
+                        </div>
+                    </div>
+                    <div class="post-body">
+                        @if (!string.IsNullOrEmpty(item.Caption) || !string.IsNullOrEmpty(item.Description))
+                        {
+                            <p class="caption"><span class="user">@item.Heading</span>@(((string.IsNullOrEmpty(item.Caption) ? item.Description : item.Caption) ?? "").Replace("â€¢", " | ").Replace("•", " | "))</p>
+                        }
+                        <div class="post-meta">@item.Date.ToString("dd MMM yyyy")</div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="card"><div class="card-body" style="padding:16px"><div class="text-center text-muted">No minutes available.</div></div></div>
+        }
+
+        <div id="gallery" class="card" style="margin-top:24px;">
+            <div class="card-body" style="padding:12px 14px; border-bottom:1px solid #f0f0f0; cursor: pointer;" onclick="window.location='@Url.Action("Gallery","Content")'">
+                <strong>Gallery</strong>
+            </div>
+        </div>
+
+        if (galleries.Any())
+        {
+            foreach (var item in galleries)
+            {
+                var av = !string.IsNullOrEmpty(item.Heading) ? item.Heading.Substring(0,1).ToUpper() : "G";
+                // Normalize gallery main image
+                var galResolved = "";
+                if (!string.IsNullOrWhiteSpace(item.MainImage))
+                {
+                    if (item.MainImage.StartsWith("/Uploads/")) { galResolved = "~" + item.MainImage; }
+                    else if (item.MainImage.StartsWith("~"))
+                    {
+                        var trimmed = item.MainImage.Trim();
+                        if (trimmed == "~") { galResolved = ""; }
+                        else if (trimmed.StartsWith("~/")) { galResolved = trimmed; }
+                        else { galResolved = "~/" + trimmed.TrimStart('~', '/'); }
+                    }
+                    else if (item.MainImage.StartsWith("http", StringComparison.OrdinalIgnoreCase)) { galResolved = item.MainImage; }
+                    else { galResolved = "~/" + item.MainImage.TrimStart('/'); }
+                }
+                galResolved = (galResolved ?? string.Empty).Trim();
+                if (galResolved == "~") { galResolved = string.Empty; }
+                string galImageSrc = "";
+                if (!string.IsNullOrWhiteSpace(galResolved))
+                {
+                    if (galResolved.StartsWith("http", StringComparison.OrdinalIgnoreCase)) { galImageSrc = galResolved; }
+                    else
+                    {
+                        if (galResolved.StartsWith("~") && !galResolved.StartsWith("~/")) { galResolved = "~/" + galResolved.Substring(1).TrimStart('/'); }
+                        galImageSrc = Url.Content(galResolved);
+                    }
+                }
+                <div id="post-gal-@item.Id" class="post clickable" data-type="Gallery" data-id="@item.Id" onclick="window.location='@Url.Action("Gallery","Content")'">
+                    <div class="post-head">
+                        <div class="avatar">@av</div>
+                        <div class="meta">
+                            <div class="name">@item.Heading</div>
+                            <div class="sub">@item.Date.ToString("dd MMM yyyy")</div>
+                        </div>
+                    </div>
+                    <div class="post-media">
+                        @{
+                            // Build combined list: Main + Additional
+                            var imgList = new List<string>();
+                            if (!string.IsNullOrEmpty(galImageSrc)) { imgList.Add(galImageSrc); }
+                            if (!string.IsNullOrEmpty(item.AdditionalImagesCsv))
+                            {
+                                var extra = (item.AdditionalImagesCsv ?? "").Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                                foreach (var raw in extra)
+                                {
+                                    var t = raw.Trim();
+                                    var norm = t;
+                                    if (!string.IsNullOrWhiteSpace(t))
+                                    {
+                                        if (t.StartsWith("/Uploads/")) { norm = Url.Content("~" + t); }
+                                        else if (t.StartsWith("~"))
+                                        {
+                                            var tri = t.Trim();
+                                            if (tri == "~") { norm = string.Empty; }
+                                            else if (!tri.StartsWith("~/")) { norm = Url.Content("~/" + tri.TrimStart('~','/')); }
+                                            else { norm = Url.Content(tri); }
+                                        }
+                                        else if (t.StartsWith("http", StringComparison.OrdinalIgnoreCase)) { norm = t; }
+                                        else { norm = Url.Content("~/" + t.TrimStart('/')); }
+                                    }
+                                    if (!string.IsNullOrWhiteSpace(norm)) { imgList.Add(norm); }
+                                }
+                            }
+                        }
+
+                        @if (imgList.Count > 1)
+                        {
+                            var cid = "fc-" + item.Id;
+                            <div id="@cid" class="feed-carousel" data-index="0">
+                                <div class="track">
+                                    @for (int i = 0; i < imgList.Count; i++)
+                                    {
+                                        <div class="slide">
+                                            <img src="@imgList[i]" alt="@item.Heading - Image @(i+1)" onerror="this.style.display='none'" />
+                                        </div>
+                                    }
+                                </div>
+                                <button type="button" class="nav prev" onclick="event.stopPropagation(); moveFeedCarousel('@cid', -1)" aria-label="Previous">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>
+                                <button type="button" class="nav next" onclick="event.stopPropagation(); moveFeedCarousel('@cid', 1)" aria-label="Next">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                                <div class="dots">
+                                    @for (int i = 0; i < imgList.Count; i++)
+                                    {
+                                        <div class="dot @(i==0 ? "active" : "")" onclick="event.stopPropagation(); goToFeedSlide('@cid', @i)"></div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        else if (imgList.Count == 1)
+                        {
+                            <div class="media-center"><img src="@imgList[0]" alt="@item.Heading" onerror="this.style.display='none'" /></div>
+                        }
+                        else
+                        {
+                            <div class="media-placeholder">No image</div>
+                        }
+                    </div>
+                    <div class="post-body">
+                        @if (!string.IsNullOrEmpty(item.Caption) || !string.IsNullOrEmpty(item.Description))
+                        {
+                            <p class="caption"><span class="user">@item.Heading</span>@(((string.IsNullOrEmpty(item.Caption) ? item.Description : item.Caption) ?? "").Replace("â€¢", " | ").Replace("•", " | "))</p>
+                        }
+                        <div class="post-meta">@item.Date.ToString("dd MMM yyyy")</div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="card"><div class="card-body" style="padding:16px"><div class="text-center text-muted">No gallery items.</div></div></div>
+        }
+    }
+    else
+    {
+        <div class="card"><div class="card-body" style="padding:16px"><div class="text-center text-muted">No posts yet.</div></div></div>
+    }
+</div>
+
+<!-- Renewal Modal Container -->
+<div class="modal fade" id="renewalModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" id="renewalModalContent"></div>
+    </div>
+</div>
+
+<script>
+    function refreshFeed() { location.reload(); }
+    function showRenewalAlert() { alert('Your membership renewal is due soon!'); }
+    
+    // Check for expired membership on page load
+    @if (ViewBag.MemberId != null)
+    {
+        @:document.addEventListener('DOMContentLoaded', function() {
+        @:    var memberId = @ViewBag.MemberId;
+        @:    var daysToRenewal = @(ViewBag.DaysToRenewal ?? 0);
+        @:    var isRenewalDue = @((ViewBag.IsRenewalDue ?? false).ToString().ToLower());
+        @:    
+        @:    // Show mandatory popup for expired memberships
+        @:    if (daysToRenewal <= 0 || isRenewalDue) {
+        @:        setTimeout(function() {
+        @:            showMandatoryRenewalPopup(memberId);
+        @:        }, 1000);
+        @:    }
+        @:});
+    }
+    
+    function showMandatoryRenewalPopup(memberId) {
+        var url = '@Url.Action("RenewalPopup","Home")' + '?memberId=' + encodeURIComponent(memberId);
+        var container = document.getElementById('renewalModalContent');
+        if (container) {
+            container.innerHTML = '<div class="p-5 text-center"><div class="spinner-border text-primary" role="status"></div><p class="mt-3">Loading renewal options...</p></div>';
+            fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(function(r){ return r.text(); })
+                .then(function(html){
+                    container.innerHTML = html;
+                    if (window.bootstrap) {
+                        var modal = new bootstrap.Modal(document.getElementById('renewalModal'), {
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        modal.show();
+                        
+                        // Hide page content until renewal
+                        document.body.style.overflow = 'hidden';
+                        var pageContent = document.querySelector('.page-wrap');
+                        if (pageContent) {
+                            pageContent.style.filter = 'blur(3px)';
+                            pageContent.style.pointerEvents = 'none';
+                        }
+                    }
+
+                    // IMPORTANT: Wire up handlers because scripts inside partial won't auto-run
+                    try {
+                        var selectedPlanId = null;
+                        var selectedPlanName = null;
+                        var priceByText = function(txt){ return /yearly/i.test(txt) ? 300 : 3000; };
+
+                        var optionCards = container.querySelectorAll('.plan-option');
+                        optionCards.forEach(function(card){
+                            card.addEventListener('click', function(){
+                                optionCards.forEach(function(c){ c.classList.remove('selected'); });
+                                this.classList.add('selected');
+                                selectedPlanId = this.getAttribute('data-plan-id');
+                                selectedPlanName = this.getAttribute('data-plan-name') || this.innerText.trim();
+                            });
+                        });
+
+                        var btn = container.querySelector('#btnSubmitRenewal');
+                        if (btn) {
+                            btn.addEventListener('click', function(){
+                                if (!selectedPlanId) { alert('Please select a renewal plan'); return; }
+                                var tokenEl = container.querySelector('input[name="__RequestVerificationToken"]');
+                                var formData = new FormData();
+                                formData.append('MemberID', memberId);
+                                formData.append('MemberTypeId', selectedPlanId);
+                                if (tokenEl) { formData.append('__RequestVerificationToken', tokenEl.value); }
+
+                                btn.disabled = true;
+                                btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+
+                                fetch('@Url.Action("SubmitRenewal","Home")', {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                                    credentials: 'same-origin'
+                                })
+                                .then(function(r){
+                                    return r.json().then(function(data){ return { ok: r.ok, status: r.status, data: data }; });
+                                })
+                                .then(function(res){
+                                    if(res.ok && res.data && res.data.success){
+                                        btn.innerHTML = '<i class="fas fa-check me-2"></i>Renewal Complete!';
+                                        btn.classList.remove('btn-gradient');
+                                        btn.classList.add('btn-success');
+                                        document.body.style.overflow = '';
+                                        var pg = document.querySelector('.page-wrap');
+                                        if (pg) { pg.style.filter=''; pg.style.pointerEvents=''; }
+                                        setTimeout(function(){ window.location.reload(); }, 1200);
+                                    } else {
+                                        btn.disabled = false;
+                                        btn.innerHTML = '<i class="fas fa-credit-card me-2"></i>Complete Renewal & Continue';
+                                        var msg = (res.data && res.data.message) ? res.data.message : ('Request failed (HTTP '+res.status+'). Please try again.');
+                                        alert(msg);
+                                    }
+                                })
+                                .catch(function(err){
+                                    console.error('Renewal submit error:', err);
+                                    btn.disabled = false;
+                                    btn.innerHTML = '<i class="fas fa-credit-card me-2"></i>Complete Renewal & Continue';
+                                    alert('Network/server error. Please try again.');
+                                });
+                            });
+                        }
+                    } catch (e) {
+                        console.error('Failed to initialize renewal popup handlers:', e);
+                    }
+                })
+                .catch(function() {
+                    container.innerHTML = '<div class="p-3 text-center text-danger">Failed to load renewal options. Please refresh the page.</div>';
+                });
+        }
+    }
+    
+    function toggleLike(el){
+        try{
+            // Toggle UI state immediately
+            var c = el.className;
+            var becomingActive = c.indexOf('active') === -1;
+            if(becomingActive){ el.className = c + ' active'; }
+            else { el.className = c.replace(' active',''); }
+
+            // Find eventId from the closest post container
+            var post = el.closest('.post');
+            if(!post) return;
+            var eventId = post.getAttribute('data-event-id');
+            if(!eventId) return;
+
+            // Determine state to send
+            var state = becomingActive ? 'interested' : 'none';
+
+            // Anti-forgery token
+            var tokenInput = document.querySelector('input[name="__RequestVerificationToken"]');
+            var token = tokenInput ? tokenInput.value : '';
+
+            // Post to server
+            var body = '__RequestVerificationToken=' + encodeURIComponent(token)
+                     + '&eventId=' + encodeURIComponent(eventId)
+                     + '&state=' + encodeURIComponent(state);
+
+            fetch('@Url.Action("SetEventInterest", "Content")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                body: body,
+                credentials: 'same-origin'
+            }).then(function(r){ return r.json(); }).then(function(data){
+                if(data && data.success){
+                    // Update likes count UI
+                    var countEl = post.querySelector('.likes-count');
+                    if(countEl){ countEl.textContent = data.interestedCount; }
+                }
+            }).catch(function(){ /* ignore errors for now */ });
+        }catch(e){ /* no-op */ }
+    }
+
+    function goToSection(id){
+        try{
+            var el = document.getElementById(id);
+            if(!el) return;
+            // If the header card exists, scroll a bit above it for spacing
+            var top = el.getBoundingClientRect().top + window.pageYOffset - 10;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+        }catch(e){ /* no-op */ }
+    }
+
+    // Simple client-side filter for feed items
+    function filterFeed(query){
+        try{
+            var q = (query || '').toLowerCase().trim();
+            var posts = document.querySelectorAll('.post');
+            var sections = [
+                { id: 'announcements', any: false },
+                { id: 'events', any: false },
+                { id: 'minutes', any: false },
+                { id: 'gallery', any: false }
+            ];
+
+            posts.forEach(function(post){
+                var name = post.querySelector('.meta .name');
+                var caption = post.querySelector('.caption');
+                var text = ((name ? name.textContent : '') + ' ' + (caption ? caption.textContent : '')).toLowerCase();
+                var show = !q || text.indexOf(q) > -1;
+                post.style.display = show ? '' : 'none';
+                if(show){
+                    var container = post.closest('.post');
+                    // mark section as having a match by walking up and detecting which section title precedes it
+                    var p = post.previousElementSibling;
+                    // Fallback: infer from click handler target
+                    var header = post.closest('.card');
+                }
+            });
+
+            // Toggle section headers based on whether any child posts are visible
+            sections.forEach(function(sec){
+                var header = document.getElementById(sec.id);
+                if(!header) return;
+                // Find following siblings until next section header or end, check visibility
+                var el = header.nextElementSibling;
+                var anyVisible = false;
+                while(el && !(el.id && (el.id === 'announcements' || el.id === 'events' || el.id === 'minutes' || el.id === 'gallery'))){
+                    if(el.classList && el.classList.contains('post') && el.style.display !== 'none'){
+                        anyVisible = true; break;
+                    }
+                    el = el.nextElementSibling;
+                }
+                header.style.display = anyVisible || !q ? '' : 'none';
+            });
+        }catch(e){ /* ignore */ }
+    }
+
+    // Enhanced search with suggestions and thumbnails
+    var feedIndex = null; // cached index
+
+    function buildFeedIndex(){
+        var items = [];
+        document.querySelectorAll('.post').forEach(function(post){
+            var id = post.id || '';
+            var type = post.getAttribute('data-type') || '';
+            var nameEl = post.querySelector('.meta .name');
+            var captionEl = post.querySelector('.caption');
+            var subEl = post.querySelector('.meta .sub');
+            var imgEl = post.querySelector('.post-media img');
+            var title = nameEl ? nameEl.textContent.trim() : '';
+            var caption = captionEl ? captionEl.textContent.trim() : '';
+            var sub = subEl ? subEl.textContent.trim() : '';
+            var img = imgEl ? (imgEl.getAttribute('src') || '') : '';
+            items.push({ id: id, type: type, title: title, text: (title + ' ' + caption).toLowerCase(), sub: sub, img: img });
+        });
+        feedIndex = items;
+    }
+
+    function renderSearchResults(results){
+        var dd = document.getElementById('searchDropdown');
+        if(!dd) return;
+        if(!results || results.length === 0){ dd.style.display = 'none'; dd.innerHTML = ''; return; }
+        var html = results.map(function(r){
+            var safeTitle = r.title || '(Untitled)';
+            var safeSub = r.sub || r.type || '';
+            var imgHtml = r.img ? ('<img class="search-thumb" src="' + r.img + '" onerror="this.style.display=\'none\'" />') : '<div class="search-thumb"></div>';
+            return '<div class="search-item" data-target="' + r.id + '">' + imgHtml + '<div class="search-meta"><div class="search-title">' + safeTitle + '</div><div class="search-sub">' + safeSub + '</div></div></div>';
+        }).join('');
+        dd.innerHTML = html;
+        dd.style.display = '';
+        // Click handler
+        dd.querySelectorAll('.search-item').forEach(function(el){
+            el.addEventListener('click', function(){
+                var targetId = el.getAttribute('data-target');
+                if(targetId){
+                    goToPost(targetId);
+                }
+                dd.style.display = 'none';
+            });
+        });
+    }
+
+    function goToPost(id){
+        try{
+            var post = document.getElementById(id);
+            if(!post) return;
+            var top = post.getBoundingClientRect().top + window.pageYOffset - 10;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+            // brief highlight
+            var old = post.style.boxShadow;
+            post.style.boxShadow = '0 0 0 3px rgba(59,130,246,.35)';
+            setTimeout(function(){ post.style.boxShadow = old || ''; }, 800);
+        }catch(e){ }
+    }
+
+    function searchInputChanged(val){
+        var q = (val || '').trim();
+        // filter in-feed
+        filterFeed(q);
+        // build index once
+        if(feedIndex === null){ buildFeedIndex(); }
+        if(!q){ renderSearchResults([]); return; }
+        var lq = q.toLowerCase();
+        var matches = feedIndex.filter(function(it){ return it.text.indexOf(lq) > -1; }).slice(0, 8);
+        renderSearchResults(matches);
+    }
+
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', function(ev){
+        var box = document.querySelector('.search-box');
+        var dd = document.getElementById('searchDropdown');
+        if(!box || !dd) return;
+        if(!box.contains(ev.target)){
+            dd.style.display = 'none';
+        }
+    });
+
+    // --- Feed carousel helpers (Gallery section) ---
+    function moveFeedCarousel(id, delta){
+        try{
+            var el = document.getElementById(id);
+            if(!el) return;
+            var track = el.querySelector('.track');
+            var slides = el.querySelectorAll('.slide');
+            if(!track || !slides || slides.length === 0) return;
+            var idx = parseInt(el.getAttribute('data-index') || '0', 10) || 0;
+            var next = (idx + delta) % slides.length; if(next < 0) next = slides.length - 1;
+            el.setAttribute('data-index', String(next));
+            track.style.transform = 'translateX(' + (-next * 100) + '%)';
+            var dots = el.querySelectorAll('.dot');
+            if(dots){ dots.forEach(function(d,i){ if(i===next) d.classList.add('active'); else d.classList.remove('active'); }); }
+        }catch(e){ /* no-op */ }
+    }
+
+    function goToFeedSlide(id, idx){
+        try{
+            var el = document.getElementById(id);
+            if(!el) return;
+            var track = el.querySelector('.track');
+            var slides = el.querySelectorAll('.slide');
+            if(!track || !slides || slides.length === 0) return;
+            var i = Math.max(0, Math.min(slides.length - 1, idx|0));
+            el.setAttribute('data-index', String(i));
+            track.style.transform = 'translateX(' + (-i * 100) + '%)';
+            var dots = el.querySelectorAll('.dot');
+            if(dots){ dots.forEach(function(d,di){ if(di===i) d.classList.add('active'); else d.classList.remove('active'); }); }
+        }catch(e){ /* no-op */ }
+    }
+</script>

@@ -1,0 +1,64 @@
+﻿using ClubMembership.Data;
+using ClubMembership.Filters;
+using ClubMembership.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using log4net;
+using Microsoft.AspNet.Identity;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace ClubMembership.Controllers
+{
+    // [AuthActionFilter]
+    public class HomeController : Controller
+    {
+        private readonly ApplicationDbContext _db;
+        //private static readonly ILog log = LogManager.GetLogger(typeof(MembersController));
+
+        public HomeController()
+        {
+            _db = new ApplicationDbContext();
+        }
+
+        public ActionResult Index()
+        {
+            var userId = User.Identity.GetUserId();
+            bool isAdmin = User.IsInRole("Admin");
+            List<MemberShipPaymentDetail> payments;
+
+            // Dashboard stats
+            var totalMembers = _db.MemberShipMasters.Count(m => m.DispStatus == 0);
+            var removedSince = DateTime.Now.AddDays(-15);
+            var removedMembers = _db.MemberShipMasters.Count(m => m.DispStatus == 1 && m.ModifiedDateTime >= removedSince);
+            var totalAmount = _db.MemberShipPaymentDetails.Sum(p => (decimal?)p.Amount) ?? 0;
+
+            if (isAdmin)
+            {
+                payments = _db.MemberShipPaymentDetails.OrderByDescending(p => p.Payment_Date).ToList();
+            }
+            else
+            {
+                var member = _db.MemberShipMasters.FirstOrDefault(m => m.UIserID == userId);
+                if (member == null)
+                {
+                    ViewBag.Message = "No member record found";
+                    return View();
+                }
+                payments = _db.MemberShipPaymentDetails.Where(p => p.MemberID == member.MemberID).OrderByDescending(p => p.Payment_Date).ToList();
+            }
+
+            ViewBag.PaymentDetails = payments;
+            ViewBag.IsAdmin = isAdmin;
+            ViewBag.TotalMembers = totalMembers;
+            ViewBag.RemovedMembers = removedMembers;
+            ViewBag.TotalAmount = totalAmount;
+            return View();
+        }
+    }
+}

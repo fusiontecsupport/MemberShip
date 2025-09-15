@@ -1,0 +1,145 @@
+﻿using ClubMembership.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using System.Net.Mail;
+
+namespace ClubMembership.Controllers
+{
+    [AllowAnonymous]
+    public class RegisterController : Controller
+    {
+        private UserManager<ApplicationUser> UserManager { get; }
+
+        public RegisterController()
+            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+        {
+        }
+
+        public RegisterController(UserManager<ApplicationUser> userManager)
+        {
+            UserManager = userManager;
+        }
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View("Login_Register", new AccountViewModels.RegisterViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Index(AccountViewModels.RegisterViewModel model)
+        {
+            if (model.Password != model.ConfirmPassword)
+            {
+                ModelState.AddModelError("ConfirmPassword", "The password and confirmation password do not match.");
+            }
+
+            if (!string.IsNullOrEmpty(model.MobileNo) && !System.Text.RegularExpressions.Regex.IsMatch(model.MobileNo, @"^[0-9]{10}$"))
+            {
+                ModelState.AddModelError("MobileNo", "Please enter a valid 10-digit mobile number");
+            }
+
+            if (model.DOB > DateTime.Now)
+            {
+                ModelState.AddModelError("DOB", "Date of birth cannot be in the future");
+            }
+
+            // Unique Username, Email, and MobileNo validation
+            using (var db = new ApplicationDbContext())
+            {
+                if (db.Users.Any(u => u.UserName == model.UserName))
+                {
+                    ModelState.AddModelError("UserName", "Username already exists!");
+                }
+                if (db.Users.Any(u => u.Email == model.Email))
+                {
+                    ModelState.AddModelError("Email", "Email Id already exists!");
+                }
+                if (db.Users.Any(u => u.MobileNo == model.MobileNo))
+                {
+                    ModelState.AddModelError("MobileNo", "Mobile number already exists!");
+                }
+            }
+
+            //// OTP validation
+            //if (Session["RegisterOTP"] == null || Session["RegisterOTPEmail"] == null ||
+            //    model.OTP != Session["RegisterOTP"].ToString() ||
+            //    model.Email != Session["RegisterOTPEmail"].ToString())
+            //{
+            //    ModelState.AddModelError("OTP", "Invalid or expired OTP.");
+            //}
+
+            if (ModelState.IsValid)
+            {
+                var user = model.GetUser();
+                user.NPassword = model.Password;
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    // Assign user to default group (GroupId = 4) using stored procedure with correct parameter names
+                    var createdUser = await UserManager.FindByNameAsync(user.UserName);
+                    if (createdUser != null)
+                    {
+                        using (var db = new ApplicationDbContext())
+                        {
+                            db.Database.ExecuteSqlCommand(
+                                "EXEC pr_Auto_User_Groups_Roles_Assgn @PUserId = {0}, @PGroupId = {1}",
+                                createdUser.Id, 4
+                            );
+                        }
+                    }
+                    // Clear OTP session after successful registration
+                    Session.Remove("RegisterOTP");
+                    Session.Remove("RegisterOTPEmail");
+                    return RedirectToAction("Login", "Account");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+            return View("Login_Register", model);
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult SendOTP(string email)
+        //{
+        //    if (string.IsNullOrEmpty(email))
+        //    {
+        //        return Json(new { success = false, message = "Email is required." });
+        //    }
+        //    // Generate OTP
+        //    var otp = new Random().Next(100000, 999999).ToString();
+        //    Session["RegisterOTP"] = otp;
+        //    Session["RegisterOTPEmail"] = email;
+
+        //    // Send OTP to email (replace with your email sending logic)
+        //    try
+        //    {
+        //        // Example using SmtpClient (configure as per your SMTP settings)
+        //        var mail = new MailMessage();
+        //        mail.To.Add(email);
+        //        mail.Subject = "Your Registration OTP";
+        //        mail.Body = $"Your OTP for registration is: {otp}";
+        //        // Set From address (update as needed)
+        //        mail.From = new MailAddress("noreply@yourdomain.com");
+        //        using (var smtp = new SmtpClient())
+        //        {
+        //            smtp.Send(mail);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { success = false, message = "Failed to send OTP. Please try again." });
+        //    }
+
+        //    return Json(new { success = true, message = "OTP sent to your email." });
+        //}
+    }
+}

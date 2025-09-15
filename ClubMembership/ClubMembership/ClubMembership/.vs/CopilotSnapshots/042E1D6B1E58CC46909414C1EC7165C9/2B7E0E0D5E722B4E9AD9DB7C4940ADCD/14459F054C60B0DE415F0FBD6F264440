@@ -1,0 +1,103 @@
+﻿@model ClubMembership.Models.MemberProfileViewModel
+@{
+    ViewBag.Title = "Create Member";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Add Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<div class="container-fluid">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    <div class="row justify-content-center">
+        <div class="col-lg-10 mt-3">
+            <div class="card border-0 shadow-lg rounded-lg overflow-hidden">
+                <div class="card-header bg-gradient-primary text-white py-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0"><i class="fas fa-user-plus mr-2"></i> Membership Registration</h3>
+                    </div>
+                </div>
+                @using (Html.BeginForm("Create", "MemberShipMaster", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "membershipForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="card-body p-5">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group row">
+                            @Html.LabelFor(m => m.Member.FirstName, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.Member.FirstName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Member.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(m => m.Member.LastName, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.Member.LastName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Member.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(m => m.Member.Email, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.Member.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Member.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(m => m.Member.PhoneNumber, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.Member.PhoneNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Member.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(m => m.Member.Password, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                            <div class="col-sm-9">
+                                @Html.PasswordFor(m => m.Member.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Member.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(m => m.Member.ConfirmPassword, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                            <div class="col-sm-9">
+                                @Html.PasswordFor(m => m.Member.ConfirmPassword, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Member.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(m => m.Member.Gender, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                            <div class="col-sm-9">
+                                @Html.EnumDropDownListFor(m => m.Member.Gender, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Member.Gender, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(m => m.Member.DateOfBirth, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.Member.DateOfBirth, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                                @Html.ValidationMessageFor(m => m.Member.DateOfBirth, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(m => m.Member.ProfilePicture, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                            <div class="col-sm-9">
+                                <input type="file" name="ProfilePicture" class="form-control-file" />
+                                @Html.ValidationMessage("", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-9 offset-sm-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-plus-circle"></i> Register Member
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

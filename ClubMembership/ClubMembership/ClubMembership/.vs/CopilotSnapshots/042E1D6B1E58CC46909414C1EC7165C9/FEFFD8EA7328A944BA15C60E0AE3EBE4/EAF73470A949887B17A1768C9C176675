@@ -1,0 +1,333 @@
+﻿using ClubMembership.Models;
+using Microsoft.AspNet.Identity;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Helpers;
+using System.Web.Mvc;
+
+namespace ClubMembership.Controllers
+{
+    public class ProfileMasterController : Controller
+    {
+        private readonly ApplicationDbContext _db;
+
+        public ProfileMasterController()
+        {
+            _db = new ApplicationDbContext();
+        }
+
+        // GET: ProfileMaster
+        public ActionResult Index()
+        {
+            return RedirectToAction("Create");
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            // Get current user
+            var userId = User.Identity.GetUserId();
+            var user = _db.Users.FirstOrDefault(u => u.Id == userId);
+            MemberShipMaster model = null;
+
+            // Try to find existing MemberShipMaster for this user
+            model = _db.MemberShipMasters.FirstOrDefault(m => m.UIserID == user.UserName);
+
+            if (model == null)
+            {
+                // If not found, create new and pre-fill from AspNetUsers
+                model = new MemberShipMaster
+                {
+                    UIserID = user.UserName,
+                    Member_EmailID = user.Email,
+                    Member_DOB = user.DOB,
+                    Member_Mobile_No = user.MobileNo,
+                    Gender = user.Gender == "Male" ? 1 : 2, // Assuming 1=Male, 2=Female
+                    Member_Reg_Date = DateTime.Now,
+                    Member_Sdate = DateTime.Now,
+                    Member_Edate = DateTime.Now.AddYears(1),
+                    DispStatus = 1 // Assuming 1 means active
+                };
+            }
+
+            // Populate dropdowns
+            PopulateViewBags();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(MemberShipMaster model, HttpPostedFileBase Photo, HttpPostedFileBase FamilyPhoto, string MaritalStatus)
+        {
+            // Get current user
+            var userId = User.Identity.GetUserId();
+            var user = _db.Users.FirstOrDefault(u => u.Id == userId);
+            if (user != null)
+            {
+                // Always update these fields from AspNetUsers
+                model.UIserID = user.UserName;
+                model.Member_EmailID = user.Email;
+                model.Member_DOB = user.DOB;
+                model.Member_Mobile_No = user.MobileNo;
+                model.Gender = user.Gender == "Male" ? 1 : 2;
+            }
+
+            // Remove ModelState errors for these fields so they are re-validated
+            ModelState.Remove("UIserID");
+            ModelState.Remove("Member_EmailID");
+            ModelState.Remove("Member_DOB");
+            ModelState.Remove("Member_Mobile_No");
+            ModelState.Remove("Gender");
+
+            // At the start of your action method
+            string logPath = Server.MapPath("~/App_Data/debug.log");
+            string logContent = $"----- {DateTime.Now} -----\n";
+            foreach (var key in Request.Form.AllKeys)
+            {
+                logContent += $"{key} = {Request.Form[key]}\n";
+            }
+            foreach (var key in ModelState.Keys)
+            {
+                foreach (var error in ModelState[key].Errors)
+                {
+                    logContent += $"ERROR: {key} - {error.ErrorMessage}\n";
+                }
+            }
+            System.IO.File.AppendAllText(logPath, logContent);
+            try
+            {
+                // Set RegstrId default value
+                model.RegstrId = "1";
+                // Set MemberNo as next available integer
+                model.MemberNo = GenerateMemberNumber();
+                // Set MemberDNo as registeryear + dob year + "000" + MemberNo
+                var registerYear = DateTime.Now.Year.ToString();
+                var dobYear = model.Member_DOB.Year.ToString();
+                var memberNoStr = model.MemberNo.ToString().PadLeft(3, '0');
+                model.MemberDNo = $"{registerYear}{dobYear}{memberNoStr}";
+                model.DispStatus = 1;
+                model.CreatedBy = User.Identity.Name;
+                model.CreatedDateTime = DateTime.Now;
+                model.Member_Age = CalculateAge(model.Member_DOB).ToString();
+                model.Member_Reg_Date = DateTime.Now;
+                model.Member_Sdate = DateTime.Now;
+                model.Member_Edate = DateTime.Now.AddYears(1);
+                if (MaritalStatus != "Married")
+                {
+                    model.Spouse_Name = null;
+                    model.Spouse_DOB = null;
+                    model.Date_Of_Marriage = null;
+                    model.Total_Children = 0;
+                }
+                else
+                {
+                    if (model.Total_Children < 0)
+                    {
+                        model.Total_Children = 0;
+                    }
+                }
+                ModelState.Remove("UIserID");
+                ModelState.Remove("MemberDNo");
+                ModelState.Remove("CreatedBy");
+                ModelState.Remove("RegstrId");
+                ModelState.Remove("MemberNo");
+                ModelState.Remove("MaritalStatus");
+                if (ModelState.IsValid)
+                {
+                    using (var transaction = _db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            // Handle member photo upload
+                            if (Photo != null && Photo.ContentLength > 0)
+                            {
+                                string uploadsFolder = Server.MapPath("~/Uploads/MemberPhotos");
+                                Directory.CreateDirectory(uploadsFolder);
+                                string uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(Photo.FileName)}";
+                                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                                Photo.SaveAs(filePath);
+                                model.Member_Photo_Path = $"/Uploads/MemberPhotos/{uniqueFileName}";
+                            }
+                            // Handle family photo upload
+                            if (FamilyPhoto != null && FamilyPhoto.ContentLength > 0)
+                            {
+                                string uploadsFolder = Server.MapPath("~/Uploads/FamilyPhotos");
+                                Directory.CreateDirectory(uploadsFolder);
+                                string uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(FamilyPhoto.FileName)}";
+                                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                                FamilyPhoto.SaveAs(filePath);
+                                model.Family_Photo_Path = $"/Uploads/FamilyPhotos/{uniqueFileName}";
+                            }
+                            // Check if record exists for this user
+                            var existing = _db.MemberShipMasters.FirstOrDefault(m => m.UIserID == model.UIserID);
+                            if (existing != null)
+                            {
+                                // Update fields
+                                _db.Entry(existing).CurrentValues.SetValues(model);
+                            }
+                            else
+                            {
+                                _db.MemberShipMasters.Add(model);
+                            }
+                            _db.SaveChanges();
+                            // Get children from form collection
+                            if (MaritalStatus == "Married" && model.Total_Children > 0)
+                            {
+                                for (int i = 0; i < model.Total_Children; i++)
+                                {
+                                    var childName = Request.Form[$"Children[{i}].Child_Name"];
+                                    if (!string.IsNullOrEmpty(childName))
+                                    {
+                                        var child = new MemberShipFamilyDetail
+                                        {
+                                            Child_Name = childName,
+                                            Child_DOB = DateTime.Parse(Request.Form[$"Children[{i}].Child_DOB"]),
+                                            Child_Age = Request.Form[$"Children[{i}].Child_Age"],
+                                            Child_Gender = int.Parse(Request.Form[$"Children[{i}].Child_Gender"]),
+                                            Child_Current_Position = int.Parse(Request.Form[$"Children[{i}].Child_Current_Position"]),
+                                            Child_MaritalStatus = int.Parse(Request.Form[$"Children[{i}].Child_MaritalStatus"]),
+                                            MemberID = model.MemberID, // Use the generated MemberID (PK)
+                                            ModifiedBy = User.Identity.Name,
+                                            ModifiedDateTime = DateTime.Now
+                                        };
+                                        _db.MemberShipFamilyDetails.Add(child);
+                                    }
+                                }
+                                _db.SaveChanges(); // Save the children
+                            }
+
+                            // Save MemberShipODetail entries from the "Other Social Status" table
+                            var orgNames = Request.Form.GetValues("MemberIn[]");
+                            var sinceYears = Request.Form.GetValues("Since[]");
+                            var currDesigs = Request.Form.GetValues("CurrentDesignation[]");
+
+                            if (orgNames != null)
+                            {
+                                for (int i = 0; i < orgNames.Length; i++)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(orgNames[i]) && !string.IsNullOrWhiteSpace(currDesigs[i]) && int.TryParse(sinceYears[i], out int sinceYear))
+                                    {
+                                        var odetail = new MemberShipODetail
+                                        {
+                                            MemberID = model.MemberID,
+                                            OrganizationName = orgNames[i],
+                                            SinceYear = sinceYear,
+                                            CurrentDesignation = currDesigs[i],
+                                            ModifiedBy = User.Identity.Name,
+                                            ModifiedDateTime = DateTime.Now
+                                        };
+                                        _db.MemberShipODetails.Add(odetail);
+                                    }
+                                }
+                                _db.SaveChanges();
+                            }
+
+                            transaction.Commit();
+                            TempData["SuccessMessage"] = "Member profile saved successfully!";
+                            return RedirectToAction("Index");
+                        }
+                        catch (DbEntityValidationException ex)
+                        {
+                            transaction.Rollback();
+                            foreach (var validationErrors in ex.EntityValidationErrors)
+                            {
+                                foreach (var validationError in validationErrors.ValidationErrors)
+                                {
+                                    ModelState.AddModelError(validationError.PropertyName, validationError.ErrorMessage);
+                                    System.Diagnostics.Debug.WriteLine($"Validation Error: {validationError.PropertyName} - {validationError.ErrorMessage}");
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            ModelState.AddModelError("", $"Error: {ex.Message}");
+                            System.Diagnostics.Debug.WriteLine($"Exception: {ex.ToString()}");
+                        }
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("ModelState is invalid:");
+                    foreach (var error in ModelState.Where(ms => ms.Value.Errors.Any()))
+                    {
+                        System.Diagnostics.Debug.WriteLine($"{error.Key}: {string.Join(", ", error.Value.Errors.Select(e => e.ErrorMessage))}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Unexpected error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Unexpected Exception: {ex.ToString()}");
+            }
+
+            PopulateViewBags();
+            return View(model);
+        }
+
+        private int GenerateMemberNumber()
+        {
+            return _db.MemberShipMasters.Max(m => (int?)m.MemberNo) + 1 ?? 1000;
+        }
+
+        private void PopulateViewBags()
+        {
+            var bloodGroups = _db.BloodGroupMasters
+                                .Where(b => b.DISPSTATUS == 0)
+                                .OrderBy(b => b.BLDGDESC)
+                                .ToList();
+            ViewBag.BloodGroups = new SelectList(bloodGroups, "BldGID", "BLDGDESC");
+            var states = _db.StateMasters
+                          .Where(s => s.DISPSTATUS == 0)
+                          .OrderBy(s => s.STATEDESC)
+                          .ToList();
+            ViewBag.States = new SelectList(states, "STATEID", "STATEDESC");
+            ViewBag.ChildGenders = new SelectList(new[]
+            {
+                new { Value = 1, Text = "Male" },
+                new { Value = 2, Text = "Female" }
+            }, "Value", "Text");
+            ViewBag.ChildPositions = new SelectList(new[]
+            {
+                new { Value = 1, Text = "Student" },
+                new { Value = 2, Text = "Graduated" },
+                new { Value = 3, Text = "Employee" },
+                new { Value = 4, Text = "Business" },
+                new { Value = 5, Text = "Others" }
+            }, "Value", "Text");
+            ViewBag.ChildMaritalStatuses = new SelectList(new[]
+            {
+                new { Value = 1, Text = "Single" },
+                new { Value = 2, Text = "Married" }
+            }, "Value", "Text");
+        }
+
+        private int CalculateAge(DateTime dob)
+        {
+            DateTime today = DateTime.Today;
+            int age = today.Year - dob.Year;
+            if (dob.Date > today.AddYears(-age)) age--;
+            return age;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        public ActionResult ViewLog()
+        {
+            string logPath = Server.MapPath("~/App_Data/debug.log");
+            return Content(System.IO.File.ReadAllText(logPath));
+        }
+    }
+}
+
