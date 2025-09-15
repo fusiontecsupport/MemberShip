@@ -573,6 +573,102 @@ namespace ClubMembership.Controllers
             {
                 var user = model.GetUser();
                 user.NPassword = model.Password;
+                // Ensure CateTid is set to avoid DB NOT NULL constraint violations
+                if (!user.CateTid.HasValue)
+                {
+                    using (var db0 = new ClubMembershipDBEntities())
+                    {
+                        // Pick a sensible default: first active category
+                        var defaultCateTid = db0.Database
+                            .SqlQuery<int?>(
+                                "SELECT TOP 1 CateTid FROM CategoryTypeMaster WHERE Dispstatus = 0 ORDER BY CateTid")
+                            .FirstOrDefault();
+
+                        if (defaultCateTid.HasValue)
+                        {
+                            user.CateTid = defaultCateTid.Value;
+                        }
+                        else
+                        {
+                            // No active categories exist; cannot proceed safely
+                            ModelState.AddModelError("CateTid", "No active Category Type found. Please create a Category Type first.");
+                            return View(model);
+                        }
+                    }
+                }
+                // Ensure MemberID is set to satisfy DB NOT NULL constraint by pre-creating a minimal MemberShipMaster
+                if (!user.MemberID.HasValue)
+                {
+                    using (var db = new ApplicationDbContext())
+                    {
+                        // Determine a default membership type (first active)
+                        var memberType = db.MemberShipTypeMasters
+                            .Where(m => m.DisplayStatus == 0)
+                            .OrderBy(m => m.MembershipFee)
+                            .Select(m => new { m.MemberTypeId, m.MembershipFee, m.NoOfYears })
+                            .FirstOrDefault();
+
+                        if (memberType == null)
+                        {
+                            ModelState.AddModelError("MemberID", "No active Membership Type found. Please configure Membership Types first.");
+                            return View(model);
+                        }
+
+                        // Generate next MemberNo
+                        int nextMemberNo = (db.MemberShipMasters.Max(m => (int?)m.MemberNo) ?? 999) + 1;
+                        string registerYear = DateTime.Now.Year.ToString();
+                        string dobYear = model.DOB.Year.ToString();
+                        string memberNoStr = nextMemberNo.ToString().PadLeft(3, '0');
+                        string memberDNo = $"{registerYear}{dobYear}{memberNoStr}";
+
+                        // Calculate age
+                        int age = DateTime.Today.Year - model.DOB.Year;
+                        if (model.DOB.Date > DateTime.Today.AddYears(-age)) age--;
+
+                        var renewalDate = DateTime.Now.AddYears(memberType.NoOfYears);
+
+                        var preMember = new MemberShipMaster
+                        {
+                            UIserID = model.UserName,
+                            RegstrId = "1",
+                            MemberNo = nextMemberNo,
+                            MemberDNo = memberDNo,
+                            Member_Reg_Date = DateTime.Now,
+                            Member_Name = ($"{model.FirstName} {model.LastName}").Trim(),
+                            Gender = string.Equals(model.Gender, "Male", StringComparison.OrdinalIgnoreCase) ? 1 : 2,
+                            Member_DOB = model.DOB,
+                            Member_Age = age.ToString(),
+                            BldGID = 1,
+                            Member_Mobile_No = model.MobileNo,
+                            Member_EmailID = model.Email,
+                            Member_Addr1 = "Address1",
+                            StateID = 1,
+                            Member_Pincode = "000000",
+                            Member_Country = "India",
+                            Member_Per_Addr1 = "Address1",
+                            PStateID = 1,
+                            Member_Per_Pincode = "000000",
+                            Member_Per_Country = "India",
+                            CreatedBy = model.UserName,
+                            CreatedDateTime = DateTime.Now,
+                            DispStatus = 1,
+                            Member_Sdate = DateTime.Now,
+                            Member_Edate = renewalDate,
+                            Reference_By = "Self",
+                            Reference_Contact_No = model.MobileNo,
+                            UserName = model.UserName,
+                            NPassword = model.Password,
+                            MemberTypeId = memberType.MemberTypeId,
+                            MemberTypeAmount = memberType.MembershipFee,
+                            CateTDesc = null
+                        };
+
+                        db.MemberShipMasters.Add(preMember);
+                        db.SaveChanges();
+
+                        user.MemberID = preMember.MemberID;
+                    }
+                }
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

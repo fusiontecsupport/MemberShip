@@ -3,7 +3,11 @@
   "WorkspaceRootPath": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|e:\\fusiontec\\membership\\clubmembership\\clubmembership\\clubmembership\\clubmembership\\domain\\domain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|e:\\fusiontec\\membership\\clubmembership\\clubmembership\\clubmembership\\clubmembership\\controllers\\groupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\groupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\domain\\domain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\domain\\domain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -174,10 +178,6 @@
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\profilemaster\\_memberform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\groupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\groupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\mediaunitmaster\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\mediaunitmaster\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -226,7 +226,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 24,
+          "SelectedChildIndex": 63,
           "Children": [
             {
               "$type": "Bookmark",
@@ -298,7 +298,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Form.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml",
@@ -310,7 +310,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MinutesOfMeeting.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MinutesOfMeeting.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MinutesOfMeeting.cs",
@@ -322,7 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Notifications.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Notifications.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Home\\Notifications.cshtml",
@@ -334,7 +334,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Shared\\_Layout.cshtml",
@@ -346,7 +346,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Gallery.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Gallery.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Content\\Gallery.cshtml",
@@ -358,7 +358,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Announcements.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Announcements.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Content\\Announcements.cshtml",
@@ -370,7 +370,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "AdminDashboard.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\AdminDashboard.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Home\\AdminDashboard.cshtml",
@@ -382,7 +382,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Domain.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Domain\\Domain.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Domain\\Domain.cs",
@@ -390,12 +390,11 @@
               "RelativeToolTip": "ClubMembership\\Domain\\Domain.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAADwvyMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-27T06:47:37.625Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-27T06:47:37.625Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "GlobalExceptionFilter.cs",
               "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Filters\\GlobalExceptionFilter.cs",
               "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Filters\\GlobalExceptionFilter.cs",
@@ -434,7 +433,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "MembersController.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\MembersController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\MembersController.cs",
@@ -446,7 +445,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\ApplicationDbContext.cs",
@@ -458,7 +457,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "HomeController.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\HomeController.cs",
@@ -470,7 +469,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "AccountController.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\AccountController.cs",
@@ -482,7 +481,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "FilterConfig.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Start\\FilterConfig.cs",
               "RelativeDocumentMoniker": "ClubMembership\\App_Start\\FilterConfig.cs",
@@ -494,7 +493,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "Global.asax.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Global.asax.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Global.asax.cs",
@@ -506,7 +505,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Login.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Account\\Login.cshtml",
@@ -518,7 +517,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "ProfileMasterController.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\ProfileMasterController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\ProfileMasterController.cs",
@@ -530,7 +529,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "RenewalSubmitRequest.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\RenewalSubmitRequest.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\RenewalSubmitRequest.cs",
@@ -542,7 +541,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "Web.config",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Web.config",
               "RelativeDocumentMoniker": "ClubMembership\\Web.config",
@@ -555,7 +554,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "MemberShipMaster.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipMaster.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MemberShipMaster.cs",
@@ -567,7 +566,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "UserDashboardViewModel.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\UserDashboardViewModel.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\UserDashboardViewModel.cs",
@@ -591,7 +590,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "PaymentTypeTotal.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\PaymentTypeTotal.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\PaymentTypeTotal.cs",
@@ -603,7 +602,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "MemberShipPaymentDetail.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipPaymentDetail.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MemberShipPaymentDetail.cs",
@@ -615,7 +614,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Home\\Index.cshtml",
@@ -627,7 +626,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "AccountViewModels.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\AccountViewModels.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\AccountViewModels.cs",
@@ -639,7 +638,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "Login_Register.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Register\\Login_Register.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Register\\Login_Register.cshtml",
@@ -651,7 +650,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "RegisterController.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\RegisterController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\RegisterController.cs",
@@ -663,7 +662,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "Create.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\Create.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\ProfileMaster\\Create.cshtml",
@@ -675,7 +674,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "Create.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Create.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Members\\Create.cshtml",
@@ -687,7 +686,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "MemberShipODetail.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipODetail.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MemberShipODetail.cs",
@@ -699,7 +698,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "_Login.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Shared\\_Login.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Shared\\_Login.cshtml",
@@ -711,7 +710,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "debug.log",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Data\\debug.log",
               "RelativeDocumentMoniker": "ClubMembership\\App_Data\\debug.log",
@@ -723,7 +722,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "RouteConfig.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Start\\RouteConfig.cs",
               "RelativeDocumentMoniker": "ClubMembership\\App_Start\\RouteConfig.cs",
@@ -735,7 +734,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Edit.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Members\\Edit.cshtml",
@@ -747,7 +746,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Delete.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Members\\Delete.cshtml",
@@ -759,7 +758,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "Index - 30082024.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Index - 30082024.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Home\\Index - 30082024.cshtml",
@@ -771,7 +770,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "MemberShipTypeMaster.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipTypeMaster.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MemberShipTypeMaster.cs",
@@ -783,7 +782,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "Index.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Index.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Members\\Index.cshtml",
@@ -795,7 +794,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "Index.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\Index.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\ProfileMaster\\Index.cshtml",
@@ -807,7 +806,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "MemberProfileViewModel.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberProfileViewModel.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MemberProfileViewModel.cs",
@@ -819,7 +818,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "Project_Readme.html",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Project_Readme.html",
               "RelativeDocumentMoniker": "ClubMembership\\Project_Readme.html",
@@ -831,7 +830,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "Web.config",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Web.config",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Web.config",
@@ -843,19 +842,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 0,
               "Title": "GroupsController.cs",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\GroupsController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\GroupsController.cs",
               "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\GroupsController.cs",
               "RelativeToolTip": "ClubMembership\\Controllers\\GroupsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAwwA8AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-11T18:54:10.78Z"
+              "WhenOpened": "2025-08-11T18:54:10.78Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "_MemberForm.cshtml",
               "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\_MemberForm.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\ProfileMaster\\_MemberForm.cshtml",
