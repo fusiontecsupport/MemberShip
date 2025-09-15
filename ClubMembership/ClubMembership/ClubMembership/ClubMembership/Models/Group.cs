@@ -7,7 +7,6 @@ namespace ClubMembership.Models
     {
         public Group()
         {
-            Roles = new List<ApplicationRoleGroup>();
         }
 
 
@@ -22,6 +21,11 @@ namespace ClubMembership.Models
         public virtual int Id { get; set; }
 
         public virtual string Name { get; set; }
-        public virtual ICollection<ApplicationRoleGroup> Roles { get; set; }
+        private ICollection<ApplicationRoleGroup> _roles;
+        public virtual ICollection<ApplicationRoleGroup> Roles
+        {
+            get { return _roles ?? (_roles = new List<ApplicationRoleGroup>()); }
+            protected set { _roles = value; }
+        }
     }
 }

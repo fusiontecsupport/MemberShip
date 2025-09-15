@@ -1,225 +1,222 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\",
+  "WorkspaceRootPath": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|d:\\fusiontec client completedprojects\\clubmembership\\clubmembership\\clubmembership\\clubmembership\\domain\\domain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\domain\\domain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|d:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\minutesofmeeting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\minutesofmeeting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Notifications.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClubMembership\\Views\\Home\\Notifications.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Gallery.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClubMembership\\Views\\Content\\Gallery.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Announcements.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClubMembership\\Views\\Content\\Announcements.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\memberscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\memberscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\members\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\members\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\AdminDashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClubMembership\\Views\\Home\\AdminDashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\app_start\\filterconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\app_start\\filterconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Filters\\GlobalExceptionFilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Filters\\GlobalExceptionFilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\renewalsubmitrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\renewalsubmitrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\membershipmaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\membershipmaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\userdashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\userdashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\paymenttypetotal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\paymenttypetotal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\membershippaymentdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\membershippaymentdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\accountviewmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\accountviewmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\profilemastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\profilemastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\members\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\members\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\membershipodetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\membershipodetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\profilemaster\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\profilemaster\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\register\\login_register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\register\\login_register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\app_start\\routeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\app_start\\routeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\app_data\\debug.log||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\app_data\\debug.log||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\shared\\_login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\shared\\_login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\members\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\members\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\home\\index - 30082024.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\home\\index - 30082024.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\membershiptypemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\membershiptypemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\members\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\members\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\profilemaster\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\profilemaster\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\memberprofileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\memberprofileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\project_readme.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\project_readme.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\profilemaster\\_memberform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\profilemaster\\_memberform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\groupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\groupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\groupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\mediaunitmaster\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|e:\\fusiontec\\membership\\clubmembership\\clubmembership\\clubmembership\\clubmembership\\domain\\domain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\domain\\domain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\minutesofmeeting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\minutesofmeeting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Notifications.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClubMembership\\Views\\Home\\Notifications.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Gallery.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClubMembership\\Views\\Content\\Gallery.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Announcements.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClubMembership\\Views\\Content\\Announcements.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\memberscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\memberscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\members\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\members\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\AdminDashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClubMembership\\Views\\Home\\AdminDashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\app_start\\filterconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\app_start\\filterconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Filters\\GlobalExceptionFilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\renewalsubmitrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\renewalsubmitrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\membershipmaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\membershipmaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\userdashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\userdashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\paymenttypetotal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\paymenttypetotal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\membershippaymentdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\membershippaymentdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\accountviewmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\accountviewmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\profilemastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\profilemastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\members\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\members\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\membershipodetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\membershipodetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\profilemaster\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\profilemaster\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\register\\login_register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\register\\login_register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\app_start\\routeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\app_start\\routeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\app_data\\debug.log||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\app_data\\debug.log||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\shared\\_login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\shared\\_login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\members\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\members\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\home\\index - 30082024.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\home\\index - 30082024.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\membershiptypemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\membershiptypemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\members\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\members\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\profilemaster\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\profilemaster\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\memberprofileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\memberprofileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\project_readme.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\project_readme.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\profilemaster\\_memberform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\profilemaster\\_memberform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\mediaunitmaster\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\mediaunitmaster\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\masters\\statemastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\controllers\\masters\\statemastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\controllers\\masters\\statemastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\statemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\models\\statemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\models\\statemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\HP\\AppData\\Local\\Temp\\u4hungls.cshtml||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\costfactormaster\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\costfactormaster\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\costfactormaster\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\studiobill\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\clubmembership\\views\\studiobill\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:clubmembership\\views\\studiobill\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\RenewalPopupViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\RenewalPopupViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9A53AD86-F83F-4992-99D1-33DAC7C4CBB5}|ClubMembership\\ClubMembership.csproj|solutionrelative:ClubMembership\\Models\\RenewalPopupViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\FeedItemViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\FeedItemViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\FeedItemViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\NotificationMaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\NotificationMaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\NotificationMaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -229,7 +226,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 23,
+          "SelectedChildIndex": 63,
           "Children": [
             {
               "$type": "Bookmark",
@@ -296,12 +293,16 @@
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Form.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\MinutesOfMeeting\\Form.cshtml",
               "ViewState": "AgIAAHQBAAAAAAAAAAAAAIQBAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -309,11 +310,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MinutesOfMeeting.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MinutesOfMeeting.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MinutesOfMeeting.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MinutesOfMeeting.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MinutesOfMeeting.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MinutesOfMeeting.cs",
               "RelativeToolTip": "ClubMembership\\Models\\MinutesOfMeeting.cs",
               "ViewState": "AgIAAFEAAAAAAAAAAAAiwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -321,11 +322,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Notifications.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Notifications.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Notifications.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Home\\Notifications.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Notifications.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Notifications.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Home\\Notifications.cshtml",
               "ViewState": "AgIAAE4BAAAAAAAAAAAAAG8BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -333,11 +334,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Shared\\_Layout.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Shared\\_Layout.cshtml",
               "ViewState": "AgIAACMBAAAAAAAAAAAAACYAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -345,11 +346,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Gallery.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Gallery.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Gallery.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Content\\Gallery.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Gallery.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Gallery.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Content\\Gallery.cshtml",
               "ViewState": "AgIAAP0BAAAAAAAAAAAWwAYCAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -357,11 +358,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Announcements.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Announcements.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Announcements.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Content\\Announcements.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Announcements.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Content\\Announcements.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Content\\Announcements.cshtml",
               "ViewState": "AgIAAEcBAAAAAAAAAAAkwEEBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -369,11 +370,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "AdminDashboard.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\AdminDashboard.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\AdminDashboard.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Home\\AdminDashboard.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\AdminDashboard.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\AdminDashboard.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Home\\AdminDashboard.cshtml",
               "ViewState": "AgIAAE8BAAAAAAAAANiGwI0BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -381,25 +382,23 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Domain.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Domain\\Domain.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Domain\\Domain.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Domain\\Domain.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Domain\\Domain.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Domain\\Domain.cs",
               "RelativeToolTip": "ClubMembership\\Domain\\Domain.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAADwvxQAAABUAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAADwvyMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-27T06:47:37.625Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "GlobalExceptionFilter.cs",
               "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Filters\\GlobalExceptionFilter.cs",
-              "RelativeDocumentMoniker": "Filters\\GlobalExceptionFilter.cs",
               "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Filters\\GlobalExceptionFilter.cs",
-              "RelativeToolTip": "Filters\\GlobalExceptionFilter.cs",
               "ViewState": "AgIAACkAAAAAAAAAAAAqwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-19T21:49:30.15Z"
@@ -409,9 +408,7 @@
               "DocumentIndex": 54,
               "Title": "NotificationMaster.cs",
               "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\NotificationMaster.cs",
-              "RelativeDocumentMoniker": "Models\\NotificationMaster.cs",
               "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\NotificationMaster.cs",
-              "RelativeToolTip": "Models\\NotificationMaster.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-19T21:37:57.21Z"
@@ -421,9 +418,7 @@
               "DocumentIndex": 53,
               "Title": "FeedItemViewModel.cs",
               "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\FeedItemViewModel.cs",
-              "RelativeDocumentMoniker": "Models\\FeedItemViewModel.cs",
               "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\FeedItemViewModel.cs",
-              "RelativeToolTip": "Models\\FeedItemViewModel.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAjwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-19T11:52:35.798Z"
@@ -439,11 +434,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "MembersController.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\MembersController.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\MembersController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\MembersController.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\MembersController.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\MembersController.cs",
               "RelativeToolTip": "ClubMembership\\Controllers\\MembersController.cs",
               "ViewState": "AgIAAAQEAAAAAAAAAAApwM0DAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -451,11 +446,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\ApplicationDbContext.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\ApplicationDbContext.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\ApplicationDbContext.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\ApplicationDbContext.cs",
               "RelativeToolTip": "ClubMembership\\Models\\ApplicationDbContext.cs",
               "ViewState": "AgIAAB8AAAAAAAAAAAA0wCsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -463,11 +458,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "HomeController.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\HomeController.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\HomeController.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\HomeController.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\HomeController.cs",
               "RelativeToolTip": "ClubMembership\\Controllers\\HomeController.cs",
               "ViewState": "AgIAAFgCAAAAAAAAAAAWwGsCAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -475,11 +470,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "AccountController.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\AccountController.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\AccountController.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\AccountController.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\AccountController.cs",
               "RelativeToolTip": "ClubMembership\\Controllers\\AccountController.cs",
               "ViewState": "AgIAAFkAAAAAAAAAAAAWwFwAAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -487,11 +482,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "FilterConfig.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Start\\FilterConfig.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Start\\FilterConfig.cs",
               "RelativeDocumentMoniker": "ClubMembership\\App_Start\\FilterConfig.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Start\\FilterConfig.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Start\\FilterConfig.cs",
               "RelativeToolTip": "ClubMembership\\App_Start\\FilterConfig.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAA6wAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -499,11 +494,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "Global.asax.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Global.asax.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Global.asax.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Global.asax.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Global.asax.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Global.asax.cs",
               "RelativeToolTip": "ClubMembership\\Global.asax.cs",
               "ViewState": "AgIAAEUAAAAAAAAAAAAIwDwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -511,11 +506,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Login.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Account\\Login.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Account\\Login.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Account\\Login.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Account\\Login.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Account\\Login.cshtml",
               "ViewState": "AgIAAM4AAAAAAAAAAAAowN8AAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -523,11 +518,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "ProfileMasterController.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\ProfileMasterController.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\ProfileMasterController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\ProfileMasterController.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\ProfileMasterController.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\ProfileMasterController.cs",
               "RelativeToolTip": "ClubMembership\\Controllers\\ProfileMasterController.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAAGwBAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -535,11 +530,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "RenewalSubmitRequest.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\RenewalSubmitRequest.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\RenewalSubmitRequest.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\RenewalSubmitRequest.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\RenewalSubmitRequest.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\RenewalSubmitRequest.cs",
               "RelativeToolTip": "ClubMembership\\Models\\RenewalSubmitRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -547,11 +542,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "Web.config",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Web.config",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Web.config",
               "RelativeDocumentMoniker": "ClubMembership\\Web.config",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Web.config",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Web.config",
               "RelativeToolTip": "ClubMembership\\Web.config",
               "ViewState": "AgIAAHIAAAAAAAAAAAAAAIcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
@@ -560,11 +555,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "MemberShipMaster.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipMaster.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipMaster.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MemberShipMaster.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipMaster.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipMaster.cs",
               "RelativeToolTip": "ClubMembership\\Models\\MemberShipMaster.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAALoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -572,11 +567,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "UserDashboardViewModel.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\UserDashboardViewModel.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\UserDashboardViewModel.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\UserDashboardViewModel.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\UserDashboardViewModel.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\UserDashboardViewModel.cs",
               "RelativeToolTip": "ClubMembership\\Models\\UserDashboardViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAvwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -586,9 +581,9 @@
               "$type": "Document",
               "DocumentIndex": 52,
               "Title": "RenewalPopupViewModel.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\RenewalPopupViewModel.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\RenewalPopupViewModel.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\RenewalPopupViewModel.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\RenewalPopupViewModel.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\RenewalPopupViewModel.cs",
               "RelativeToolTip": "ClubMembership\\Models\\RenewalPopupViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -596,11 +591,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "PaymentTypeTotal.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\PaymentTypeTotal.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\PaymentTypeTotal.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\PaymentTypeTotal.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\PaymentTypeTotal.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\PaymentTypeTotal.cs",
               "RelativeToolTip": "ClubMembership\\Models\\PaymentTypeTotal.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -608,11 +603,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "MemberShipPaymentDetail.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipPaymentDetail.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipPaymentDetail.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MemberShipPaymentDetail.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipPaymentDetail.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipPaymentDetail.cs",
               "RelativeToolTip": "ClubMembership\\Models\\MemberShipPaymentDetail.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAA1wEIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -620,11 +615,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Index.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Index.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Home\\Index.cshtml",
               "ViewState": "AgIAAHsAAAAAAAAAAAD4v3sAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -632,11 +627,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "AccountViewModels.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\AccountViewModels.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\AccountViewModels.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\AccountViewModels.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\AccountViewModels.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\AccountViewModels.cs",
               "RelativeToolTip": "ClubMembership\\Models\\AccountViewModels.cs",
               "ViewState": "AgIAAG4AAAAAAAAAAAAcwHwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -644,11 +639,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "Login_Register.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Register\\Login_Register.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Register\\Login_Register.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Register\\Login_Register.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Register\\Login_Register.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Register\\Login_Register.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Register\\Login_Register.cshtml",
               "ViewState": "AgIAAPkAAAAAAAAAAAAAABQBAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -656,11 +651,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "RegisterController.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\RegisterController.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\RegisterController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\RegisterController.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\RegisterController.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\RegisterController.cs",
               "RelativeToolTip": "ClubMembership\\Controllers\\RegisterController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAHkBAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -668,11 +663,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "Create.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\Create.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\Create.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\ProfileMaster\\Create.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\Create.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\Create.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\ProfileMaster\\Create.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAMEFAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -680,11 +675,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "Create.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Create.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Create.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Members\\Create.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Create.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Create.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Members\\Create.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -692,11 +687,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "MemberShipODetail.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipODetail.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipODetail.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MemberShipODetail.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipODetail.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipODetail.cs",
               "RelativeToolTip": "ClubMembership\\Models\\MemberShipODetail.cs",
               "ViewState": "AgIAACUAAAAAAAAAAAAwwC4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -704,11 +699,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "_Login.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Shared\\_Login.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Shared\\_Login.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Shared\\_Login.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Shared\\_Login.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Shared\\_Login.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Shared\\_Login.cshtml",
               "ViewState": "AgIAABsAAAAAAAAAAAAAACEAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -716,11 +711,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "debug.log",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Data\\debug.log",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Data\\debug.log",
               "RelativeDocumentMoniker": "ClubMembership\\App_Data\\debug.log",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Data\\debug.log",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Data\\debug.log",
               "RelativeToolTip": "ClubMembership\\App_Data\\debug.log",
               "ViewState": "AgIAAKwMAAAAAAAAAAAAAO4MAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
@@ -728,11 +723,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "RouteConfig.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Start\\RouteConfig.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Start\\RouteConfig.cs",
               "RelativeDocumentMoniker": "ClubMembership\\App_Start\\RouteConfig.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Start\\RouteConfig.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\App_Start\\RouteConfig.cs",
               "RelativeToolTip": "ClubMembership\\App_Start\\RouteConfig.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAQwBMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -740,11 +735,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Edit.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Edit.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Edit.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Members\\Edit.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Edit.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Edit.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Members\\Edit.cshtml",
               "ViewState": "AgIAAFMAAAAAAAAAAAAowEMAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -752,11 +747,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "Delete.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Delete.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Delete.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Members\\Delete.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Delete.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Delete.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Members\\Delete.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -764,11 +759,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "Index - 30082024.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Index - 30082024.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Index - 30082024.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Home\\Index - 30082024.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Index - 30082024.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Home\\Index - 30082024.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Home\\Index - 30082024.cshtml",
               "ViewState": "AgIAAEQBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -776,11 +771,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "MemberShipTypeMaster.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipTypeMaster.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipTypeMaster.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MemberShipTypeMaster.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipTypeMaster.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberShipTypeMaster.cs",
               "RelativeToolTip": "ClubMembership\\Models\\MemberShipTypeMaster.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAQwB8AAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -788,11 +783,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Index.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Index.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Members\\Index.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Index.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Members\\Index.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Members\\Index.cshtml",
               "ViewState": "AgIAAEUAAAAAAAAAAAAqwF8AAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -800,11 +795,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\Index.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\Index.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\ProfileMaster\\Index.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\Index.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\Index.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\ProfileMaster\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -812,11 +807,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "MemberProfileViewModel.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberProfileViewModel.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberProfileViewModel.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\MemberProfileViewModel.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberProfileViewModel.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\MemberProfileViewModel.cs",
               "RelativeToolTip": "ClubMembership\\Models\\MemberProfileViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -824,11 +819,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "Project_Readme.html",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Project_Readme.html",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Project_Readme.html",
               "RelativeDocumentMoniker": "ClubMembership\\Project_Readme.html",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Project_Readme.html",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Project_Readme.html",
               "RelativeToolTip": "ClubMembership\\Project_Readme.html",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
@@ -836,11 +831,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "Web.config",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Web.config",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Web.config",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Web.config",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Web.config",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Web.config",
               "RelativeToolTip": "ClubMembership\\Views\\Web.config",
               "ViewState": "AgIAABUAAAAAAAAAAAAAABIAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
@@ -848,23 +843,24 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 0,
               "Title": "GroupsController.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\GroupsController.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\GroupsController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\GroupsController.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\GroupsController.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\GroupsController.cs",
               "RelativeToolTip": "ClubMembership\\Controllers\\GroupsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAwwA8AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-11T18:54:10.78Z"
+              "WhenOpened": "2025-08-11T18:54:10.78Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "_MemberForm.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\_MemberForm.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\_MemberForm.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\ProfileMaster\\_MemberForm.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\_MemberForm.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\ProfileMaster\\_MemberForm.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\ProfileMaster\\_MemberForm.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAABeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -874,9 +870,9 @@
               "$type": "Document",
               "DocumentIndex": 44,
               "Title": "Form.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\MediaUnitMaster\\Form.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\MediaUnitMaster\\Form.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\MediaUnitMaster\\Form.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\MediaUnitMaster\\Form.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\MediaUnitMaster\\Form.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\MediaUnitMaster\\Form.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -886,9 +882,9 @@
               "$type": "Document",
               "DocumentIndex": 45,
               "Title": "StateMasterController.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\Masters\\StateMasterController.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\Masters\\StateMasterController.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Controllers\\Masters\\StateMasterController.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\Masters\\StateMasterController.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Controllers\\Masters\\StateMasterController.cs",
               "RelativeToolTip": "ClubMembership\\Controllers\\Masters\\StateMasterController.cs",
               "ViewState": "AgIAAIcAAAAAAAAAAAAAAJUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -898,9 +894,9 @@
               "$type": "Document",
               "DocumentIndex": 46,
               "Title": "Register.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Account\\Register.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Account\\Register.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\Account\\Register.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Account\\Register.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\Account\\Register.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\Account\\Register.cshtml",
               "ViewState": "AgIAAPsAAAAAAAAAAAAAAMkAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -910,9 +906,9 @@
               "$type": "Document",
               "DocumentIndex": 47,
               "Title": "Startup.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Startup.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Startup.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Startup.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Startup.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Startup.cs",
               "RelativeToolTip": "ClubMembership\\Startup.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -922,9 +918,9 @@
               "$type": "Document",
               "DocumentIndex": 48,
               "Title": "StateMaster.cs",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\StateMaster.cs",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\StateMaster.cs",
               "RelativeDocumentMoniker": "ClubMembership\\Models\\StateMaster.cs",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\StateMaster.cs",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Models\\StateMaster.cs",
               "RelativeToolTip": "ClubMembership\\Models\\StateMaster.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -934,9 +930,9 @@
               "$type": "Document",
               "DocumentIndex": 50,
               "Title": "Form.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\CostFactorMaster\\Form.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\CostFactorMaster\\Form.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\CostFactorMaster\\Form.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\CostFactorMaster\\Form.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\CostFactorMaster\\Form.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\CostFactorMaster\\Form.cshtml",
               "ViewState": "AgIAABEAAAAAAAAAAAAAACIAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -946,9 +942,9 @@
               "$type": "Document",
               "DocumentIndex": 51,
               "Title": "Form.cshtml",
-              "DocumentMoniker": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\StudioBill\\Form.cshtml",
+              "DocumentMoniker": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\StudioBill\\Form.cshtml",
               "RelativeDocumentMoniker": "ClubMembership\\Views\\StudioBill\\Form.cshtml",
-              "ToolTip": "D:\\FUSIONTEC CLIENT COMPLETEDPROJECTS\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\StudioBill\\Form.cshtml",
+              "ToolTip": "E:\\FusionTec\\MemberShip\\ClubMembership\\ClubMembership\\ClubMembership\\ClubMembership\\Views\\StudioBill\\Form.cshtml",
               "RelativeToolTip": "ClubMembership\\Views\\StudioBill\\Form.cshtml",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
