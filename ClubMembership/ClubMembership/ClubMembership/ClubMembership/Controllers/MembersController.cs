@@ -517,7 +517,7 @@ namespace ClubMembership.Controllers
                                 Amount = memberType.MembershipFee,
                                 Payment_Type = "Online",
                                 Payment_Status = "Pending",
-                                Payment_Plan = "Standard",
+                                Payment_Plan = memberType.MemberTypeDescription,
                                 Payment_Receipt_No = string.Format("MR/{0}/{1}", fy, nextSerial.ToString("D3")),
                                 ReceiptSerialNo = nextSerial,
                                 ReceiptDocumentNo = fy,

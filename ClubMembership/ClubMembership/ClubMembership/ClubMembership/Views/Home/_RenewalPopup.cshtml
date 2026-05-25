@@ -49,7 +49,7 @@
                         <div class="plan-title">@plan.Text</div>
                         <div class="plan-duration">@(plan.Text.Contains("Yearly") ? "Valid for 1 Year" : "Lifetime Access")</div>
                     </div>
-                    <div class="plan-price">₹@(plan.Text.Contains("Yearly") ? "300" : "3000")</div>
+                    <div class="plan-price">INR @(plan.Text.Contains("Yearly") ? "300" : "25,000")</div>
                 </div>
             </div>
         }

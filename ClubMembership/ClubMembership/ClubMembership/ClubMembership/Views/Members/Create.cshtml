@@ -1019,15 +1019,7 @@
                                         <option value="">-- Select Membership Type --</option>
                                         @foreach (var item in ViewBag.MemberTypes as SelectList)
                                         {
-                                            var textParts = item.Text.Split(new[] { '-' }, 2);
-                                            var feePart = textParts.Length > 1 ? textParts[1] : "";
-                                            var feeMatch = System.Text.RegularExpressions.Regex.Match(feePart, @"\d+");
-                                            var fee = feeMatch.Success ? feeMatch.Value : "0";
-
-                                            var yearMatch = System.Text.RegularExpressions.Regex.Match(item.Text, @"(\d+)\s*year");
-                                            var years = yearMatch.Success ? yearMatch.Groups[1].Value : "1";
-
-                                            <option value="@item.Value" data-fee="@fee" data-years="@years">
+                                            <option value="@item.Value" data-plan-name="@item.Text">
                                                 @item.Text
                                             </option>
                                         }
@@ -1056,24 +1048,44 @@
 
                             <!-- Membership Type Details -->
                             <div id="membershipTypeDetails" class="mt-4" style="display: none;">
-                                <!-- Additional subscription info -->
                                 <div class="row mt-3">
-                                    <div class="col-md-6">
-                                        <div class="card bg-info text-white border-0">
+                                    <div class="col-md-6 col-lg-3 mb-3">
+                                        <div class="card membership-summary-card bg-primary text-white border-0">
+                                            <div class="card-body">
+                                                <h6 class="card-title"><i class="fas fa-rupee-sign mr-2"></i> Amount to Pay</h6>
+                                                <p class="card-text" id="membershipFee">Not selected</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3 mb-3">
+                                        <div class="card membership-summary-card bg-secondary text-white border-0">
+                                            <div class="card-body">
+                                                <h6 class="card-title"><i class="fas fa-hourglass-half mr-2"></i> Plan Validity</h6>
+                                                <p class="card-text" id="membershipDuration">Not selected</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3 mb-3">
+                                        <div class="card membership-summary-card bg-info text-white border-0">
                                             <div class="card-body">
                                                 <h6 class="card-title"><i class="fas fa-calendar-check mr-2"></i> Subscription Start</h6>
                                                 <p class="card-text" id="subscriptionStartDisplay">Not selected</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="card bg-warning text-dark border-0">
+                                    <div class="col-md-6 col-lg-3 mb-3">
+                                        <div class="card membership-summary-card bg-warning text-dark border-0">
                                             <div class="card-body">
                                                 <h6 class="card-title"><i class="fas fa-calendar-times mr-2"></i> Subscription End</h6>
                                                 <p class="card-text" id="subscriptionEndDisplay">Not selected</p>
+                                                <span id="membershipExpiry" class="d-none"></span>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="alert alert-light border mt-2 mb-0">
+                                    <strong>Pricing Note:</strong> Yearly Membership is INR 300 and Lifetime Membership is INR 25,000.
                                 </div>
                             </div>
                         </div>
@@ -1116,10 +1128,12 @@
             border-left: 4px solid #5e72e4;
         }
 
+        .membership-summary-card,
         .card.bg-info, .card.bg-warning {
             transition: transform 0.2s ease-in-out;
         }
 
+        .membership-summary-card:hover,
         .card.bg-info:hover, .card.bg-warning:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -1789,18 +1803,48 @@
 
 
 
+        function getMembershipPlanDetails(selectedOption) {
+            const planName = ((selectedOption && selectedOption.getAttribute("data-plan-name")) || (selectedOption && selectedOption.text) || "").toLowerCase();
+
+            if (planName.indexOf("yearly") !== -1) {
+                return {
+                    fee: 300,
+                    years: 1,
+                    durationLabel: "1 year"
+                };
+            }
+
+            if (planName.indexOf("lifetime") !== -1) {
+                return {
+                    fee: 25000,
+                    years: 100,
+                    durationLabel: "Lifetime access"
+                };
+            }
+
+            return {
+                fee: null,
+                years: 1,
+                durationLabel: "1 year"
+            };
+        }
+
+        function formatMembershipCurrency(amount) {
+            return amount === null ? "Contact admin" : `INR ${amount.toLocaleString('en-IN')}`;
+        }
+
         // Membership Type Selection Handler
         document.getElementById("SelectedMemberTypeId").addEventListener("change", function () {
             const selectedOption = this.options[this.selectedIndex];
             const detailsContainer = document.getElementById("membershipTypeDetails");
 
             if (this.value) {
-                const fee = selectedOption.getAttribute("data-fee");
-                const years = selectedOption.getAttribute("data-years");
+                const planDetails = getMembershipPlanDetails(selectedOption);
+                const years = planDetails.years;
 
                 // Update the details display
-                document.getElementById("membershipFee").textContent = `₹${fee}`;
-                document.getElementById("membershipDuration").textContent = `${years} year${years > 1 ? 's' : ''}`;
+                document.getElementById("membershipFee").textContent = formatMembershipCurrency(planDetails.fee);
+                document.getElementById("membershipDuration").textContent = planDetails.durationLabel;
 
                 // Calculate expiry date based on selected start date
                 const startDateInput = document.getElementById("SubscriptionStartDate");

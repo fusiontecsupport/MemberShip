@@ -222,6 +222,61 @@
             padding: 0.75rem 1rem;
         }
 
+        .membership-pricing-list {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .membership-pricing-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.9rem 1rem;
+            border: 1px solid #d9e2ff;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(106, 94, 241, 0.08), rgba(76, 201, 240, 0.08));
+        }
+
+        .membership-pricing-item strong {
+            color: #233876;
+            font-size: 1rem;
+        }
+
+        .membership-pricing-item span {
+            color: #4b5563;
+            font-weight: 600;
+        }
+
+        .selected-membership-price {
+            margin-top: 1rem;
+            padding: 1rem 1.1rem;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            color: #fff;
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.2);
+        }
+
+        .selected-membership-price__label {
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        .selected-membership-price__amount {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 0.35rem;
+        }
+
+        .selected-membership-price__meta {
+            margin-top: 0.35rem;
+            opacity: 0.9;
+        }
+
         /* Small devices (landscape phones, 576px and up) */
         @@media (min-width: 576px) {
             .auth-container {
@@ -481,6 +536,23 @@
                                 }
                             </select>
                             <span class="validation-error" id="membershipTypeValidation"></span>
+
+                            <div class="membership-pricing-list">
+                                <div class="membership-pricing-item">
+                                    <span>Yearly Membership</span>
+                                    <strong>INR 300</strong>
+                                </div>
+                                <div class="membership-pricing-item">
+                                    <span>Lifetime Membership</span>
+                                    <strong>INR 25,000</strong>
+                                </div>
+                            </div>
+
+                            <div class="selected-membership-price d-none" id="selectedMembershipPrice">
+                                <div class="selected-membership-price__label">Amount to Pay</div>
+                                <div class="selected-membership-price__amount" id="selectedMembershipAmount">INR 0</div>
+                                <div class="selected-membership-price__meta" id="selectedMembershipMeta"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -571,14 +643,50 @@
                     icon.toggleClass('fa-eye fa-eye-slash');
                 };
 
+                function getMembershipDisplayAmount(planName) {
+                    const normalizedPlan = (planName || '').toLowerCase();
+
+                    if (normalizedPlan.indexOf('yearly') !== -1) {
+                        return 300;
+                    }
+
+                    if (normalizedPlan.indexOf('lifetime') !== -1) {
+                        return 25000;
+                    }
+
+                    return null;
+                }
+
+                function formatMembershipAmount(amount) {
+                    return amount === null ? 'Contact Admin' : 'INR ' + amount.toLocaleString('en-IN');
+                }
+
+                function updateMembershipSelectionSummary() {
+                    const $dropdown = $('#membershipTypeDropdown');
+                    const selectedValue = $dropdown.val();
+                    const selectedText = $('#membershipTypeDropdown option:selected').text().trim();
+                    const amount = getMembershipDisplayAmount(selectedText);
+
+                    if (!selectedValue) {
+                        $('#membershipTypeValidation').text('Please select a membership type');
+                        $('#selectedMembershipPrice').addClass('d-none');
+                        $('#selectedMembershipAmount').text('INR 0');
+                        $('#selectedMembershipMeta').text('');
+                        return;
+                    }
+
+                    $('#membershipTypeValidation').text('');
+                    $('#selectedMembershipAmount').text(formatMembershipAmount(amount));
+                    $('#selectedMembershipMeta').text(selectedText + ' selected');
+                    $('#selectedMembershipPrice').removeClass('d-none');
+                }
+
                 // Handle membership type selection
                 $('#membershipTypeDropdown').change(function() {
-                    if ($(this).val() === "") {
-                        $('#membershipTypeValidation').text('Please select a membership type');
-                    } else {
-                        $('#membershipTypeValidation').text('');
-                    }
+                    updateMembershipSelectionSummary();
                 });
+
+                updateMembershipSelectionSummary();
 
                 // Start OTP timer
                 function startOtpTimer(duration, display) {

@@ -531,7 +531,7 @@ namespace ClubMembership.Controllers
                                 Amount = memberType.MembershipFee, // Default or from form
                                 Payment_Type = "Online", // Default or from form
                                 Payment_Status = "Success", // Default or from form
-                                Payment_Plan = "Standard", // Default or from form
+                                Payment_Plan = memberType.MemberTypeDescription,
                                 Payment_Receipt_No = receiptNo,
                                 ReceiptSerialNo = nextSerial,
                                 ReceiptDocumentNo = fy,
