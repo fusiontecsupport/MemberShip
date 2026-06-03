@@ -1,0 +1,404 @@
+﻿@using ClubMembership.Models;
+@model  ClubMembership.Models.CustomerMaster
+@{
+    ViewBag.Title = "Customer Master";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .req {
+        color: red;
+        font-size: 15px;
+    }
+</style>
+
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>  Customer Master  <div class="clearfix"> </div></h3>
+        </div>
+
+        @Html.Raw(ViewBag.msg)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel-body">
+                    <form action="@Url.Content("~/CustomerMaster/savedata")" method="post" accept-charset="utf-8" id="customermasterform" data-ng-controller="myController" name="customermasterform" onsubmit="return validate();">
+
+
+                        @Html.ValidationSummary(true)
+
+                        <fieldset id="CustomerMasterForm_info">
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+
+
+                                    <div class="col-md-4 hidden">
+                                        <div class="form-group">
+                                            <label>Primary  </label>
+                                            @Html.TextBoxFor(model => Model.CATEID, new { @class = "form-control  CATEID", @id = "CATEID" })
+                                            @Html.TextBoxFor(model => Model.CATENO, new { @class = "form-control  CATENO", @id = "CATENO" })
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Name <span class="req"> *</span></label>
+
+                                            @Html.TextBoxFor(model => Model.CATENAME, new { @class = "form-control  CATENAME", @id = "CATENAME", tabindex = "1" })
+                                            <input type="text" value="@Model.CATENAME" name="i_CATENAME" hidden />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Display Name </label>
+                                            @Html.TextBoxFor(model => Model.CATEDNAME, new { @class = "form-control  CATEDNAME", @id = "CATEDNAME", tabindex = "2" })
+                                        </div>
+
+                                    </div>
+                                 
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Gender</label>
+                                            @Html.DropDownList("CATESEX", null, "Select Gender", new { @class = "form-control CATESEX", @id = "CATESEX", tabindex = "3" })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    <div class="col-md-12">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Communication Address <span class="req"> *</span></label>
+                                                @Html.TextBoxFor(model => Model.CATEADDR, new { @class = "form-control  CATEADDR", @id = "CATEADDR", tabindex = "4" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Office Address</label>
+                                                @Html.TextBoxFor(model => Model.CATEOADDR, new { @class = "form-control  CATEOADDR", @id = "CATEOADDR", tabindex = "5" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>State <span class="req"> *</span></label>
+                                                @Html.DropDownList("STATEID", null, "Select State", new { @class = "form-control STATEID", @id = "STATEID", @required = "required", tabindex = "6", @onchange = "StateDetail()" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Location <span class="req"> *</span></label>
+                                                @Html.DropDownList("LOCTID", null, "Select Location", new { @class = "form-control LOCTID", @id = "LOCTID", @required = "required", tabindex = "7" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Pincode </label>
+                                                @Html.TextBoxFor(model => Model.CATEPCODE, new { @class = "form-control  CATEPCODE", @id = "CATEPCODE", tabindex = "8" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="CATEDOB">DOB</label>
+                                                @Html.TextBoxFor(model => model.CATEDOB, "{0:dd/MM/yyyy}", new { @class = "form-control CATEDOB datepicker", @id = "CATEDOB", @data_Val = false, @tabindex = "9" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="CATEDSGN">Customer Designation</label>
+                                                @Html.TextBoxFor(model => model.CATEDSGN, new { @class = "form-control CATEDSGN", @id = "CATEDSGN", @tabindex = "10" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label> Mobile 1<span class="req"> *</span></label>
+                                                @Html.TextBoxFor(model => Model.CATEPHN1, new { @class = "form-control  CATEPHN1", @id = "CATEPHN1", tabindex = "11" })
+                                                <input type="text" value="@Model.CATEPHN1" name="i_CATEPHN1" hidden />
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Mobile 2</label>
+                                                @Html.TextBoxFor(model => Model.CATEPHN4, new { @class = "form-control  CATEPHN4", @id = "CATEPHN4", tabindex = "12" })
+                                            <input type="text" value="@Model.CATEPHN4" name="i_CATEPHN4" hidden />
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Landline 1</label>
+                                                @Html.TextBoxFor(model => Model.CATEPHN3, new { @class = "form-control  CATEPHN3", @id = "CATEPHN3", tabindex = "13" })
+                                            <input type="text" value="@Model.CATEPHN3" name="i_CATEPHN3" hidden />
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Landline 2</label>
+
+                                                @Html.TextBoxFor(model => Model.CATEPHN2, new { @class = "form-control  CATEPHN2", @id = "CATEPHN2", tabindex = "14" })
+                                           `    <input type="text" value="@Model.CATEPHN2" name="i_CATEPHN2" hidden />
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Code<span class="req"> *</span></label>
+                                                @Html.TextBoxFor(model => Model.CATECODE, new { @class = "form-control CATECODE", @id = "CATECODE", tabindex = "15" })
+                                                @Html.ValidationMessageFor(model => Model.CATECODE)
+                                                <input type="text" value="@Model.CATECODE" name="i_CATECODE" hidden />
+                                                <div id="duplicateCodeError" style="color: red; display: none;">Duplicate code! Please enter a different code.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>ID Proof Name<span class="req"> *</span> </label>
+                                                @Html.TextBoxFor(model => Model.CATEPROOFNAME, new { @class = "form-control CATEPROOFNAME", @id = "CATEPROOFNAME", tabindex = "16" })
+                                                @Html.ValidationMessageFor(mode => Model.CATEPROOFNAME)
+                                                <input type="text" value="@Model.CATEPROOFNAME" name="i_CATEPROOFNAME" hidden />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>ID Proof No<span class="req"> *</span> </label>
+                                                @Html.TextBoxFor(model => Model.CATEPROOFNO, new { @class = "form-control CATEPROOFNO", @id = "CATEPROOFNO", tabindex = "17" })
+                                                @Html.ValidationMessageFor(mode => Model.CATEPROOFNO)
+                                                <input type="text" value="@Model.CATEPROOFNO" name="i_CATEPROOFNO" hidden />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Status </label>
+                                                @Html.DropDownList("DISPSTATUS", null, new { @class = "form-control", tabindex = "18" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Branch Name <span class="req"> *</span> </label>
+                                                @Html.DropDownList("BRNCHID", null, "Please select", new { @class = "form-control BRNCHID", @data_val = "true", @data_val_required = "Field is required", @id = "BRNCHID", tabindex = "19" })
+                                                @*@Html.ValidationMessageFor(model => model.CLRID, "", new { @class = "Text-danger" })*@
+                                            </div>
+                                        </div>
+                                        @*<div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="BranchName">Branch Name</label>
+                                                <input class="uname form-control hide" id="uname" name="uname" value="@Session["BRNCHNAME"]" />
+                                                @Html.DropDownList("BRNCHID", null, new { @class = "form-control BRNCHID", @id = "BRNCHID", @name = "BRNCHID", tabindex = "19" })
+                                            </div>
+                                        </div>*@
+
+                                    </div>
+                                    <div class="col-md-12 hidden">
+
+                                    </div>
+
+
+                                    <div class="col-md-12 hidden">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>CUSRID </label>
+                                                @Html.TextBoxFor(model => Model.CUSRID, new { @class = "form-control CUSRID", @id = "CUSRID" })
+                                                @Html.ValidationMessageFor(model => model.CUSRID)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>LMUSRID </label>
+                                                @Html.TextBoxFor(model => Model.LMUSRID, new { @class = "form-control  LMUSRID readonly", @id = "LMUSRID" })
+                                                @Html.ValidationMessageFor(model => model.LMUSRID)
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            <input type="submit" name="submit" value="Submit" class="btn btn-primary btn-sm pull-right"  ID="SaveButton" runat="server" OnClientClick="disableSaveButton();" OnClick="SaveButton_Click" Text="Save" />
+
+                            <input type="button" name="back" value="Go Back" class="btn btn-primary btn-sm pull-left" onclick="JavaScript:history.back()" />
+
+
+
+                        </fieldset>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @*<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script src="~/Scripts/jquery.validate_tab.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            $("#CATECODE").on("blur", function () {
+                var enteredCode = $(this).val();
+                $.ajax({
+                    url: "/CustomerMaster/CheckDuplicateCode",
+                    type: "POST",  // Change to POST
+                    data: { code: enteredCode },
+                    success: function (result) {
+                        if (result.isDuplicate) {
+                            $("#duplicateCodeError").show();
+                        } else {
+                            $("#duplicateCodeError").hide();
+                        }
+                    },
+                    error: function () {
+                        console.log("Error checking duplicate code");
+                    }
+                });
+            });
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $(".datepicker").datepicker({ dateFormat: 'dd/mm/yy' });
+
+            $('.msg').delay(1200).fadeOut(1000);
+
+            $(".CATECODE").keyup(function () {
+                $(this).val($(this).val().toUpperCase());
+            });
+
+            $(".CATENAME").keyup(function () {
+                var DNAME = $("#CATENAME").val();
+                var code = DNAME.substring(0, 3);
+                $('#CATEDNAME').val(DNAME);
+            });
+           
+            //$("#BRNCHID").on("change", function () {
+            //    var bname = $('#BRNCHID :selected').text();
+            //    var bid = $('#BRNCHID :selected').val();
+            //    $("#F_BRNCHID").val(bid);
+            //    $("#F_BRNCHNAME").val(bname);
+            //});
+
+            $("#customermasterform").on("submit", function () {
+                return validate();
+            });
+
+            
+            
+            //$(".STATEID, .LOCTID").on("change", function () {
+            //    StateDetail();
+            //});
+
+            $(".CATECODE").on("blur", function () {
+                checkDuplicateCode();
+            });
+
+        });
+        $(document).ready(function () {
+
+            $('.CATEPHN1').on('input', function () {
+                // Remove non-numeric characters
+                $(this).val(function (index, value) {
+                    return value.replace(/[^0-9]/g, '');
+                });
+            });
+
+        });
+        function disableSaveButton() {
+            document.getElementById("saveButton").disabled = true;
+        }
+
+        function validate() {
+            var bad = 0;
+
+            if (!$(".CATENAME").val()) { alert("Please Enter Customer Name"); $(".CATENAME").focus(); bad++; return false; }
+            if (!$(".CATESEX").val()) { alert("Please Select Gender"); $(".CATESEX").focus(); bad++; return false; }
+            if (!$(".CATEADDR").val()) { alert("Please Enter Customer Address"); $(".CATEADDR").focus(); bad++; return false; }
+            if (!$(".STATEID").val()) { alert("Please Select State"); $(".STATEID").focus(); bad++; return false; }
+            if (!$(".LOCTID").val()) { alert("Please Select Location"); $(".LOCTID").focus(); bad++; return false; }
+            if (!$(".CATEPHN1").val()) { alert("Please Enter Customer Mobile No."); $(".CATEPHN1").focus(); bad++; return false; }
+            if (!$(".CATECODE").val()) { alert("Please Enter Customer Code"); $(".CATECODE").focus(); bad++; return false; }
+            if (!$(".CATEPROOFNAME").val()) { alert("Please Enter Proof Name"); $(".CATEPROOFNAME").focus(); bad++; return false; }
+            if (!$(".CATEPROOFNO").val()) { alert("Please Enter Proof No"); $(".CATEPROOFNO").focus(); bad++; return false; }
+            if ($(".BRNCHID").val() == "") {
+                alert("Please Select Branch");
+                $(".BRNCHID").focus();
+                return false;
+            }
+            // Additional validation checks can be added as needed.
+
+            return bad < 1;
+        }
+
+
+
+       function StateDetail()
+            {
+                var stateid = $("#STATEID option:selected").val();
+                alert(stateid);
+
+                $(".LOCTID").empty();
+
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("GetLocationDetails", "CustomerMaster")/' + stateid, // we are calling json method
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data != "") {
+                            $(".LOCTID").append("<option value=''>Select Location</option>");
+                        } else {
+                            $(".LOCTID").append("<option value=''>No Record Found</option>");
+                        }
+                        $.each(data, function (k, v) {
+                            //if (v.HSNID == mcode) {
+
+                            //    $trCur.find(".LOCTID").append("<option value=" + v.HSNID + " selected >" + v.HSNCODE + " </option>");
+                            //}
+                            //else {
+                            $(".LOCTID").append("<option value=" + v.LOCTID + ">" + v.LOCTDESC + "</option>");
+                            //}
+
+                        })
+                       GetHSNDetails(obj)
+                    },
+                    error: function (ex) {
+                        alert('Failed to data ' + ex);
+                    }
+                });
+            }
+    </script>
+}
+
+
+
+
+
+
+
+

@@ -197,7 +197,7 @@ namespace ClubMembership.Controllers
 
             if (normalizedDescription.Contains("yearly"))
             {
-                return 10m;
+                return 300m;
             }
 
             return membershipFee;
@@ -779,7 +779,13 @@ namespace ClubMembership.Controllers
                     {
                         IsSuccess = false,
                         Title = "Payment verification failed",
-                        Message = "The payment response hash could not be verified."
+                        Message = "The payment response hash could not be verified.",
+                        OrderId = GetValue(responseFields, "order_id"),
+                        TransactionId = GetValue(responseFields, "transaction_id"),
+                        ResponseCode = GetValue(responseFields, "response_code"),
+                        PaymentMode = GetValue(responseFields, "payment_mode"),
+                        PaymentChannel = GetValue(responseFields, "payment_channel"),
+                        PaymentDatetime = GetValue(responseFields, "payment_datetime")
                     });
                 }
 
@@ -808,7 +814,13 @@ namespace ClubMembership.Controllers
                     {
                         IsSuccess = false,
                         Title = "Payment received",
-                        Message = $"Payment completed for order {orderId}, but the registration record was not found."
+                        Message = $"Payment completed for order {orderId}, but the registration record was not found.",
+                        OrderId = orderId,
+                        TransactionId = transactionId,
+                        ResponseCode = responseCode,
+                        PaymentMode = paymentMode,
+                        PaymentChannel = paymentChannel,
+                        PaymentDatetime = paymentDatetime
                     });
                 }
 

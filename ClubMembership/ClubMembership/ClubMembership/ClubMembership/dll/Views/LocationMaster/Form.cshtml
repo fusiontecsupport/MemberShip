@@ -1,0 +1,192 @@
+﻿@using ClubMembership.Models;
+@model ClubMembership.Models.LocationMaster
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .spacer5 {
+        height: 5px !important;
+    }
+
+    .req {
+        color: red;
+        font-size: 15px;
+    }
+</style>
+
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>  Location Master  <div class="clearfix"> </div></h3>
+        </div>
+
+        @Html.Raw(ViewBag.msg)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel-body">
+                    <form action="@Url.Content("~/LocationMaster/savedata")" method="post" accept-charset="utf-8" id="loactionmasterform" data-ng-controller="myController" name="loactionmasterform" onsubmit="return ValidateMyform(this,event);>
+                        @Html.ValidationSummary(true)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4 hidden">
+                                    <div class="form-group">
+                                        <label>Primary  </label>
+                                        @Html.TextBoxFor(model => Model.LOCTID, new { @class = "form-control  LOCTID", @id = "LOCTID" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Code<span class="req"> *</span> </label>
+                                        @Html.TextBoxFor(model => Model.LOCTCODE, new { @class = "form-control LOCTCODE caps", @id = "LOCTCODE", required = "required", MaxLength = "15" })
+                                        @Html.ValidationMessageFor(mode => Model.LOCTCODE)
+                                        <input type="text" value="@Model.LOCTCODE" name="i_LOCTCODE" hidden>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Description <span class="req"> *</span> </label>
+                                        @Html.TextBoxFor(model => Model.LOCTDESC, new { @class = "form-control  LOCTDESC", @id = "LOCTDESC", required = "required" })
+                                        @Html.ValidationMessageFor(mode => Model.LOCTDESC)
+                                        <input type="text" value="@Model.LOCTDESC" name="i_LOCTDESC" hidden>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>State <span class="req"> *</span> </label>
+                                        @Html.DropDownList("STATEID", null, "Please select State", new { @class = "form-control  STATEID", @data_val = "true", @data_val_required = "Field is required", @id = "STATEID" })
+                                        @Html.ValidationMessageFor(mode => Model.STATEID)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 hidden">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>CUSRID </label>
+                                        @Html.TextBoxFor(model => Model.CUSRID, new { @class = "form-control CUSRID", @id = "CUSRID" })
+                                        @Html.ValidationMessageFor(model => model.CUSRID)
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>LMUSRID </label>
+                                        @Html.TextBoxFor(model => Model.LMUSRID, new { @class = "form-control  LMUSRID", @id = "LMUSRID" })
+                                        @Html.ValidationMessageFor(model => model.LMUSRID)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Status </label>
+                                        @Html.DropDownList("DISPSTATUS", null, new { @class = "form-control DISPSTATUS", @id = "DISPSTATUS" })
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Branch </label>
+                                        @Html.DropDownList("BRNCHID", null, new { @class = "form-control BRNCHID", @id = "BRNCHID" })
+                                    </div>
+                                </div>
+                            </div>*@
+                            <div class="col-md-12 box-footer">
+                                <input type="button" name="back" value="Go Back" class="btn btn-primary btn-sm  pull-left" onclick="JavaScript:history.back()" />
+                                @*<input type="submit" name="continue" value="Save & Add" class="btn btn-success btn-sm pull-right " />*@
+
+                                <input type="submit" name="save" value="Save" class="btn btn-primary btn-sm pull-right  " />
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.validate_tab.js"></script>
+    <script>
+        $('.msg').delay(1200).fadeOut(1000);
+        $("#LOCTDESC").keyup(function () {//...capitalize each
+
+            $(this).val($(this).val().toUpperCase());
+        });
+
+        function ValidateMyform(form, event) {
+            flag = true;
+            i = 0;
+            //$("#btnsave").attr("disabled", "disabled");
+            var frmflag = $(form).attr('data-flag');
+            //alert(frmflag);
+            var form = document.getElementById('loactionmasterform');
+            var inputs = form.getElementsByTagName('input');
+            var forms = document.getElementsByClassName('needs-validation');
+
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                flag = false;
+            }
+            else {
+                form.classList.add('was-validated'); flag = true;
+            }
+
+            if (flag) {
+                if (frmflag == 0) {
+                    event.preventDefault(); //to prevent submitting
+
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "Are you sure to Submit the Information !",
+                        type: "warning",
+                        confirmButtonText: "Yes",
+                        showCancelButton: true,
+                        cancelButtonColor: "#d43f3a",
+                        cancelButtonText: "No",
+                        showCloseButton: true,
+                        position: "Center",
+                    }).then((result) => {
+                        if (result.value) {
+                            flag = true;
+                            var ActionName = "SaveData";
+                            var controllername = "LocationMaster";
+                            var pagetitle = "@ViewBag.Title";
+                            var formData = $(loactionmasterform).serialize();
+                            submitFormData(ActionName, controllername, pagetitle, formData,"Index");
+                            $("#btnsave").removeAttr("disabled", "disabled");
+                        }
+                        else if (result.isDenied) {
+                            Swal.fire('Changes are not saved', '', 'info')
+                            flag = false;
+                            $("#btnsave").removeAttr("disabled", "disabled");
+                            return false;
+                        }
+
+                    });
+                }
+            }
+            else {
+                return false;
+            }
+        }
+
+    </script>
+
+}
+
+
+
+

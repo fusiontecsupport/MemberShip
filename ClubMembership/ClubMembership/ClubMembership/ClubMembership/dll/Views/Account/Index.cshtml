@@ -1,0 +1,114 @@
+﻿@model IEnumerable<ClubMembership.Models.AccountViewModels.EditUserViewModel>
+@{
+    ViewBag.Title = "User Management";
+}
+
+<div class="container-fluid px-4 py-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">
+                    <i class="bi bi-people-fill me-2"></i> User Management
+                </h3>
+                <a href="@Url.Action("Register", "Account")" class="btn btn-light btn-sm">
+                    <i class="bi bi-plus-circle me-1"></i> Add New User
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                            <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+                            <th>@Html.DisplayNameFor(model => model.LastName)</th>
+                            <th>@Html.DisplayNameFor(model => model.MobileNo)</th>
+                            <th>@Html.DisplayNameFor(model => model.Gender)</th>
+                            <th>@Html.DisplayNameFor(model => model.Email)</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (((Session["Group"].ToString() == "Admin") || (Session["Group"].ToString() == "SuperAdmin") || (Session["Group"].ToString() == "Manager")))
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MobileNo)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                    <td class="text-end">
+                                        <div class="btn-group" role="group">
+                                            <a href="@Url.Action("Manage", new { id = item.UserName })" class="btn btn-sm btn-outline-primary" title="Change Password">
+                                                <i class="bi bi-key"></i>
+                                            </a>
+                                            <a href="@Url.Action("Edit", new { id = item.UserName })" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <a href="@Url.Action("UserGroups", new { id = item.UserName })" class="btn btn-sm btn-outline-info" title="Groups">
+                                                <i class="bi bi-people"></i>
+                                            </a>
+                                            <a href="@Url.Action("UserPermissions", new { id = item.UserName })" class="btn btn-sm btn-outline-warning" title="Permissions">
+                                                <i class="bi bi-shield-lock"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete", new { id = item.UserName })"
+                                               class="btn btn-sm btn-outline-danger"
+                                               title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            else if (Session["CUSRID"].ToString() == item.UserName)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MobileNo)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                    <td class="text-end">
+                                        <a href="@Url.Action("Manage", new { id = item.UserName })" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-key me-1"></i>Change Password
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 8px;
+    }
+
+    .card-header {
+        padding: 1rem 1.5rem;
+    }
+
+    .table th {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
+
+    .btn-group .btn {
+        margin-left: 0.25rem;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+    }
+</style>

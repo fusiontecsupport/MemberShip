@@ -1,0 +1,254 @@
+@model IEnumerable<ClubMembership.Models.AnnouncementMaster>
+
+@{
+    ViewBag.Title = "Announcements";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .hero {
+        position: relative;
+        background: linear-gradient(135deg, #eef4ff 0%, #f7fbff 40%, #ecf7ff 100%);
+        border: 1px solid #e7edf6;
+        border-radius: .9rem;
+        padding: 1rem 1rem;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(31, 98, 221, 0.06);
+    }
+    .hero:before {
+        content: "";
+        position: absolute;
+        right: -60px;
+        top: -60px;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(closest-side, rgba(76, 130, 254, .18), transparent);
+        filter: blur(2px);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+    .filter-bar .nav-link {
+        border-radius: 2rem;
+        border: 1px solid #e6ebf3;
+        background: #fff;
+        color: #2b3a55;
+        padding: .35rem .85rem;
+        transition: all .2s ease;
+    }
+    .filter-bar .nav-link:hover { background: #f6f9ff; }
+    .filter-bar .nav-link.active {
+        background: linear-gradient(135deg, #4f8dfb 0%, #2a6df6 100%);
+        color: #fff;
+        border-color: transparent;
+        box-shadow: 0 6px 14px rgba(42,109,246,.25);
+    }
+    .filters-wrap { background:#ffffff; border:1px solid #e9eef5; border-radius:.75rem; padding:.35rem; display:inline-flex; gap:.35rem }
+    .filter-bar { display:flex; gap:.35rem; align-items:center; margin-bottom:0 }
+    .badge-count { font-weight: 600; padding: .15rem .45rem; border-radius: 1rem; }
+    .search-input { flex: 0 0 auto }
+    /* Approximate to placeholder length */
+    .search-input input { width: 34ch; max-width: 100% }
+    .input-icon .input-group-text { background: #fff; border-right: 0 }
+    .input-icon .form-control { border-left: 0 }
+    /* List layout styles */
+    .ann-row { display:flex; align-items:center; gap:1rem }
+    .thumb { width:72px; height:72px; object-fit:cover; border-radius:.5rem; background:#f8f9fa; border:1px solid #eef1f4 }
+    .ann-body { flex:1 1 auto; min-width:0 }
+    .ann-title { margin:0; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+    .ann-cap { margin:0; color:#6c757d; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+    .ann-meta { display:flex; align-items:center; gap:.75rem; color:#6c757d }
+</style>
+
+<div class="container-fluid">
+    <div class="hero mb-3">
+        <div class="d-flex flex-column flex-md-row gap-2 align-items-md-center justify-content-between">
+            <div class="d-flex align-items-center gap-2">
+                <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:36px;height:36px;background:#e8f0ff;color:#2a6df6">
+                    <i class="fa fa-bullhorn"></i>
+                </span>
+                <div>
+                    <h5 class="mb-0">Announcements</h5>
+                    <small class="text-muted">Create, preview and manage announcements</small>
+                </div>
+            </div>
+            <div class="d-flex gap-2 align-items-center">
+                <div class="search-input">
+                    <input id="searchBox" type="search" class="form-control form-control-sm" placeholder="Search by heading or caption..." />
+                </div>
+                <select id="sortBox" class="form-select form-select-sm" style="max-width:180px">
+                    <option value="date_desc">Newest first</option>
+                    <option value="date_asc">Oldest first</option>
+                    <option value="title_asc">Title A–Z</option>
+                    <option value="title_desc">Title Z–A</option>
+                </select>
+                <a href="@Url.Action("Form", "AnnouncementMaster")" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> New</a>
+            </div>
+        </div>
+        <div class="mt-2 filters-wrap">
+            <ul class="nav nav-pills filter-bar" id="statusTabs">
+                <li class="nav-item"><a class="nav-link active" data-status="all"><i class="fa fa-layer-group me-1"></i> All <span class="badge bg-light text-dark badge-count ms-1" id="countAll">0</span></a></li>
+                <li class="nav-item"><a class="nav-link" data-status="active"><i class="fa fa-check-circle text-success me-1"></i> Active <span class="badge bg-light text-dark badge-count ms-1" id="countActive">0</span></a></li>
+                <li class="nav-item"><a class="nav-link" data-status="inactive"><i class="fa fa-minus-circle text-secondary me-1"></i> Inactive <span class="badge bg-light text-dark badge-count ms-1" id="countInactive">0</span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa fa-check-circle"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width:90px">Image</th>
+                        <th>Heading</th>
+                        <th>Caption</th>
+                        <th style="width:150px">Category Types</th>
+                        <th style="width:120px">Status</th>
+                        <th style="width:150px">Created</th>
+                        <th style="width:220px" class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="listContainer">
+                    @foreach (var item in Model)
+                    {
+                        var caption = !string.IsNullOrEmpty(item.Caption) && item.Caption.Length > 110 ? item.Caption.Substring(0, 110) + "..." : (item.Caption ?? "");
+                        var statusText = item.Status == 0 ? "active" : "inactive";
+                        var textIndex = (item.Heading ?? "") + " " + caption;
+                        <tr class="ann-card" data-status="@statusText" data-text="@textIndex" data-title="@item.Heading" data-date="@item.CreatedDate.ToString("o")">
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.MainImage))
+                                {
+                                    <img src="@item.MainImage" class="thumb" alt="Announcement" />
+                                }
+                                else
+                                {
+                                    <div class="thumb d-flex align-items-center justify-content-center text-muted"><i class="fa fa-image"></i></div>
+                                }
+                            </td>
+                            <td>
+                                <div class="ann-body">
+                                    <p class="ann-title" title="@item.Heading">@item.Heading</p>
+                                    <div class="ann-meta small"><span><i class="fa fa-hashtag me-1"></i>@item.AnnouncementId</span></div>
+                                </div>
+                            </td>
+                            <td><p class="ann-cap" title="@caption">@caption</p></td>
+                            <td>
+                                @if (item.CategoryTypeDescriptions != null && item.CategoryTypeDescriptions.Any())
+                                {
+                                    foreach (var category in item.CategoryTypeDescriptions)
+                                    {
+                                        <span class="badge bg-info me-1">@category</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="text-muted small">Not specified</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="badge @(item.Status == 0 ? "bg-success" : "bg-secondary")">@(item.Status == 0 ? "Active" : "Inactive")</span>
+                            </td>
+                            <td><span class="text-muted small"><i class="fa fa-clock-o me-1"></i>@item.CreatedDate.ToString("dd MMM yyyy")</span></td>
+                            <td class="text-end">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-outline-secondary" data-role="preview" data-id="@item.AnnouncementId" href="@Url.Action("Details", "AnnouncementMaster", new { id = item.AnnouncementId })">View</a>
+                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Form", "AnnouncementMaster", new { id = item.AnnouncementId })">Edit</a>
+                                    <a class="btn btn-sm btn-outline-danger" href="@Url.Action("Delete", "AnnouncementMaster", new { id = item.AnnouncementId })" onclick="return confirm('Delete this announcement?')">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            function updateCounts() {
+                var allRows = Array.prototype.slice.call(document.querySelectorAll('.ann-card'));
+                var all = allRows.length;
+                var active = allRows.filter(function (r) { return r.getAttribute('data-status') === 'active'; }).length;
+                var inactive = allRows.filter(function (r) { return r.getAttribute('data-status') === 'inactive'; }).length;
+                var setText = function (id, val) { var el = document.getElementById(id); if (el) el.textContent = val; };
+                setText('countAll', all);
+                setText('countActive', active);
+                setText('countInactive', inactive);
+            }
+
+            function filter() {
+                var q = (document.getElementById('searchBox').value || '').toLowerCase();
+                var activeTab = document.querySelector('#statusTabs .nav-link.active');
+                var stat = activeTab ? activeTab.getAttribute('data-status') : 'all';
+                document.querySelectorAll('.ann-card').forEach(function (el) {
+                    var t = (el.getAttribute('data-text') || '').toLowerCase();
+                    var s = el.getAttribute('data-status');
+                    var matchText = t.indexOf(q) > -1;
+                    var matchStatus = (stat === 'all') || (s === stat);
+                    el.style.display = (matchText && matchStatus) ? '' : 'none';
+                });
+            }
+
+            document.getElementById('searchBox').addEventListener('input', filter);
+            document.querySelectorAll('#statusTabs .nav-link').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    document.querySelectorAll('#statusTabs .nav-link').forEach(function (l) { l.classList.remove('active'); });
+                    this.classList.add('active');
+                    filter();
+                });
+            });
+
+            document.getElementById('sortBox').addEventListener('change', function () {
+                var cards = Array.prototype.slice.call(document.querySelectorAll('.ann-card'));
+                var container = document.getElementById('listContainer');
+                var val = this.value;
+                cards.sort(function (a, b) {
+                    if (val === 'date_desc') return b.getAttribute('data-date').localeCompare(a.getAttribute('data-date'));
+                    if (val === 'date_asc') return a.getAttribute('data-date').localeCompare(b.getAttribute('data-date'));
+                    if (val === 'title_asc') return (a.getAttribute('data-title') || '').localeCompare(b.getAttribute('data-title') || '');
+                    if (val === 'title_desc') return (b.getAttribute('data-title') || '').localeCompare(a.getAttribute('data-title') || '');
+                    return 0;
+                });
+                cards.forEach(function (c) { container.appendChild(c); });
+            });
+
+            // Preview modal that loads partial via AJAX
+            var modalHtml = '<div class="modal fade" id="annPreview" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Announcement</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body" id="annPreviewBody"><div class="text-center text-muted py-4"><i class="fa fa-spinner fa-spin"></i> Loading...</div></div></div></div></div>';
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            document.querySelectorAll('[data-role="preview"]').forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var url = this.getAttribute('href');
+                    var body = document.getElementById('annPreviewBody');
+                    body.innerHTML = '<div class="text-center text-muted py-4"><i class="fa fa-spinner fa-spin"></i> Loading...</div>';
+                    fetch(url, { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } }).then(function (r) { return r.text(); }).then(function (html) {
+                        body.innerHTML = html;
+                        new bootstrap.Modal(document.getElementById('annPreview')).show();
+                    }).catch(function () {
+                        body.innerHTML = '<div class="alert alert-danger mb-0">Failed to load details.</div>';
+                        new bootstrap.Modal(document.getElementById('annPreview')).show();
+                    });
+                });
+            });
+
+            updateCounts();
+            filter();
+        })();
+    </script>
+}

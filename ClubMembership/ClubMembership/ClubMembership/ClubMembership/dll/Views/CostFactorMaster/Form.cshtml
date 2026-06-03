@@ -1,0 +1,125 @@
+﻿@using ClubMembership.Models;
+@model ClubMembership.Models.CostFactorMaster
+@{
+    ViewBag.Title = "Value Added Services";
+}
+<style>
+    .req {
+        color: red;
+        font-size: 15px;
+    }
+</style>
+<div class="col-lg-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>  Value Added Services Master  <div class="clearfix"> </div></h3>
+        </div>
+
+        @Html.Raw(ViewBag.msg)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel-body">
+                    <form action="@Url.Content("~/CostFactorMaster/savedata")" method="post" accept-charset="utf-8" id="costfactormasterform" data-ng-controller="myController" onsubmit="return validate();">
+                        @Html.ValidationSummary(true)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4 hidden">
+                                    <div class="form-group">
+                                        <label>Primary  </label>
+                                        @Html.TextBoxFor(model => Model.CFID, new { @class = "form-control  CFID", @id = "CFID" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Description <span class="req"> *</span></label>
+                                        @Html.TextBoxFor(model => Model.CFDESC, new { @class = "form-control  CFDESC", @id = "CFDESC" })
+                                        @Html.ValidationMessageFor(mode => Model.CFDESC)
+                                        <input type="text" value="@Model.CFDESC" name="i_CFDESC" hidden>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Mode <span class="req"> *</span> </label>
+                                        @Html.DropDownList("CFMODE", null, "Please select", new { @class = "form-control", @data_val = "true", @data_val_required = "Field is required" })
+                                        @Html.ValidationMessageFor(mode => Model.CFMODE)
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>As </label>
+                                        @Html.DropDownList("CFTYPE", null, new { @class = "form-control", @data_val = "true", @data_val_required = "Field is required" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Value </label>
+                                        @Html.TextBoxFor(model => Model.CFEXPR, new { @class = "form-control CFEXPR", @id = "CFEXPR" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>On </label>
+                                        @Html.DropDownList("CFNATR", null, new { @class = "form-control", @data_val = "true", @data_val_required = "Field is required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Calculated On <span class="req"> *</span>  </label>
+                                        @Html.DropDownList("CFOPTN", null, "Please select an option", new { @class = "form-control", @data_val = "true", @data_val_required = "Field is required" })
+                                        @Html.ValidationMessageFor(mode => Model.CFOPTN)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Belongs To <span class="req"> *</span>  </label>
+                                        @Html.DropDownList("DORDRID", null, "Please select an option", new { @class = "form-control", @data_val = "true", @data_val_required = "Field is required" })
+                                        @Html.ValidationMessageFor(mode => Model.DORDRID)
+                                    </div>
+                                </div>
+                                <div class="col-md-4 hide">
+                                    <div class="form-group">
+                                        <label>Tally A/C Ledger <span class="req"> *</span>  </label>
+                                        @Html.DropDownList("ACHEADID", null, "Please select an option", new { @class = "form-control ACHEADID"@*, @data_val = "true", @data_val_required = "Field is required"*@ })
+                                        @Html.ValidationMessageFor(mode => Model.ACHEADID)
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Status </label>
+                                        @Html.DropDownList("DISPSTATUS", null, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 box-footer">
+                                <input type="button" name="back" value="Go Back" class="btn btn-primary btn-sm  pull-left" onclick="JavaScript:history.back()" />
+                                <input type="submit" name="save" value="Save" class="btn btn-primary btn-sm pull-right  " />
+                                @*<input type="submit" name="continue" value="Save & Add" class="btn btn-success btn-xs  " />*@
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+    $('.msg').delay(1200).fadeOut(1000);
+    //$(".CURNCODE").keyup(function () {//...capitalize each
+
+    //    $(this).val($(this).val().toUpperCase());
+    //});
+    </script>
+}

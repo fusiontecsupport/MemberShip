@@ -1,0 +1,244 @@
+@model IEnumerable<ClubMembership.Models.GalleryMaster>
+
+@{
+    ViewBag.Title = "Gallery";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .hero {
+        position: relative;
+        background: linear-gradient(135deg, #eef4ff 0%, #f7fbff 40%, #ecf7ff 100%);
+        border: 1px solid #e7edf6;
+        border-radius: .9rem;
+        padding: 1rem 1rem;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(31, 98, 221, 0.06);
+    }
+    .hero:before {
+        content: "";
+        position: absolute;
+        right: -60px;
+        top: -60px;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(closest-side, rgba(76, 130, 254, .18), transparent);
+        filter: blur(2px);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+    .filters-wrap { background:#ffffff; border:1px solid #e9eef5; border-radius:.75rem; padding:.35rem; display:inline-flex; gap:.35rem }
+    .filter-bar { display:flex; gap:.35rem; align-items:center; margin-bottom:0 }
+    .filter-bar .nav-link {
+        border-radius: 2rem;
+        border: 1px solid #e6ebf3;
+        background: #fff;
+        color: #2b3a55;
+        padding: .35rem .85rem;
+        transition: all .2s ease;
+    }
+    .filter-bar .nav-link:hover { background: #f6f9ff; }
+    .filter-bar .nav-link.active {
+        background: linear-gradient(135deg, #4f8dfb 0%, #2a6df6 100%);
+        color: #fff;
+        border-color: transparent;
+        box-shadow: 0 6px 14px rgba(42,109,246,.25);
+    }
+    .badge-count { font-weight: 600; padding: .15rem .45rem; border-radius: 1rem; }
+    .controls-right { flex: 0 0 auto }
+    .search-input { flex: 0 0 auto }
+    /* Approximate to placeholder length */
+    .search-input input { width: 38ch; max-width: 100% }
+    .input-icon .input-group-text { background: #fff; border-right: 0 }
+    .input-icon .form-control { border-left: 0 }
+
+    .gallery-card .badge-status { position:absolute; top:.75rem; left:.75rem }
+    .gallery-cover { height:180px; object-fit:cover; background:#f8f9fa }
+    .gallery-item { transition: transform .15s ease }
+    .gallery-item:hover { transform: translateY(-2px) }
+    .controls-right select { max-width:180px }
+</style>
+
+<div class="container-fluid">
+    <div class="hero mb-3">
+        <div class="d-flex flex-column flex-md-row gap-2 align-items-md-center justify-content-between">
+            <div class="d-flex align-items-center gap-2">
+                <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width:36px;height:36px;background:#e8f0ff;color:#2a6df6">
+                    <i class="fa fa-images"></i>
+                </span>
+                <div>
+                    <h5 class="mb-0">Gallery</h5>
+                    <small class="text-muted">Browse and manage your gallery items</small>
+                </div>
+            </div>
+            <div class="d-flex gap-2 align-items-center controls-right">
+                <div class="search-input">
+                    <input id="searchBox" type="search" class="form-control form-control-sm" placeholder="Search by title, caption or category..." />
+                </div>
+                <select id="sortBox" class="form-select form-select-sm">
+                    <option value="date_desc">Newest first</option>
+                    <option value="date_asc">Oldest first</option>
+                    <option value="title_asc">Title A–Z</option>
+                    <option value="title_desc">Title Z–A</option>
+                </select>
+                <a href="@Url.Action("Form", "GalleryMaster")" class="btn btn-primary btn-sm">
+                    <i class="fa fa-plus"></i> New Item
+                </a>
+            </div>
+        </div>
+        <div class="mt-2 filters-wrap">
+            <ul class="nav nav-pills filter-bar" id="statusTabs">
+                <li class="nav-item"><a class="nav-link active" data-status="all"><i class="fa fa-layer-group me-1"></i> All <span class="badge bg-light text-dark badge-count ms-1" id="countAll">0</span></a></li>
+                <li class="nav-item"><a class="nav-link" data-status="active"><i class="fa fa-check-circle text-success me-1"></i> Active <span class="badge bg-light text-dark badge-count ms-1" id="countActive">0</span></a></li>
+                <li class="nav-item"><a class="nav-link" data-status="inactive"><i class="fa fa-minus-circle text-secondary me-1"></i> Inactive <span class="badge bg-light text-dark badge-count ms-1" id="countInactive">0</span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa fa-check-circle"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width:90px">Image</th>
+                        <th>Title</th>
+                        <th>Caption</th>
+                        <th style="width:140px">Category</th>
+                        <th style="width:120px">Status</th>
+                        <th style="width:150px">Created</th>
+                        <th style="width:220px" class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="cardsContainer">
+                    @foreach (var item in Model)
+                    {
+                        var caption = !string.IsNullOrEmpty(item.Caption) && item.Caption.Length > 110 ? item.Caption.Substring(0, 110) + "..." : (item.Caption ?? "");
+                        var category = item.Category ?? "";
+                        var statusText = item.Status == 0 ? "active" : "inactive";
+                        var textIndex = (item.Heading ?? "") + " " + caption + " " + category;
+                        <tr class="gallery-item" data-status="@statusText" data-text="@textIndex" data-title="@item.Heading" data-date="@item.CreatedDate.ToString("o")">
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.MainImage))
+                                {
+                                    <img src="@item.MainImage" class="thumb" style="width:72px;height:72px;object-fit:cover;border-radius:.5rem;background:#f8f9fa;border:1px solid #eef1f4" alt="Gallery" />
+                                }
+                                else
+                                {
+                                    <div class="d-flex align-items-center justify-content-center text-muted" style="width:72px;height:72px;border-radius:.5rem;background:#f8f9fa;border:1px solid #eef1f4"><i class="fa fa-image"></i></div>
+                                }
+                            </td>
+                            <td>
+                                <div class="ann-body">
+                                    <p class="ann-title" title="@item.Heading">@item.Heading</p>
+                                </div>
+                            </td>
+                            <td><p class="ann-cap" title="@caption">@caption</p></td>
+                            <td><span class="badge text-bg-light">@category</span></td>
+                            <td>
+                                <span class="badge @(item.Status == 0 ? "bg-success" : "bg-secondary")">@(item.Status == 0 ? "Active" : "Inactive")</span>
+                            </td>
+                            <td><span class="text-muted small"><i class="fa fa-clock-o me-1"></i>@item.CreatedDate.ToString("dd MMM yyyy")</span></td>
+                            <td class="text-end">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-outline-secondary" data-role="preview" data-id="@item.GalleryId" href="@Url.Action("Details", "GalleryMaster", new { id = item.GalleryId })">View</a>
+                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Form", "GalleryMaster", new { id = item.GalleryId })">Edit</a>
+                                    <a class="btn btn-sm btn-outline-danger" href="@Url.Action("Delete", "GalleryMaster", new { id = item.GalleryId })" onclick="return confirm('Delete this gallery item?')">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            function updateCounts() {
+                var allRows = Array.prototype.slice.call(document.querySelectorAll('.gallery-item'));
+                var all = allRows.length;
+                var active = allRows.filter(function (r) { return r.getAttribute('data-status') === 'active'; }).length;
+                var inactive = allRows.filter(function (r) { return r.getAttribute('data-status') === 'inactive'; }).length;
+                var setText = function (id, val) { var el = document.getElementById(id); if (el) el.textContent = val; };
+                setText('countAll', all);
+                setText('countActive', active);
+                setText('countInactive', inactive);
+            }
+
+            function filter() {
+                var q = (document.getElementById('searchBox').value || '').toLowerCase();
+                var activeTab = document.querySelector('#statusTabs .nav-link.active');
+                var stat = activeTab ? activeTab.getAttribute('data-status') : 'all';
+                document.querySelectorAll('.gallery-item').forEach(function (el) {
+                    var t = (el.getAttribute('data-text') || '').toLowerCase();
+                    var s = el.getAttribute('data-status');
+                    var matchText = t.indexOf(q) > -1;
+                    var matchStatus = (stat === 'all') || (s === stat);
+                    el.style.display = (matchText && matchStatus) ? '' : 'none';
+                });
+            }
+
+            document.getElementById('searchBox').addEventListener('input', filter);
+            document.querySelectorAll('#statusTabs .nav-link').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    document.querySelectorAll('#statusTabs .nav-link').forEach(function (l) { l.classList.remove('active'); });
+                    this.classList.add('active');
+                    filter();
+                });
+            });
+
+            document.getElementById('sortBox').addEventListener('change', function () {
+                var cards = Array.prototype.slice.call(document.querySelectorAll('.gallery-item'));
+                var container = document.getElementById('cardsContainer');
+                var val = this.value;
+                cards.sort(function (a, b) {
+                    if (val === 'date_desc') return (b.getAttribute('data-date') || '').localeCompare(a.getAttribute('data-date') || '');
+                    if (val === 'date_asc') return (a.getAttribute('data-date') || '').localeCompare(b.getAttribute('data-date') || '');
+                    if (val === 'title_asc') return (a.getAttribute('data-title') || '').localeCompare(b.getAttribute('data-title') || '');
+                    if (val === 'title_desc') return (b.getAttribute('data-title') || '').localeCompare(a.getAttribute('data-title') || '');
+                    return 0;
+                });
+                cards.forEach(function (c) { container.appendChild(c); });
+            });
+
+            // Preview modal (reuse pattern from announcements)
+            var modalHtml = '<div class="modal fade" id="galPreview" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Gallery Item</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body" id="galPreviewBody"><div class="text-center text-muted py-4"><i class="fa fa-spinner fa-spin"></i> Loading...</div></div></div></div></div>';
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            document.querySelectorAll('[data-role="preview"]').forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var url = this.getAttribute('href');
+                    var body = document.getElementById('galPreviewBody');
+                    body.innerHTML = '<div class="text-center text-muted py-4"><i class="fa fa-spinner fa-spin"></i> Loading...</div>';
+                    fetch(url, { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } }).then(function (r) { return r.text(); }).then(function (html) {
+                        body.innerHTML = html;
+                        new bootstrap.Modal(document.getElementById('galPreview')).show();
+                    }).catch(function () {
+                        body.innerHTML = '<div class="alert alert-danger mb-0">Failed to load details.</div>';
+                        new bootstrap.Modal(document.getElementById('galPreview')).show();
+                    });
+                });
+            });
+
+            updateCounts();
+            filter();
+        })();
+    </script>
+}

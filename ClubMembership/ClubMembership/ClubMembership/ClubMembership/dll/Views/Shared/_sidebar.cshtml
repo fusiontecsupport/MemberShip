@@ -1,0 +1,211 @@
+@model IEnumerable<ClubMembership.Models.MenuNavbar>
+
+<style>
+    :root {
+        --ig-sidebar-width: 250px;
+        --ig-sidebar-bg: #ffffff;
+        --ig-sidebar-border: #e6e6e6;
+        --ig-item-hover: #f5f5f5;
+        --ig-text: #262626;
+        --ig-muted: #8e8e8e;
+        --ig-primary: #000000;
+    }
+
+    /* Push page content when sidebar is present */
+    #page-wrapper {
+        margin-left: var(--ig-sidebar-width);
+        transition: margin-left .2s ease;
+    }
+
+    .ig-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: var(--ig-sidebar-width);
+        background: var(--ig-sidebar-bg);
+        border-right: 1px solid var(--ig-sidebar-border);
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        z-index: 1030;
+    }
+
+    .ig-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 8px 16px 8px;
+        margin-bottom: 8px;
+    }
+
+    .ig-brand img {
+        height: 80px;
+        width: auto;
+        margin-bottom: 8px;
+    }
+
+    .ig-brand .company-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--ig-text);
+        text-align: center;
+        line-height: 1.2;
+    }
+
+    .ig-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1 1 auto;
+        overflow-y: auto;
+    }
+
+    .ig-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: var(--ig-text);
+        text-decoration: none;
+        transition: background .15s ease;
+        font-weight: 500;
+    }
+
+    .ig-item:hover {
+        background: var(--ig-item-hover);
+        text-decoration: none;
+        color: var(--ig-text);
+    }
+
+    .ig-item i {
+        font-size: 18px;
+        width: 22px;
+        text-align: center;
+        color: var(--ig-primary);
+    }
+
+    .ig-bottom {
+        margin-top: auto;
+        border-top: 1px solid var(--ig-sidebar-border);
+        padding-top: 8px;
+    }
+
+    .ig-muted {
+        color: var(--ig-muted);
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    @@media (max-width: 991.98px) {
+        :root { --ig-sidebar-width: 220px; }
+        
+        .ig-brand .company-name {
+            font-size: 14px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .ig-brand .company-name {
+            font-size: 12px;
+        }
+    }
+</style>
+
+@if (Request.IsAuthenticated)
+{
+    var username = User.Identity.Name;
+    var memberIdDisplay = "";
+    var notifCount = 0;
+    try
+    {
+        ClubMembership.Models.ApplicationDbContext db2 = new ClubMembership.Models.ApplicationDbContext();
+        var m = db2.MemberShipMasters.FirstOrDefault(x => x.UIserID == username);
+        memberIdDisplay = (m != null && !string.IsNullOrEmpty(m.MemberDNo)) ? m.MemberDNo : "";
+
+        // Compute today's notifications: events user marked interested that occur today
+        var uid = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId(User.Identity);
+        var today = DateTime.Today;
+        var tomorrow = today.AddDays(1);
+        var interestedEventIds = db2.eventinterests
+            .Where(ei => ei.UserId == uid && ei.State == 1)
+            .Select(ei => ei.EventId)
+            .ToList();
+        notifCount = db2.eventmasters
+            .Count(em => interestedEventIds.Contains(em.EventId)
+                        && em.Status == 0
+                        && em.EventTime >= today
+                        && em.EventTime < tomorrow);
+    }
+    catch { memberIdDisplay = ""; }
+    <aside class="ig-sidebar">
+        <div class="ig-brand">
+            <img src="~/Content/images/logo-small.png" alt="Logo" />
+        </div>
+
+        <nav class="ig-nav">
+            <a class="ig-item" href="@Url.Action("Index","Home")">
+                <i class="fa fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a class="ig-item" href="@Url.Action("UserDashboard","Home")">
+                <i class="fa fa-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+            <a class="ig-item" href="@Url.Action("Announcements","Content")">
+                <i class="fa fa-bullhorn"></i>
+                <span>Announcements</span>
+            </a>
+            <a class="ig-item" href="@Url.Action("Events","Content")">
+                <i class="fa fa-calendar"></i>
+                <span>Events</span>
+            </a>
+            <a class="ig-item" href="@Url.Action("Gallery","Content")">
+                <i class="fa fa-images"></i>
+                <span>Gallery</span>
+            </a>
+            <a class="ig-item" href="@Url.Action("UserView","MinutesOfMeeting")">
+                <i class="fa fa-book"></i>
+                <span>Minutes of Meeting</span>
+            </a>
+            <a class="ig-item" href="@Url.Action("Notifications","Home")">
+                <i class="fa fa-bell"></i>
+                <span>
+                    Notifications
+                    @if (notifCount > 0)
+                    {
+                        <span style="background:#dc3545;color:#fff;border-radius:10px;padding:1px 6px;font-size:11px;margin-left:6px;">@notifCount</span>
+                    }
+                </span>
+            </a>
+            <a class="ig-item" href="@Url.Action("Create","ProfileMaster")">
+                <i class="fa fa-user"></i>
+                <span>Profile Updation</span>
+            </a>
+        </nav>
+
+        <div class="ig-bottom">
+            <div class="ig-muted">Signed in as</div>
+            <div class="ig-item" style="cursor:default;">
+                <i class="fa fa-user-circle"></i>
+                <span>
+                    @if (!string.IsNullOrEmpty(memberIdDisplay))
+                    {
+                        <div class="ig-muted" style="padding:0; margin-bottom:2px;">@memberIdDisplay</div>
+                    }
+                    <div>@username</div>
+                </span>
+            </div>
+
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutFormSidebar", @class = "form-css" }))
+            {
+                @Html.AntiForgeryToken()
+                <a class="ig-item" href="javascript:document.getElementById('logoutFormSidebar').submit()">
+                    <i class="fa fa-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            }
+        </div>
+    </aside>
+}

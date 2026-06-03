@@ -1,0 +1,648 @@
+@{
+    ViewBag.Title = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int totalMembers = ViewBag.TotalMembers != null ? ViewBag.TotalMembers : 0;
+    int removedMembers = ViewBag.RemovedMembers != null ? ViewBag.RemovedMembers : 0;
+    decimal totalAmount = ViewBag.TotalAmount != null ? ViewBag.TotalAmount : 0;
+    int newMembersLast30 = ViewBag.NewMembersLast30 != null ? ViewBag.NewMembersLast30 : 0;
+    int upcomingRenewalsNext30 = ViewBag.UpcomingRenewalsNext30 != null ? ViewBag.UpcomingRenewalsNext30 : 0;
+    int renewalsLt15 = ViewBag.RenewalsLt15 != null ? ViewBag.RenewalsLt15 : 0;
+    int renewals15to30 = ViewBag.Renewals15to30 != null ? ViewBag.Renewals15to30 : 0;
+    int activeMembers = ViewBag.ActiveMembers != null ? ViewBag.ActiveMembers : 0;
+    int inactiveMembers = ViewBag.InactiveMembers != null ? ViewBag.InactiveMembers : 0;
+    decimal amountLast30Days = ViewBag.AmountLast30Days != null ? ViewBag.AmountLast30Days : 0;
+    var paymentBreakdown = ViewBag.PaymentBreakdown as IEnumerable<ClubMembership.Models.PaymentTypeTotal>;
+    var recentPayments = ViewBag.RecentPayments as IEnumerable<ClubMembership.Models.MemberShipPaymentDetail>;
+    var upcomingRenewals = ViewBag.UpcomingRenewals as IEnumerable<dynamic>;
+    var dailyLabels = ViewBag.DailyLabels as IEnumerable<string>;
+    var dailyTotals = ViewBag.DailyTotals as IEnumerable<decimal>;
+}
+
+@section Styles {
+    <style>
+        .dashboard-card {
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            background: #fff;
+            padding: 24px 18px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .dashboard-card h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .dashboard-card .desc {
+            color: #6c757d;
+            font-size: 1rem;
+        }
+        .dashboard-row {
+            margin-bottom: 32px;
+        }
+        .dashboard-chart {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+        .dashboard-card .kpi { font-weight: 700; letter-spacing: 0.3px; }
+        .muted { color: #6c757d; }
+        #paymentTypeChart { max-height: 160px; }
+        .filter-chip { cursor: pointer; padding: 6px 12px; border-radius: 20px; border: 1px solid #e0e0e0; margin-right: 8px; }
+        .filter-chip.active { background: #e8f0fe; border-color: #90caf9; }
+        .table thead th { white-space: nowrap; }
+        .table-hover tbody tr:hover { background-color: #f8fbff; }
+        .align-middle th, .align-middle td { vertical-align: middle; }
+        .renewal-days .badge { font-size: 0.85rem; padding: 0.45em 0.65em; }
+        .renew-action { text-align: end; }
+        .renew-action .btn { min-width: 92px; }
+        #eventInterestChart, #topEventsChart { max-height: 120px; }
+        .dashboard-header { display:flex; align-items:center; justify-content:space-between; padding:18px 24px; border-radius:12px; background: linear-gradient(90deg, #f8f9fa 0%, #eef2ff 100%); box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-bottom: 24px; }
+        .dashboard-header .title { font-size: 1.6rem; font-weight: 700; margin:0; }
+        .dashboard-header .subtitle { color:#6c757d; margin:0; }
+        .quick-actions .btn { margin-left:8px; }
+        
+        /* Event Interest Styles */
+        .event-interest-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+        .event-interest-card h2,
+        .event-interest-card .desc {
+            color: white;
+        }
+        .event-interest-card .kpi {
+            color: white;
+        }
+        #eventInterestTable .badge {
+            font-size: 0.85rem;
+            padding: 0.45em 0.65em;
+        }
+        .interest-rate-high { background-color: #28a745 !important; }
+        .interest-rate-medium { background-color: #ffc107 !important; color: #212529 !important; }
+        .interest-rate-low { background-color: #dc3545 !important; }
+    </style>
+}
+
+<div class="container-fluid py-4">
+    <div class="dashboard-header">
+        <div>
+            <h2 class="title">Admin Dashboard</h2>
+            <p class="subtitle">Key metrics, renewals, and recent activity</p>
+        </div>
+        <div class="quick-actions">
+            <a href="@Url.Action("Index","Members")" class="btn btn-primary btn-sm"><i class="fas fa-users"></i> Manage Members</a>
+            <a href="#" class="btn btn-outline-secondary btn-sm" onclick="window.print(); return false;"><i class="fas fa-print"></i> Print</a>
+        </div>
+    </div>
+    <div class="row dashboard-row">
+        <div class="col-md-4">
+            <div class="dashboard-card">
+                <h2><i class="fas fa-users text-primary"></i> @totalMembers</h2>
+                <div class="desc">Total Members</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-card">
+                <h2><i class="fas fa-user-slash text-danger"></i> @removedMembers</h2>
+                <div class="desc">Removed in Last 15 Days</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-card">
+                <h2><i class="fas fa-rupee-sign text-success"></i> @totalAmount.ToString("N2")</h2>
+                <div class="desc">Total Amount Received</div>
+            </div>
+        </div>
+    </div>
+    <div class="row dashboard-row">
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h2><i class="fas fa-user-plus text-success"></i> @newMembersLast30</h2>
+                <div class="desc">New Members (30 days)</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h2 class="kpi"><i class="fas fa-bell text-warning"></i> @renewalsLt15</h2>
+                <div class="desc">Renewals in &lt; 15 days</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h2 class="kpi"><i class="fas fa-calendar-alt text-primary"></i> @renewals15to30</h2>
+                <div class="desc">Renewals in 15-30 days</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h2 class="kpi"><i class="fas fa-user-check text-success"></i> @activeMembers</h2>
+                <div class="desc">Active Members</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h2 class="kpi"><i class="fas fa-user-times text-secondary"></i> @inactiveMembers</h2>
+                <div class="desc">Inactive Members</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="dashboard-chart">
+                <h4 class="mb-3">Amount Received (Last 30 days)</h4>
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <h2 class="mb-1">@amountLast30Days.ToString("N2")</h2>
+                        <small class="text-muted d-block">Total collections in the last month</small>
+                    </div>
+                    <div class="col-sm-6">
+                        <canvas id="dailyTrendChart" height="80"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dashboard-chart">
+                <h4 class="mb-3">Payment Type Breakdown</h4>
+                <canvas id="paymentTypeChart" height="80"></canvas>
+                <div class="mt-3">
+                    <table class="table table-sm mb-0">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if (paymentBreakdown != null)
+                        {
+                            foreach (var item in paymentBreakdown)
+                            {
+                                <tr>
+                                    <td>@item.Type</td>
+                                    <td class="text-end">@item.Total.ToString("N2")</td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Interest Statistics Row -->
+    <div class="row dashboard-row">
+        <div class="col-md-3">
+            <div class="dashboard-card event-interest-card">
+                <h2 class="kpi"><i class="fas fa-calendar-check"></i> @(ViewBag.TotalEventsWithInterest != null ? ViewBag.TotalEventsWithInterest : 0)</h2>
+                <div class="desc">Events with Interest</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h2 class="kpi"><i class="fas fa-thumbs-up text-primary"></i> @(ViewBag.TotalInterested != null ? ViewBag.TotalInterested : 0)</h2>
+                <div class="desc">Total Interested</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h2 class="kpi"><i class="fas fa-thumbs-down text-warning"></i> @(ViewBag.TotalNotInterested != null ? ViewBag.TotalNotInterested : 0)</h2>
+                <div class="desc">Total Not Interested</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h2 class="kpi"><i class="fas fa-chart-line text-info"></i> @(ViewBag.TotalEventInterest != null ? ViewBag.TotalEventInterest : 0)</h2>
+                <div class="desc">Total Responses</div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dashboard-chart">
+                <h4 class="mb-3">Event Interest Analysis</h4>
+                <div class="mb-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" class="form-control" id="eventInterestSearch" placeholder="Search events...">
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <span class="filter-chip active" data-filter="all">All Events</span>
+                            <span class="filter-chip" data-filter="high">High Interest (≥70%)</span>
+                            <span class="filter-chip" data-filter="medium">Medium Interest (50-69%)</span>
+                            <span class="filter-chip" data-filter="low">Low Interest (<50%)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle table-sm" id="eventInterestTable">
+                        <thead>
+                            <tr>
+                                <th>Event Name</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th class="text-center">Interested</th>
+                                <th class="text-center">Not Interested</th>
+                                <th class="text-center">Total Responses</th>
+                                <th class="text-center">Interest Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if (ViewBag.EventInterestStats != null)
+                        {
+                            foreach (var eventStat in ViewBag.EventInterestStats)
+                            {
+                                if (eventStat != null)
+                                {
+                                    var interestRate = eventStat.TotalResponses > 0 ? (eventStat.InterestedCount * 100.0 / eventStat.TotalResponses) : 0;
+                                    <tr>
+                                        <td>
+                                            <strong>@(eventStat.EventName != null ? eventStat.EventName : "Unknown Event")</strong>
+                                        </td>
+                                        <td>@(eventStat.EventDate.ToString("dd MMM yyyy"))</td>
+                                        <td>@(string.IsNullOrEmpty(eventStat.EventLocation) ? "TBA" : eventStat.EventLocation)</td>
+                                        <td class="text-center">
+                                            <span class="badge bg-success">@eventStat.InterestedCount</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-warning text-dark">@eventStat.NotInterestedCount</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-info">@eventStat.TotalResponses</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge @(interestRate >= 70 ? "bg-success" : (interestRate >= 50 ? "bg-warning text-dark" : "bg-danger"))">
+                                                @interestRate.ToString("F1")%
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Interest Chart Row -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="dashboard-chart">
+                <h4 class="mb-3">Event Interest Overview</h4>
+                <canvas id="eventInterestChart" height="120"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dashboard-chart">
+                <h4 class="mb-3">Top Events by Interest</h4>
+                <canvas id="topEventsChart" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dashboard-chart">
+                <h4 class="mb-3">Upcoming Renewals</h4>
+                <div class="mb-3">
+                    <span class="filter-chip active" data-range="all">All (@upcomingRenewalsNext30)</span>
+                    <span class="filter-chip" data-range="lt15">&lt; 15 days (@renewalsLt15)</span>
+                    <span class="filter-chip" data-range="15to30">15-30 days (@renewals15to30)</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle table-sm" id="renewalsTable">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Renewal Date</th>
+                                <th class="text-right text-end">Days Remaining</th>
+                                <th class="text-right text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if (upcomingRenewals != null)
+                        {
+                            foreach (var r in upcomingRenewals)
+                            {
+                                <tr data-days="@r.DaysRemaining">
+                                    <td>@r.MemberName</td>
+                                    <td>@r.RenewalDate.ToString("dd-MMM-yyyy")</td>
+                                    <td class="text-right text-end renewal-days"><span class="badge @(r.DaysRemaining < 7 ? "bg-danger" : (r.DaysRemaining < 15 ? "bg-warning text-dark" : "bg-info"))">@r.DaysRemaining days</span></td>
+                                    <td class="renew-action text-right text-end">
+                                        <button type="button" class="btn btn-sm btn-primary" data-renew="@r.MemberID"><i class="fas fa-redo"></i> Renew</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="renewalModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="renewalModalContent"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dashboard-chart">
+                <h4 class="mb-3">Recent Payments</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Receipt No</th>
+                                <th>Type</th>
+                                <th class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if (recentPayments != null)
+                        {
+                            foreach (var p in recentPayments)
+                            {
+                                <tr>
+                                    <td>@p.Payment_Date.ToString("dd-MMM-yyyy")</td>
+                                    <td>@p.Payment_Receipt_No</td>
+                                    <td>@p.Payment_Type</td>
+                                    <td class="text-end">@p.Amount.ToString("N2")</td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+		(function() {
+			var breakdown = @Html.Raw(System.Web.Helpers.Json.Encode(paymentBreakdown != null ? paymentBreakdown : new System.Collections.Generic.List<ClubMembership.Models.PaymentTypeTotal>()));
+			var labels = breakdown.map(function(x){ return x.Type; });
+			var data = breakdown.map(function(x){ return x.Total; });
+
+			var colors = [
+				'rgba(67, 97, 238, 0.7)',
+				'rgba(247, 37, 133, 0.7)',
+				'rgba(76, 201, 240, 0.7)',
+				'rgba(45, 212, 191, 0.7)',
+				'rgba(250, 204, 21, 0.7)',
+				'rgba(236, 72, 153, 0.7)'
+			];
+
+			var el = document.getElementById('paymentTypeChart');
+			var ctx2 = el ? el.getContext('2d') : null;
+			if (ctx2) {
+				new Chart(ctx2, {
+					type: 'doughnut',
+					data: {
+						labels: labels,
+						datasets: [{
+							data: data,
+							backgroundColor: colors,
+							borderColor: colors.map(function(c){ return c.replace('0.7', '1'); }),
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						plugins: {
+							legend: { position: 'bottom' }
+						}
+					}
+				});
+			}
+
+			// Daily trend sparkline
+			var dailyLabels = @Html.Raw(System.Web.Helpers.Json.Encode(dailyLabels != null ? dailyLabels : new string[]{}));
+			var dailyTotals = @Html.Raw(System.Web.Helpers.Json.Encode(dailyTotals != null ? dailyTotals : new decimal[]{}));
+			var tcanvas = document.getElementById('dailyTrendChart');
+			if (tcanvas) {
+				new Chart(tcanvas.getContext('2d'), {
+					type: 'line',
+					data: {
+						labels: dailyLabels,
+						datasets: [{
+							data: dailyTotals,
+							borderColor: 'rgba(67,97,238,1)',
+							backgroundColor: 'rgba(67,97,238,0.15)',
+							tension: 0.3,
+							fill: true,
+							pointRadius: 0
+						}]
+					},
+					options: {
+						plugins: { legend: { display: false } },
+						scales: { x: { display: false }, y: { display: false } },
+						elements: { line: { borderWidth: 2 } },
+						responsive: true,
+						maintainAspectRatio: false
+					}
+				});
+			}
+
+			// Renewal table filter
+			var chips = document.querySelectorAll('.filter-chip');
+			var rows = document.querySelectorAll('#renewalsTable tbody tr');
+			function applyFilter(range) {
+				chips.forEach(function(c){ c.classList.toggle('active', c.getAttribute('data-range') === range); });
+				if (range === 'all') { chips.forEach(function(c){ if (c.getAttribute('data-range')==='all') c.classList.add('active'); }); }
+				rows.forEach(function(r){
+					var days = parseInt(r.getAttribute('data-days'));
+					var show = true;
+					if (range === 'lt15') show = days < 15;
+					else if (range === '15to30') show = days >= 15 && days <= 30;
+					r.style.display = show ? '' : 'none';
+				});
+			}
+			chips.forEach(function(c){ c.addEventListener('click', function(){ applyFilter(c.getAttribute('data-range')); }); });
+
+			// Event Interest Charts
+			var eventInterestStats = @Html.Raw(System.Web.Helpers.Json.Encode(ViewBag.EventInterestStats != null ? ViewBag.EventInterestStats : new System.Collections.Generic.List<ClubMembership.Controllers.EventInterestStat>()));
+			
+			// Event Interest Overview Chart (Doughnut)
+			var eventOverviewCanvas = document.getElementById('eventInterestChart');
+			if (eventOverviewCanvas && eventInterestStats.length > 0) {
+				var overviewCtx = eventOverviewCanvas.getContext('2d');
+				new Chart(overviewCtx, {
+					type: 'doughnut',
+					data: {
+						labels: ['Interested', 'Not Interested'],
+						datasets: [{
+							data: [@(ViewBag.TotalInterested != null ? ViewBag.TotalInterested : 0), @(ViewBag.TotalNotInterested != null ? ViewBag.TotalNotInterested : 0)],
+							backgroundColor: [
+								'rgba(40, 167, 69, 0.8)',
+								'rgba(255, 193, 7, 0.8)'
+							],
+							borderColor: [
+								'rgba(40, 167, 69, 1)',
+								'rgba(255, 193, 7, 1)'
+							],
+							borderWidth: 2
+						}]
+					},
+					options: {
+						responsive: true,
+						plugins: {
+							legend: { position: 'bottom' },
+							tooltip: {
+								callbacks: {
+									label: function(context) {
+										var total = @(ViewBag.TotalEventInterest != null ? ViewBag.TotalEventInterest : 0);
+										var percentage = total > 0 ? ((context.parsed / total) * 100).toFixed(1) : 0;
+										return context.label + ': ' + context.parsed + ' (' + percentage + '%)';
+									}
+								}
+							}
+						}
+					}
+				});
+			}
+
+			// Top Events by Interest Chart (Line)
+			var topEventsCanvas = document.getElementById('topEventsChart');
+			if (topEventsCanvas && eventInterestStats.length > 0) {
+				var topEventsCtx = topEventsCanvas.getContext('2d');
+				var top5Events = eventInterestStats.slice(0, 5);
+				
+				new Chart(topEventsCtx, {
+					type: 'line',
+					data: {
+						labels: top5Events.map(function(x) { return x.EventName && x.EventName.length > 20 ? x.EventName.substring(0, 20) + '...' : (x.EventName || 'Unknown Event'); }),
+						datasets: [{
+							label: 'Interested',
+							data: top5Events.map(function(x) { return x.InterestedCount || 0; }),
+							borderColor: 'rgba(40, 167, 69, 1)',
+							backgroundColor: 'rgba(40, 167, 69, 0.18)',
+							borderWidth: 2,
+							tension: 0.35,
+							pointRadius: 0,
+							fill: true
+						}, {
+							label: 'Not Interested',
+							data: top5Events.map(function(x) { return x.NotInterestedCount || 0; }),
+							borderColor: 'rgba(255, 193, 7, 1)',
+							backgroundColor: 'rgba(255, 193, 7, 0.18)',
+							borderWidth: 2,
+							tension: 0.35,
+							pointRadius: 0,
+							fill: true
+						}]
+					},
+					options: {
+						responsive: true,
+						scales: {
+							x: { display: false },
+							y: { display: false, beginAtZero: true }
+						},
+						plugins: {
+							legend: { position: 'top' }
+						},
+						elements: { line: { borderWidth: 2 } },
+						spanGaps: true,
+						maintainAspectRatio: false
+					}
+				});
+			}
+
+			// Event Interest Table Search and Filtering
+			var eventInterestSearch = document.getElementById('eventInterestSearch');
+			var eventInterestFilterChips = document.querySelectorAll('[data-filter]');
+			var eventInterestRows = document.querySelectorAll('#eventInterestTable tbody tr');
+
+			function applyEventInterestFilter() {
+				var searchTerm = eventInterestSearch.value.toLowerCase();
+				var activeFilter = document.querySelector('[data-filter].active').getAttribute('data-filter');
+
+				eventInterestRows.forEach(function(row) {
+					var eventName = row.cells[0].textContent.toLowerCase();
+					var interestRate = parseFloat(row.cells[6].textContent.replace('%', ''));
+					var showBySearch = eventName.includes(searchTerm);
+					var showByFilter = true;
+
+					if (activeFilter === 'high') showByFilter = interestRate >= 70;
+					else if (activeFilter === 'medium') showByFilter = interestRate >= 50 && interestRate < 70;
+					else if (activeFilter === 'low') showByFilter = interestRate < 50;
+
+					row.style.display = (showBySearch && showByFilter) ? '' : 'none';
+				});
+			}
+
+			if (eventInterestSearch) {
+				eventInterestSearch.addEventListener('input', applyEventInterestFilter);
+			}
+
+			eventInterestFilterChips.forEach(function(chip) {
+				chip.addEventListener('click', function() {
+					eventInterestFilterChips.forEach(function(c) { c.classList.remove('active'); });
+					this.classList.add('active');
+					applyEventInterestFilter();
+				});
+			});
+
+			// Attach renew button handler
+			document.querySelectorAll('[data-renew]').forEach(function(btn){
+				btn.addEventListener('click', function(){
+					var memberId = this.getAttribute('data-renew');
+					fetch('@Url.Action("RenewalPopup","Home")?memberId=' + memberId, { headers: { 'X-Requested-With': 'XMLHttpRequest' }})
+						.then(function(r){ return r.text(); })
+						.then(function(html){
+							var container = document.getElementById('renewalModalContent');
+							container.innerHTML = html;
+							var modalEl = document.getElementById('renewalModal');
+							if(window.bootstrap){
+								new bootstrap.Modal(modalEl).show();
+							}
+
+							// Attach Buy/Renew click handler for dynamically injected content
+							var buyBtn = container.querySelector('#btnSubmitRenewal');
+							if (buyBtn) {
+								buyBtn.addEventListener('click', function(){
+									var form = container.querySelector('#renewalForm');
+									if (!form) { return; }
+									var formData = new FormData(form);
+									fetch(form.action, {
+										method: 'POST',
+										body: formData,
+										headers: { 'X-Requested-With': 'XMLHttpRequest' },
+										credentials: 'same-origin'
+									}).then(function(res){ return res.json(); })
+									.then(function(res){
+										if (res && res.success) {
+											var instance = window.bootstrap ? window.bootstrap.Modal.getInstance(modalEl) : null;
+											if (instance) { instance.hide(); }
+											window.location.reload();
+										} else {
+											alert((res && res.message) || 'Failed to renew');
+										}
+									}).catch(function(){ alert('Failed to renew'); });
+								});
+							}
+						});
+				});
+			});
+		})();
+	</script>
+}
