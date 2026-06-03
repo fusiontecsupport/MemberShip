@@ -540,7 +540,7 @@
                             <div class="membership-pricing-list">
                                 <div class="membership-pricing-item">
                                     <span>Yearly Membership</span>
-                                    <strong>INR 300</strong>
+                                    <strong>INR 10</strong>
                                 </div>
                                 <div class="membership-pricing-item">
                                     <span>Lifetime Membership</span>
@@ -552,6 +552,10 @@
                                 <div class="selected-membership-price__label">Amount to Pay</div>
                                 <div class="selected-membership-price__amount" id="selectedMembershipAmount">INR 0</div>
                                 <div class="selected-membership-price__meta" id="selectedMembershipMeta"></div>
+                            </div>
+
+                            <div class="alert alert-info mt-3 mb-0 py-2">
+                                After you complete registration, you will be redirected to the Omniware payment gateway to finish the payment.
                             </div>
                         </div>
                     </div>
@@ -576,7 +580,7 @@
                     </a>
                     <div class="d-flex flex-column flex-md-row gap-2 w-100 w-md-auto order-md-2 order-1">
                         <button type="submit" class="btn btn-primary action-btn" id="registerBtn" disabled>
-                            <i class="fas fa-user-plus me-2"></i>Register
+                            <i class="fas fa-credit-card me-2"></i>Payment
                         </button>
                     </div>
                 </div>
@@ -647,7 +651,7 @@
                     const normalizedPlan = (planName || '').toLowerCase();
 
                     if (normalizedPlan.indexOf('yearly') !== -1) {
-                        return 300;
+                        return 10;
                     }
 
                     if (normalizedPlan.indexOf('lifetime') !== -1) {

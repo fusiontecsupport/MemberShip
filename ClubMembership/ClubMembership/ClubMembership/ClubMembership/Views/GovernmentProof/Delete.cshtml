@@ -75,7 +75,9 @@
                         </div>
                         <div class="col-sm-8">
                             @{
-                                string fileExtension = System.IO.Path.GetExtension(Model.GovPath)?.ToLower();
+            string fileExtension = string.IsNullOrEmpty(Model.GovPath)
+                ? string.Empty
+                : System.IO.Path.GetExtension(Model.GovPath).ToLower();
                                 string documentType = fileExtension switch
                                 {
                                     ".pdf" => "PDF Document",
@@ -132,7 +134,9 @@
                         </div>
                         <div class="card-body text-center">
                             @{
-                                string fileExt = System.IO.Path.GetExtension(Model.GovPath)?.ToLower();
+            string fileExt = string.IsNullOrEmpty(Model.GovPath)
+                ? string.Empty
+                : System.IO.Path.GetExtension(Model.GovPath).ToLower();
                                 if (fileExt == ".pdf")
                                 {
                                     <div class="mb-3">

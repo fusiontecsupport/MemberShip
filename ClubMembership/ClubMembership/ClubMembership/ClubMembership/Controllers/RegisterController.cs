@@ -2,12 +2,15 @@ using ClubMembership.Models;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System;
 using System.Configuration;
 using System.IO;
+using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -30,6 +33,174 @@ namespace ClubMembership.Controllers
         {
             UserManager = userManager;
             _db = new ApplicationDbContext();
+        }
+
+        private static string GetValue(IDictionary<string, string> values, string key)
+        {
+            string result;
+            return values != null && values.TryGetValue(key, out result) ? result : string.Empty;
+        }
+
+        private static string BuildOmniwareHash(IDictionary<string, string> values, string salt)
+        {
+            var builder = new StringBuilder();
+            builder.Append(salt ?? string.Empty);
+
+            foreach (var key in values.Keys.OrderBy(k => k, StringComparer.Ordinal))
+            {
+                var value = GetValue(values, key);
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    builder.Append("|").Append(value.Trim());
+                }
+            }
+
+            using (var sha = SHA512.Create())
+            {
+                var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(builder.ToString()));
+                return BitConverter.ToString(bytes).Replace("-", string.Empty).ToUpperInvariant();
+            }
+        }
+
+        private static bool LooksLikeSuccessCode(string responseCode)
+        {
+            int code;
+            return int.TryParse(responseCode, out code) && code == 0;
+        }
+
+        private static DateTime? TryParseOmniwareDate(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            DateTime parsed;
+            var formats = new[]
+            {
+                "dd-MM-yyyy HH:mm:ss",
+                "yyyy-MM-dd HH:mm:ss",
+                "dd-MM-yyyy",
+                "yyyy-MM-dd"
+            };
+
+            if (DateTime.TryParseExact(value.Trim(), formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
+            {
+                return parsed;
+            }
+
+            if (DateTime.TryParse(value.Trim(), CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out parsed))
+            {
+                return parsed;
+            }
+
+            return null;
+        }
+
+        private OmniwarePaymentRedirectViewModel BuildOmniwareRedirectViewModel(
+            string orderId,
+            decimal amount,
+            string membershipPlan,
+            string customerName,
+            string email,
+            string phone,
+            int memberId,
+            int memberTypeId)
+        {
+            var apiBaseUrl = (ConfigurationManager.AppSettings["OmniwareApiBaseUrl"] ?? string.Empty).Trim().TrimEnd('/');
+            if (string.IsNullOrWhiteSpace(apiBaseUrl))
+            {
+                throw new InvalidOperationException("OmniwareApiBaseUrl is missing in Web.config");
+            }
+
+            var apiKey = (ConfigurationManager.AppSettings["OmniwareApiKey"] ?? string.Empty).Trim();
+            var salt = (ConfigurationManager.AppSettings["OmniwareSalt"] ?? string.Empty).Trim();
+            var mode = string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["OmniwareMode"])
+                ? "TEST"
+                : ConfigurationManager.AppSettings["OmniwareMode"].Trim().ToUpperInvariant();
+
+            if (string.IsNullOrWhiteSpace(apiKey))
+            {
+                throw new InvalidOperationException("OmniwareApiKey is missing in Web.config");
+            }
+
+            if (string.IsNullOrWhiteSpace(salt))
+            {
+                throw new InvalidOperationException("OmniwareSalt is missing in Web.config");
+            }
+
+            var returnUrl = Url.Action("OmniwareReturn", "Register", null, Request.Url.Scheme);
+
+            var fields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "api_key", apiKey },
+                { "order_id", orderId },
+                { "mode", mode },
+                { "amount", amount.ToString("0.00", CultureInfo.InvariantCulture) },
+                { "currency", "INR" },
+                { "description", $"Membership payment for {membershipPlan}" },
+                { "name", customerName },
+                { "email", email },
+                { "phone", phone },
+                { "address_line_1", "Membership Registration" },
+                { "address_line_2", membershipPlan },
+                { "city", "Bangalore" },
+                { "state", "Karnataka" },
+                { "country", "IND" },
+                { "zip_code", "560001" },
+                { "return_url", returnUrl },
+                { "return_url_failure", returnUrl },
+                { "return_url_cancel", returnUrl },
+                { "udf1", memberId.ToString(CultureInfo.InvariantCulture) },
+                { "udf2", memberTypeId.ToString(CultureInfo.InvariantCulture) },
+                { "udf3", membershipPlan },
+                { "udf4", phone },
+                { "udf5", email }
+            };
+
+            fields["hash"] = BuildOmniwareHash(fields.Where(kvp => !string.Equals(kvp.Key, "hash", StringComparison.OrdinalIgnoreCase))
+                                                      .ToDictionary(kvp => kvp.Key, kvp => kvp.Value, StringComparer.OrdinalIgnoreCase), salt);
+
+            return new OmniwarePaymentRedirectViewModel
+            {
+                ActionUrl = $"{apiBaseUrl}/v2/paymentrequest",
+                Fields = fields
+            };
+        }
+
+        private bool ValidateOmniwareResponseHash(IDictionary<string, string> responseFields)
+        {
+            var responseHash = GetValue(responseFields, "hash");
+            if (string.IsNullOrWhiteSpace(responseHash))
+            {
+                return true;
+            }
+
+            var salt = (ConfigurationManager.AppSettings["OmniwareSalt"] ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(salt))
+            {
+                return false;
+            }
+
+            var calculated = BuildOmniwareHash(
+                responseFields
+                    .Where(kvp => !string.Equals(kvp.Key, "hash", StringComparison.OrdinalIgnoreCase))
+                    .ToDictionary(kvp => kvp.Key, kvp => kvp.Value, StringComparer.OrdinalIgnoreCase),
+                salt);
+
+            return string.Equals(responseHash, calculated, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static decimal GetRegistrationPaymentAmount(decimal membershipFee, string membershipDescription)
+        {
+            var normalizedDescription = (membershipDescription ?? string.Empty).Trim().ToLowerInvariant();
+
+            if (normalizedDescription.Contains("yearly"))
+            {
+                return 10m;
+            }
+
+            return membershipFee;
         }
 
         [HttpGet]
@@ -518,19 +689,20 @@ namespace ClubMembership.Controllers
                                                      .Select(m => m.MemberID)
                                                      .FirstOrDefault());
                             var renewalDate = DateTime.Now.AddYears(memberType.NoOfYears);
+                            var gatewayAmount = GetRegistrationPaymentAmount(memberType.MembershipFee, memberType.MemberTypeDescription);
 
                             var payment = new MemberShipPaymentDetail
                             {
                                 MemberID = memberId,
                                 MemberTypeId = memberType.MemberTypeId,
-                                MemberTypeAmount = memberType.MembershipFee,
+                                MemberTypeAmount = gatewayAmount,
                                 Payment_Date = DateTime.Now,
                                 Renewal_Date = renewalDate,
                                 UPI_ID = "NA", // Default or from form
                                 RRN_NO = "NA", // Default or from form
-                                Amount = memberType.MembershipFee, // Default or from form
+                                Amount = gatewayAmount, // Default or from form
                                 Payment_Type = "Online", // Default or from form
-                                Payment_Status = "Success", // Default or from form
+                                Payment_Status = "Pending", // Will be updated after Omniware response
                                 Payment_Plan = memberType.MemberTypeDescription,
                                 Payment_Receipt_No = receiptNo,
                                 ReceiptSerialNo = nextSerial,
@@ -538,6 +710,15 @@ namespace ClubMembership.Controllers
                                 CompanyAccountingDetailId = compyId
                             };
                             db.MemberShipPaymentDetails.Add(payment);
+                            db.SaveChanges();
+
+                            // Omniware order_id must be unique and no longer than 30 characters.
+                            // Keep it compact: prefix + payment id + UTC timestamp.
+                            var gatewayOrderId = string.Format(
+                                "OM{0}{1}",
+                                payment.PaymentID,
+                                DateTime.UtcNow.ToString("yyMMddHHmmssfff"));
+                            payment.Payment_Receipt_No = gatewayOrderId;
                             db.SaveChanges();
 
                             // Save government proof to govrmnet_proof table if file was uploaded
@@ -551,11 +732,20 @@ namespace ClubMembership.Controllers
                                 db.GovernmentProofs.Add(governmentProof);
                                 db.SaveChanges();
                             }
+
+                            var paymentRedirect = BuildOmniwareRedirectViewModel(
+                                gatewayOrderId,
+                                gatewayAmount,
+                                memberType.MemberTypeDescription,
+                                $"{model.FirstName} {model.LastName}",
+                                model.Email,
+                                model.MobileNo,
+                                memberId,
+                                memberType.MemberTypeId);
+
+                            return View("OmniwareRedirect", paymentRedirect);
                         }
                     }
-
-                    TempData["RegistrationSuccess"] = "Your account has been created successfully. You can now log in.";
-                    return RedirectToAction("Login", "Account");
                 }
                 foreach (var error in result.Errors)
                 {
@@ -571,6 +761,115 @@ namespace ClubMembership.Controllers
             );
 
             return View("Login_Register", model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult OmniwareReturn()
+        {
+            try
+            {
+                var responseFields = Request.Form.AllKeys
+                    .Where(key => !string.IsNullOrWhiteSpace(key))
+                    .ToDictionary(key => key, key => Request.Form[key], StringComparer.OrdinalIgnoreCase);
+
+                if (!ValidateOmniwareResponseHash(responseFields))
+                {
+                    return View("PaymentResult", new OmniwarePaymentResultViewModel
+                    {
+                        IsSuccess = false,
+                        Title = "Payment verification failed",
+                        Message = "The payment response hash could not be verified."
+                    });
+                }
+
+                var orderId = GetValue(responseFields, "order_id");
+                var transactionId = GetValue(responseFields, "transaction_id");
+                var responseCode = GetValue(responseFields, "response_code");
+                var responseMessage = GetValue(responseFields, "response_message");
+                var errorDesc = GetValue(responseFields, "error_desc");
+                var paymentMode = GetValue(responseFields, "payment_mode");
+                if (string.IsNullOrWhiteSpace(paymentMode))
+                {
+                    paymentMode = GetValue(responseFields, "payment_method");
+                }
+
+                var paymentChannel = GetValue(responseFields, "payment_channel");
+                if (string.IsNullOrWhiteSpace(paymentChannel))
+                {
+                    paymentChannel = GetValue(responseFields, "bank_name");
+                }
+                var paymentDatetime = GetValue(responseFields, "payment_datetime");
+
+                var payment = _db.MemberShipPaymentDetails.FirstOrDefault(p => p.Payment_Receipt_No == orderId);
+                if (payment == null)
+                {
+                    return View("PaymentResult", new OmniwarePaymentResultViewModel
+                    {
+                        IsSuccess = false,
+                        Title = "Payment received",
+                        Message = $"Payment completed for order {orderId}, but the registration record was not found."
+                    });
+                }
+
+                payment.Payment_Date = TryParseOmniwareDate(paymentDatetime) ?? DateTime.Now;
+                payment.RRN_NO = string.IsNullOrWhiteSpace(transactionId) ? payment.RRN_NO : transactionId;
+                var paymentInfo = string.Join(" | ", new[] { paymentMode, paymentChannel }.Where(v => !string.IsNullOrWhiteSpace(v)));
+                if (!string.IsNullOrWhiteSpace(paymentInfo))
+                {
+                    payment.UPI_ID = paymentInfo;
+                }
+
+                if (LooksLikeSuccessCode(responseCode))
+                {
+                    payment.Payment_Status = "Success";
+                    if (payment.MemberID > 0)
+                    {
+                        var member = _db.MemberShipMasters.FirstOrDefault(m => m.MemberID == payment.MemberID);
+                        if (member != null)
+                        {
+                            member.DispStatus = 1;
+                            member.ModifiedDateTime = DateTime.Now;
+                            member.ModifiedBy = "Omniware";
+                        }
+                    }
+                }
+                else
+                {
+                    var failureStatus = !string.IsNullOrWhiteSpace(responseMessage)
+                        ? responseMessage
+                        : (!string.IsNullOrWhiteSpace(errorDesc) ? errorDesc : "Failed");
+
+                    payment.Payment_Status = failureStatus;
+                }
+
+                _db.SaveChanges();
+
+                return View("PaymentResult", new OmniwarePaymentResultViewModel
+                {
+                    IsSuccess = LooksLikeSuccessCode(responseCode),
+                    Title = LooksLikeSuccessCode(responseCode) ? "Payment successful" : "Payment not completed",
+                    Message = LooksLikeSuccessCode(responseCode)
+                        ? "Your registration payment has been confirmed successfully."
+                        : (!string.IsNullOrWhiteSpace(errorDesc) ? errorDesc
+                            : (!string.IsNullOrWhiteSpace(responseMessage) ? responseMessage : "Payment could not be completed.")),
+                    OrderId = orderId,
+                    TransactionId = transactionId,
+                    ResponseCode = responseCode,
+                    PaymentMode = paymentMode,
+                    PaymentChannel = paymentChannel,
+                    PaymentDatetime = paymentDatetime
+                });
+            }
+            catch (Exception ex)
+            {
+                return View("PaymentResult", new OmniwarePaymentResultViewModel
+                {
+                    IsSuccess = false,
+                    Title = "Payment processing error",
+                    Message = ex.Message
+                });
+            }
         }
     }
 }

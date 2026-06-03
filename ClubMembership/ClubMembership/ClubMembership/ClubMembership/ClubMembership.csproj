@@ -274,6 +274,7 @@
     <Compile Include="Migrations\202501010000004_AddGovernmentProofTable.Designer.cs" />
     <Compile Include="Models\MemberShipTypeMaster.cs" />
     <Compile Include="Models\MemberShipPaymentDetail.cs" />
+    <Compile Include="Models\OmniwarePaymentModels.cs" />
     <Compile Include="Models\MemberProfileViewModel.cs" />
     <Compile Include="Models\MemberShipODetail.cs" />
     <Compile Include="Models\MemberShipFamilyDetail.cs" />

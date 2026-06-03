@@ -1,0 +1,101 @@
+@model ClubMembership.Models.OmniwarePaymentResultViewModel
+@{
+    Layout = null;
+    var isSuccess = Model != null && Model.IsSuccess;
+    var title = (Model != null && !string.IsNullOrEmpty(Model.Title)) ? Model.Title : "Payment result";
+    var message = (Model != null && !string.IsNullOrEmpty(Model.Message)) ? Model.Message : "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .result-card {
+            max-width: 700px;
+            width: calc(100% - 2rem);
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 18px 48px rgba(15, 23, 42, 0.12);
+            padding: 2rem;
+        }
+        .result-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            border-radius: 999px;
+            padding: .45rem .85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .success {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .failure {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .meta {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 1rem;
+        }
+        .meta dt {
+            color: #64748b;
+            font-weight: 600;
+        }
+        .meta dd {
+            margin-bottom: .75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-card">
+        <div class="result-badge @(isSuccess ? "success" : "failure")">
+            @(isSuccess ? "Payment successful" : "Payment issue")
+        </div>
+        <h1 class="h3 mb-3">@title</h1>
+        <p class="text-muted mb-4">@message</p>
+
+        @if (Model != null)
+        {
+            <dl class="row meta mb-4">
+                <dt class="col-sm-4">Order ID</dt>
+                <dd class="col-sm-8">@Model.OrderId</dd>
+
+                <dt class="col-sm-4">Transaction ID</dt>
+                <dd class="col-sm-8">@Model.TransactionId</dd>
+
+                <dt class="col-sm-4">Response Code</dt>
+                <dd class="col-sm-8">@Model.ResponseCode</dd>
+
+                <dt class="col-sm-4">Payment Mode</dt>
+                <dd class="col-sm-8">@Model.PaymentMode</dd>
+
+                <dt class="col-sm-4">Payment Channel</dt>
+                <dd class="col-sm-8">@Model.PaymentChannel</dd>
+
+                <dt class="col-sm-4">Payment Time</dt>
+                <dd class="col-sm-8">@Model.PaymentDatetime</dd>
+            </dl>
+        }
+
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="@Url.Action("Login", "Account")" class="btn btn-primary">Go to Login</a>
+            <a href="@Url.Action("Index", "Register")" class="btn btn-outline-secondary">Back to Registration</a>
+        </div>
+    </div>
+</body>
+</html>
